@@ -21,7 +21,7 @@
     }
   ],
   "build": {
-    "appId": "40code",
+    "appId": "com.40code",
     "directories": {
       "output": "build"
     },
