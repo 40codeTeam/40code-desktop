@@ -26,7 +26,16 @@
       "output": "build"
     },
     "productName": "40code离线编辑器",
+
+    "mac": {
+      "icon": "./logo.icns",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
     "dmg": {
+      "backgroundColor":"#4b9aed",
       "icon": "./logo.icns",
       "window": {
         "x": "200",
@@ -35,18 +44,13 @@
         "height": 400
       }
     },
-    "mac": {
-      "icon": "./logo.icns",
-      "target": [
-        "dmg",
-        "zip"
-      ]
-    },
+
     "win": {
       "icon": "./logo.ico",
       "target": [
         "nsis",
-        "zip"
+        "zip",
+        "appx"
       ]
     },
     "nsis": {
@@ -57,6 +61,19 @@
       "installerHeaderIcon": "./logo.ico",
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true
+    },
+    "appx":{
+
+    },
+
+    "linux":{
+      "target": [
+        "apk",
+        "zip","tar.gz",
+        "AppImage",
+        "flatpak","snap",
+        "deb","rpm"
+      ]
     }
   },
   "author": "40code",
