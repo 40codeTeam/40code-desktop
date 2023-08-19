@@ -69,10 +69,8 @@
 
     "linux":{
       "target": [
-        "apk",
         "zip","tar.gz",
-        "AppImage",
-        "deb","rpm"
+        "AppImage"
       ]
     }
   },
