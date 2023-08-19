@@ -22,6 +22,7 @@
   ],
   "build": {
     "appId": "com.40code",
+    "publish": ["github"],
     "directories": {
       "output": "build"
     },
