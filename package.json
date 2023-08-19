@@ -72,7 +72,6 @@
         "apk",
         "zip","tar.gz",
         "AppImage",
-        "flatpak","snap",
         "deb","rpm"
       ]
     }
