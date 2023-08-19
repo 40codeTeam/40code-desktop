@@ -13,7 +13,8 @@ function createWindow() {
       // contextIsolation: true, // protect against prototype pollution
       // enableRemoteModule: false, // turn off remote
       nodeIntegration: true, // 是否集成 Nodejs
-    }
+    },
+    // autoHideMenuBar: true // 自动隐藏菜单栏
   })
 
   // and load the index.html of the app.

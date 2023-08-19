@@ -1,1 +1,4261 @@
-!function(t){var e={};function n(r){if(e[r])return e[r].exports;var i=e[r]={i:r,l:!1,exports:{}};return t[r].call(i.exports,i,i.exports,n),i.l=!0,i.exports}n.m=t,n.c=e,n.d=function(t,e,r){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:r})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var i in t)n.d(r,i,function(e){return t[e]}.bind(null,i));return r},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="./",n(n.s=10)}([function(t,e,n){function r(){}n(14).mixin(r),r.prototype.write=function(t,e,n){this.emit("item",t,e,n)},r.prototype.end=function(){this.emit("end"),this.removeAllListeners()},r.prototype.pipe=function(t){var e=this;function n(){t.write.apply(t,Array.prototype.slice.call(arguments))}function r(){!t._isStdio&&t.end()}return e.emit("unpipe",t),t.emit("pipe",e),e.on("item",n),e.on("end",r),e.when("unpipe",(function(i){var a=i===t||void 0===i;return a&&(e.removeListener("item",n),e.removeListener("end",r),t.emit("unpipe")),a})),t},r.prototype.unpipe=function(t){return this.emit("unpipe",t),this},r.prototype.format=function(t){throw new Error(["Warning: .format() is deprecated in Minilog v2! Use .pipe() instead. For example:","var Minilog = require('minilog');","Minilog","  .pipe(Minilog.backends.console.formatClean)","  .pipe(Minilog.backends.console);"].join("\n"))},r.mixin=function(t){var e,n=r.prototype;for(e in n)n.hasOwnProperty(e)&&(t.prototype[e]=n[e])},t.exports=r},function(t,e,n){const r=n(12);r.enable(),t.exports=r("vm")},function(t,e){var n;n=function(){return this}();try{n=n||new Function("return this")()}catch(t){"object"==typeof window&&(n=window)}t.exports=n},function(t,e){t.exports={isWorker:!0,centralDispatchService:self}},function(t,e){var n={black:"#000",red:"#c23621",green:"#25bc26",yellow:"#bbbb00",blue:"#492ee1",magenta:"#d338d3",cyan:"#33bbc8",gray:"#808080",purple:"#708"};t.exports=function(t,e){return e?"color: #fff; background: "+n[t]+";":"color: "+n[t]+";"}},function(t,e){t.exports={ANGLE:"angle",BOOLEAN:"Boolean",COLOR:"color",NUMBER:"number",STRING:"string",MATRIX:"matrix",NOTE:"note",IMAGE:"image",COSTUME:"costume",SOUND:"sound"}},function(t,e){t.exports={BOOLEAN:"Boolean",BUTTON:"button",LABEL:"label",COMMAND:"command",CONDITIONAL:"conditional",EVENT:"event",HAT:"hat",LOOP:"loop",REPORTER:"reporter"}},function(t,e){var n="long",r="short",i="numeric";t.exports={number:{decimal:{style:"decimal"},integer:{style:"decimal",maximumFractionDigits:0},currency:{style:"currency",currency:"USD"},percent:{style:"percent"},default:{style:"decimal"}},date:{short:{month:i,day:i,year:"2-digit"},medium:{month:r,day:i,year:i},long:{month:n,day:i,year:i},full:{month:n,day:i,year:i,weekday:n},default:{month:r,day:i,year:i}},time:{short:{hour:i,minute:i},medium:{hour:i,minute:i,second:i},long:{hour:i,minute:i,second:i,timeZoneName:r},full:{hour:i,minute:i,second:i,timeZoneName:r},default:{hour:i,minute:i,second:i}},duration:{default:{hours:{minimumIntegerDigits:1,maximumFractionDigits:0},minutes:{minimumIntegerDigits:2,maximumFractionDigits:0},seconds:{minimumIntegerDigits:2,maximumFractionDigits:3}}},parseNumberPattern:function(t){if(t){var e={},n=t.match(/\b[A-Z]{3}\b/i),r=t.replace(/[^¤]/g,"").length;if(!r&&n&&(r=1),r?(e.style="currency",e.currencyDisplay=1===r?"symbol":2===r?"code":"name",e.currency=n?n[0].toUpperCase():"USD"):t.indexOf("%")>=0&&(e.style="percent"),!/[@#0]/.test(t))return e.style?e:void 0;if(e.useGrouping=t.indexOf(",")>=0,/E\+?[@#0]+/i.test(t)||t.indexOf("@")>=0){var i=t.replace(/E\+?[@#0]+|[^@#0]/gi,"");e.minimumSignificantDigits=Math.min(Math.max(i.replace(/[^@0]/g,"").length,1),21),e.maximumSignificantDigits=Math.min(Math.max(i.length,1),21)}else{for(var a=t.replace(/[^#0.]/g,"").split("."),o=a[0],s=o.length-1;"0"===o[s];)--s;e.minimumIntegerDigits=Math.min(Math.max(o.length-1-s,1),21);var c=a[1]||"";for(s=0;"0"===c[s];)++s;for(e.minimumFractionDigits=Math.min(Math.max(s,0),20);"#"===c[s];)++s;e.maximumFractionDigits=Math.min(Math.max(s,0),20)}return e}},parseDatePattern:function(t){if(t){for(var e={},a=0;a<t.length;){for(var o=t[a],s=1;t[++a]===o;)++s;switch(o){case"G":e.era=5===s?"narrow":4===s?n:r;break;case"y":case"Y":e.year=2===s?"2-digit":i;break;case"M":case"L":s=Math.min(Math.max(s-1,0),4),e.month=[i,"2-digit",r,n,"narrow"][s];break;case"E":case"e":case"c":e.weekday=5===s?"narrow":4===s?n:r;break;case"d":case"D":e.day=2===s?"2-digit":i;break;case"h":case"K":e.hour12=!0,e.hour=2===s?"2-digit":i;break;case"H":case"k":e.hour12=!1,e.hour=2===s?"2-digit":i;break;case"m":e.minute=2===s?"2-digit":i;break;case"s":case"S":e.second=2===s?"2-digit":i;break;case"z":case"Z":case"v":case"V":e.timeZoneName=1===s?r:n}}return Object.keys(e).length?e:void 0}}}},function(t,e){t.exports=function(t,e){if("string"==typeof t&&e[t])return t;for(var n=[].concat(t||[]),r=0,i=n.length;r<i;++r)for(var a=n[r].split("-");a.length;){var o=a.join("-");if(e[o])return o;a.pop()}}},function(t,e,n){"use strict";var r="one",i="two",a="few",o="many",s="other",c=[function(t){return 1===+t?r:s},function(t){var e=+t;return 0<=e&&e<=1?r:s},function(t){return 0===Math.floor(Math.abs(+t))||1===+t?r:s},function(t){var e=+t;return 0===e?"zero":1===e?r:2===e?i:3<=e%100&&e%100<=10?a:11<=e%100&&e%100<=99?o:s},function(t){var e=Math.floor(Math.abs(+t)),n=(t+".").split(".")[1].length;return 1===e&&0===n?r:s},function(t){var e=+t;return e%10==1&&e%100!=11?r:2<=e%10&&e%10<=4&&(e%100<12||14<e%100)?a:e%10==0||5<=e%10&&e%10<=9||11<=e%100&&e%100<=14?o:s},function(t){var e=+t;return e%10==1&&e%100!=11&&e%100!=71&&e%100!=91?r:e%10==2&&e%100!=12&&e%100!=72&&e%100!=92?i:(3<=e%10&&e%10<=4||e%10==9)&&(e%100<10||19<e%100)&&(e%100<70||79<e%100)&&(e%100<90||99<e%100)?a:0!==e&&e%1e6==0?o:s},function(t){var e=Math.floor(Math.abs(+t)),n=(t+".").split(".")[1].length,i=+(t+".").split(".")[1];return 0===n&&e%10==1&&e%100!=11||i%10==1&&i%100!=11?r:0===n&&2<=e%10&&e%10<=4&&(e%100<12||14<e%100)||2<=i%10&&i%10<=4&&(i%100<12||14<i%100)?a:s},function(t){var e=Math.floor(Math.abs(+t)),n=(t+".").split(".")[1].length;return 1===e&&0===n?r:2<=e&&e<=4&&0===n?a:0!==n?o:s},function(t){var e=+t;return 0===e?"zero":1===e?r:2===e?i:3===e?a:6===e?o:s},function(t){var e=Math.floor(Math.abs(+t)),n=+(""+t).replace(/^[^.]*.?|0+$/g,"");return 1===+t||0!==n&&(0===e||1===e)?r:s},function(t){var e=Math.floor(Math.abs(+t)),n=(t+".").split(".")[1].length,o=+(t+".").split(".")[1];return 0===n&&e%100==1||o%100==1?r:0===n&&e%100==2||o%100==2?i:0===n&&3<=e%100&&e%100<=4||3<=o%100&&o%100<=4?a:s},function(t){var e=Math.floor(Math.abs(+t));return 0===e||1===e?r:s},function(t){var e=Math.floor(Math.abs(+t)),n=(t+".").split(".")[1].length,i=+(t+".").split(".")[1];return 0===n&&(1===e||2===e||3===e)||0===n&&e%10!=4&&e%10!=6&&e%10!=9||0!==n&&i%10!=4&&i%10!=6&&i%10!=9?r:s},function(t){var e=+t;return 1===e?r:2===e?i:3<=e&&e<=6?a:7<=e&&e<=10?o:s},function(t){var e=+t;return 1===e||11===e?r:2===e||12===e?i:3<=e&&e<=10||13<=e&&e<=19?a:s},function(t){var e=Math.floor(Math.abs(+t)),n=(t+".").split(".")[1].length;return 0===n&&e%10==1?r:0===n&&e%10==2?i:0!==n||e%100!=0&&e%100!=20&&e%100!=40&&e%100!=60&&e%100!=80?0!==n?o:s:a},function(t){var e=Math.floor(Math.abs(+t)),n=(t+".").split(".")[1].length,a=+t;return 1===e&&0===n?r:2===e&&0===n?i:0===n&&(a<0||10<a)&&a%10==0?o:s},function(t){var e=Math.floor(Math.abs(+t)),n=+(""+t).replace(/^[^.]*.?|0+$/g,"");return 0===n&&e%10==1&&e%100!=11||0!==n?r:s},function(t){var e=+t;return 1===e?r:2===e?i:s},function(t){var e=+t;return 0===e?"zero":1===e?r:s},function(t){var e=Math.floor(Math.abs(+t)),n=+t;return 0===n?"zero":0!==e&&1!==e||0===n?s:r},function(t){var e=+(t+".").split(".")[1],n=+t;return n%10==1&&(n%100<11||19<n%100)?r:2<=n%10&&n%10<=9&&(n%100<11||19<n%100)?a:0!==e?o:s},function(t){var e=(t+".").split(".")[1].length,n=+(t+".").split(".")[1],i=+t;return i%10==0||11<=i%100&&i%100<=19||2===e&&11<=n%100&&n%100<=19?"zero":i%10==1&&i%100!=11||2===e&&n%10==1&&n%100!=11||2!==e&&n%10==1?r:s},function(t){var e=Math.floor(Math.abs(+t)),n=(t+".").split(".")[1].length,i=+(t+".").split(".")[1];return 0===n&&e%10==1&&e%100!=11||i%10==1&&i%100!=11?r:s},function(t){var e=Math.floor(Math.abs(+t)),n=(t+".").split(".")[1].length,i=+t;return 1===e&&0===n?r:0!==n||0===i||1!==i&&1<=i%100&&i%100<=19?a:s},function(t){var e=+t;return 1===e?r:0===e||2<=e%100&&e%100<=10?a:11<=e%100&&e%100<=19?o:s},function(t){var e=Math.floor(Math.abs(+t)),n=(t+".").split(".")[1].length;return 1===e&&0===n?r:0===n&&2<=e%10&&e%10<=4&&(e%100<12||14<e%100)?a:0===n&&1!==e&&0<=e%10&&e%10<=1||0===n&&5<=e%10&&e%10<=9||0===n&&12<=e%100&&e%100<=14?o:s},function(t){var e=Math.floor(Math.abs(+t));return 0<=e&&e<=1?r:s},function(t){var e=Math.floor(Math.abs(+t)),n=(t+".").split(".")[1].length;return 0===n&&e%10==1&&e%100!=11?r:0===n&&2<=e%10&&e%10<=4&&(e%100<12||14<e%100)?a:0===n&&e%10==0||0===n&&5<=e%10&&e%10<=9||0===n&&11<=e%100&&e%100<=14?o:s},function(t){var e=+t;return 0===Math.floor(Math.abs(+t))||1===e?r:2<=e&&e<=10?a:s},function(t){var e=Math.floor(Math.abs(+t)),n=+(t+".").split(".")[1],i=+t;return 0===i||1===i||0===e&&1===n?r:s},function(t){var e=Math.floor(Math.abs(+t)),n=(t+".").split(".")[1].length;return 0===n&&e%100==1?r:0===n&&e%100==2?i:0===n&&3<=e%100&&e%100<=4||0!==n?a:s},function(t){var e=+t;return 0<=e&&e<=1||11<=e&&e<=99?r:s},function(t){var e=+t;return 1===e||5===e||7===e||8===e||9===e||10===e?r:2===e||3===e?i:4===e?a:6===e?o:s},function(t){var e=Math.floor(Math.abs(+t));return e%10==1||e%10==2||e%10==5||e%10==7||e%10==8||e%100==20||e%100==50||e%100==70||e%100==80?r:e%10==3||e%10==4||e%1e3==100||e%1e3==200||e%1e3==300||e%1e3==400||e%1e3==500||e%1e3==600||e%1e3==700||e%1e3==800||e%1e3==900?a:0===e||e%10==6||e%100==40||e%100==60||e%100==90?o:s},function(t){var e=+t;return e%10!=2&&e%10!=3||e%100==12||e%100==13?s:a},function(t){var e=+t;return 1===e||3===e?r:2===e?i:4===e?a:s},function(t){var e=+t;return 0===e||7===e||8===e||9===e?"zero":1===e?r:2===e?i:3===e||4===e?a:5===e||6===e?o:s},function(t){var e=+t;return e%10==1&&e%100!=11?r:e%10==2&&e%100!=12?i:e%10==3&&e%100!=13?a:s},function(t){var e=+t;return 1===e||11===e?r:2===e||12===e?i:3===e||13===e?a:s},function(t){var e=+t;return 1===e?r:2===e||3===e?i:4===e?a:6===e?o:s},function(t){var e=+t;return 1===e||5===e?r:s},function(t){var e=+t;return 11===e||8===e||80===e||800===e?o:s},function(t){var e=Math.floor(Math.abs(+t));return 1===e?r:0===e||2<=e%100&&e%100<=20||e%100==40||e%100==60||e%100==80?o:s},function(t){var e=+t;return e%10==6||e%10==9||e%10==0&&0!==e?o:s},function(t){var e=Math.floor(Math.abs(+t));return e%10==1&&e%100!=11?r:e%10==2&&e%100!=12?i:e%10!=7&&e%10!=8||e%100==17||e%100==18?s:o},function(t){var e=+t;return 1===e?r:2===e||3===e?i:4===e?a:s},function(t){var e=+t;return 1<=e&&e<=4?r:s},function(t){var e=+t;return 1===e||5===e||7<=e&&e<=9?r:2===e||3===e?i:4===e?a:6===e?o:s},function(t){var e=+t;return 1===e?r:e%10==4&&e%100!=14?o:s},function(t){var e=+t;return e%10!=1&&e%10!=2||e%100==11||e%100==12?s:r},function(t){var e=+t;return e%10==6||e%10==9||10===e?a:s},function(t){var e=+t;return e%10==3&&e%100!=13?a:s}];t.exports={af:{cardinal:c[0]},ak:{cardinal:c[1]},am:{cardinal:c[2]},ar:{cardinal:c[3]},ars:{cardinal:c[3]},as:{cardinal:c[2],ordinal:c[34]},asa:{cardinal:c[0]},ast:{cardinal:c[4]},az:{cardinal:c[0],ordinal:c[35]},be:{cardinal:c[5],ordinal:c[36]},bem:{cardinal:c[0]},bez:{cardinal:c[0]},bg:{cardinal:c[0]},bh:{cardinal:c[1]},bn:{cardinal:c[2],ordinal:c[34]},br:{cardinal:c[6]},brx:{cardinal:c[0]},bs:{cardinal:c[7]},ca:{cardinal:c[4],ordinal:c[37]},ce:{cardinal:c[0]},cgg:{cardinal:c[0]},chr:{cardinal:c[0]},ckb:{cardinal:c[0]},cs:{cardinal:c[8]},cy:{cardinal:c[9],ordinal:c[38]},da:{cardinal:c[10]},de:{cardinal:c[4]},dsb:{cardinal:c[11]},dv:{cardinal:c[0]},ee:{cardinal:c[0]},el:{cardinal:c[0]},en:{cardinal:c[4],ordinal:c[39]},eo:{cardinal:c[0]},es:{cardinal:c[0]},et:{cardinal:c[4]},eu:{cardinal:c[0]},fa:{cardinal:c[2]},ff:{cardinal:c[12]},fi:{cardinal:c[4]},fil:{cardinal:c[13],ordinal:c[0]},fo:{cardinal:c[0]},fr:{cardinal:c[12],ordinal:c[0]},fur:{cardinal:c[0]},fy:{cardinal:c[4]},ga:{cardinal:c[14],ordinal:c[0]},gd:{cardinal:c[15],ordinal:c[40]},gl:{cardinal:c[4]},gsw:{cardinal:c[0]},gu:{cardinal:c[2],ordinal:c[41]},guw:{cardinal:c[1]},gv:{cardinal:c[16]},ha:{cardinal:c[0]},haw:{cardinal:c[0]},he:{cardinal:c[17]},hi:{cardinal:c[2],ordinal:c[41]},hr:{cardinal:c[7]},hsb:{cardinal:c[11]},hu:{cardinal:c[0],ordinal:c[42]},hy:{cardinal:c[12],ordinal:c[0]},ia:{cardinal:c[4]},io:{cardinal:c[4]},is:{cardinal:c[18]},it:{cardinal:c[4],ordinal:c[43]},iu:{cardinal:c[19]},iw:{cardinal:c[17]},jgo:{cardinal:c[0]},ji:{cardinal:c[4]},jmc:{cardinal:c[0]},ka:{cardinal:c[0],ordinal:c[44]},kab:{cardinal:c[12]},kaj:{cardinal:c[0]},kcg:{cardinal:c[0]},kk:{cardinal:c[0],ordinal:c[45]},kkj:{cardinal:c[0]},kl:{cardinal:c[0]},kn:{cardinal:c[2]},ks:{cardinal:c[0]},ksb:{cardinal:c[0]},ksh:{cardinal:c[20]},ku:{cardinal:c[0]},kw:{cardinal:c[19]},ky:{cardinal:c[0]},lag:{cardinal:c[21]},lb:{cardinal:c[0]},lg:{cardinal:c[0]},ln:{cardinal:c[1]},lt:{cardinal:c[22]},lv:{cardinal:c[23]},mas:{cardinal:c[0]},mg:{cardinal:c[1]},mgo:{cardinal:c[0]},mk:{cardinal:c[24],ordinal:c[46]},ml:{cardinal:c[0]},mn:{cardinal:c[0]},mo:{cardinal:c[25],ordinal:c[0]},mr:{cardinal:c[2],ordinal:c[47]},mt:{cardinal:c[26]},nah:{cardinal:c[0]},naq:{cardinal:c[19]},nb:{cardinal:c[0]},nd:{cardinal:c[0]},ne:{cardinal:c[0],ordinal:c[48]},nl:{cardinal:c[4]},nn:{cardinal:c[0]},nnh:{cardinal:c[0]},no:{cardinal:c[0]},nr:{cardinal:c[0]},nso:{cardinal:c[1]},ny:{cardinal:c[0]},nyn:{cardinal:c[0]},om:{cardinal:c[0]},or:{cardinal:c[0],ordinal:c[49]},os:{cardinal:c[0]},pa:{cardinal:c[1]},pap:{cardinal:c[0]},pl:{cardinal:c[27]},prg:{cardinal:c[23]},ps:{cardinal:c[0]},pt:{cardinal:c[28]},"pt-PT":{cardinal:c[4]},rm:{cardinal:c[0]},ro:{cardinal:c[25],ordinal:c[0]},rof:{cardinal:c[0]},ru:{cardinal:c[29]},rwk:{cardinal:c[0]},saq:{cardinal:c[0]},sc:{cardinal:c[4],ordinal:c[43]},scn:{cardinal:c[4],ordinal:c[43]},sd:{cardinal:c[0]},sdh:{cardinal:c[0]},se:{cardinal:c[19]},seh:{cardinal:c[0]},sh:{cardinal:c[7]},shi:{cardinal:c[30]},si:{cardinal:c[31]},sk:{cardinal:c[8]},sl:{cardinal:c[32]},sma:{cardinal:c[19]},smi:{cardinal:c[19]},smj:{cardinal:c[19]},smn:{cardinal:c[19]},sms:{cardinal:c[19]},sn:{cardinal:c[0]},so:{cardinal:c[0]},sq:{cardinal:c[0],ordinal:c[50]},sr:{cardinal:c[7]},ss:{cardinal:c[0]},ssy:{cardinal:c[0]},st:{cardinal:c[0]},sv:{cardinal:c[4],ordinal:c[51]},sw:{cardinal:c[4]},syr:{cardinal:c[0]},ta:{cardinal:c[0]},te:{cardinal:c[0]},teo:{cardinal:c[0]},ti:{cardinal:c[1]},tig:{cardinal:c[0]},tk:{cardinal:c[0],ordinal:c[52]},tl:{cardinal:c[13],ordinal:c[0]},tn:{cardinal:c[0]},tr:{cardinal:c[0]},ts:{cardinal:c[0]},tzm:{cardinal:c[33]},ug:{cardinal:c[0]},uk:{cardinal:c[29],ordinal:c[53]},ur:{cardinal:c[4]},uz:{cardinal:c[0]},ve:{cardinal:c[0]},vo:{cardinal:c[0]},vun:{cardinal:c[0]},wa:{cardinal:c[1]},wae:{cardinal:c[0]},xh:{cardinal:c[0]},xog:{cardinal:c[0]},yi:{cardinal:c[4]},zu:{cardinal:c[2]},lo:{ordinal:c[0]},ms:{ordinal:c[0]},vi:{ordinal:c[0]}}},function(t,e,n){(function(t){const e=n(3),r=n(11);t.$=r,t.jQuery=r;const i=window.__WRAPPED_IFRAME_ID__;e.isWorker=!1,e.centralDispatchService={postMessage(t,e){const n={vmIframeId:i,message:t};e?window.parent.postMessage(n,"*",e):window.parent.postMessage(n,"*")}},n(22),window.parent.postMessage({vmIframeId:i,ready:!0},"*")}).call(this,n(2))},function(t,e,n){(function(e){const r=n(1),i=()=>{throw new Error("Not implemented")};i.getScript=(t,e)=>{const n=document.createElement("script");n.src=t,e&&(n.onload=()=>e()),document.body.appendChild(n)};let a=0;i.ajax=async(t,n)=>{let o={};t&&n?(o=n,o.url=t):t&&(o=t);const s=(t=>{const e=new URLSearchParams;if(t)for(const n of Object.keys(t))e.set(n,t[n]);return e})(o.data),c=()=>{const t=s.toString();let e=o.url;return t&&(e+="?".concat(t)),e.startsWith("http://")&&(e=e.replace("http://","https://")),e},l=t=>{o.success&&o.success(t)};try{if("jsonp"===o.dataType){const t="_jsonp_callback".concat(a++);e[t]=n=>{delete e[t],l(n)};const n=o.jsonp||"callback";return s.set(n,t),void i.getScript(c())}if("script"===o.dataType)return void i.getScript(c(),l);const t=await fetch(c(),{headers:o.headers});l(await t.json())}catch(t){u=t,r.error(u),o.error&&o.error(u)}var u},t.exports=i}).call(this,n(2))},function(t,e,n){var r=n(13),i=r.enable,a=r.disable,o="undefined"!=typeof navigator&&/chrome/i.test(navigator.userAgent),s=n(16);if(r.defaultBackend=o?s.minilog:s,"undefined"!=typeof window){try{r.enable(JSON.parse(window.localStorage.minilogSettings))}catch(t){}if(window.location&&window.location.search){var c=RegExp("[?&]minilog=([^&]*)").exec(window.location.search);c&&r.enable(decodeURIComponent(c[1]))}}r.enable=function(){i.call(r,!0);try{window.localStorage.minilogSettings=JSON.stringify(!0)}catch(t){}return this},r.disable=function(){a.call(r);try{delete window.localStorage.minilogSettings}catch(t){}return this},(t.exports=r).backends={array:n(19),browser:r.defaultBackend,localStorage:n(20),jQuery:n(21)}},function(t,e,n){var r=n(0),i=n(15),a=new r,o=Array.prototype.slice;(e=t.exports=function(t){var n=function(){return a.write(t,void 0,o.call(arguments)),n};return n.debug=function(){return a.write(t,"debug",o.call(arguments)),n},n.info=function(){return a.write(t,"info",o.call(arguments)),n},n.warn=function(){return a.write(t,"warn",o.call(arguments)),n},n.error=function(){return a.write(t,"error",o.call(arguments)),n},n.log=n.debug,n.suggest=e.suggest,n.format=a.format,n}).defaultBackend=e.defaultFormatter=null,e.pipe=function(t){return a.pipe(t)},e.end=e.unpipe=e.disable=function(t){return a.unpipe(t)},e.Transform=r,e.Filter=i,e.suggest=new i,e.enable=function(){return e.defaultFormatter?a.pipe(e.suggest).pipe(e.defaultFormatter).pipe(e.defaultBackend):a.pipe(e.suggest).pipe(e.defaultBackend)}},function(t,e){function n(){this._events={}}n.prototype={on:function(t,e){this._events||(this._events={});var n=this._events;return(n[t]||(n[t]=[])).push(e),this},removeListener:function(t,e){var n,r=this._events[t]||[];for(n=r.length-1;n>=0&&r[n];n--)r[n]!==e&&r[n].cb!==e||r.splice(n,1)},removeAllListeners:function(t){t?this._events[t]&&(this._events[t]=[]):this._events={}},listeners:function(t){return this._events&&this._events[t]||[]},emit:function(t){this._events||(this._events={});var e,n=Array.prototype.slice.call(arguments,1),r=this._events[t]||[];for(e=r.length-1;e>=0&&r[e];e--)r[e].apply(this,n);return this},when:function(t,e){return this.once(t,e,!0)},once:function(t,e,n){if(!e)return this;function r(){n||this.removeListener(t,r),e.apply(this,arguments)&&n&&this.removeListener(t,r)}return r.cb=e,this.on(t,r),this}},n.mixin=function(t){var e,r=n.prototype;for(e in r)r.hasOwnProperty(e)&&(t.prototype[e]=r[e])},t.exports=n},function(t,e,n){var r=n(0),i={debug:1,info:2,warn:3,error:4};function a(){this.enabled=!0,this.defaultResult=!0,this.clear()}function o(t,e){return t.n.test?t.n.test(e):t.n==e}r.mixin(a),a.prototype.allow=function(t,e){return this._white.push({n:t,l:i[e]}),this},a.prototype.deny=function(t,e){return this._black.push({n:t,l:i[e]}),this},a.prototype.clear=function(){return this._white=[],this._black=[],this},a.prototype.test=function(t,e){var n,r=Math.max(this._white.length,this._black.length);for(n=0;n<r;n++){if(this._white[n]&&o(this._white[n],t)&&i[e]>=this._white[n].l)return!0;if(this._black[n]&&o(this._black[n],t)&&i[e]<=this._black[n].l)return!1}return this.defaultResult},a.prototype.write=function(t,e,n){if(!this.enabled||this.test(t,e))return this.emit("item",t,e,n)},t.exports=a},function(t,e,n){var r=n(0),i=/\n+$/,a=new r;a.write=function(t,e,n){var r=n.length-1;if("undefined"!=typeof console&&console.log){if(console.log.apply)return console.log.apply(console,[t,e].concat(n));if(JSON&&JSON.stringify){n[r]&&"string"==typeof n[r]&&(n[r]=n[r].replace(i,""));try{for(r=0;r<n.length;r++)n[r]=JSON.stringify(n[r])}catch(t){}console.log(n.join(" "))}}},a.formatters=["color","minilog"],a.color=n(17),a.minilog=n(18),t.exports=a},function(t,e,n){var r=n(0),i=n(4),a={debug:["cyan"],info:["purple"],warn:["yellow",!0],error:["red",!0]},o=new r;o.write=function(t,e,n){console.log;console[e]&&console[e].apply&&console[e].apply(console,["%c"+t+" %c"+e,i("gray"),i.apply(i,a[e])].concat(n))},o.pipe=function(){},t.exports=o},function(t,e,n){var r=n(0),i=n(4),a={debug:["gray"],info:["purple"],warn:["yellow",!0],error:["red",!0]},o=new r;o.write=function(t,e,n){var r=console.log;"debug"!=e&&console[e]&&(r=console[e]);var o=0;if("info"!=e){for(;o<n.length&&"string"==typeof n[o];o++);r.apply(console,["%c"+t+" "+n.slice(0,o).join(" "),i.apply(i,a[e])].concat(n.slice(o)))}else r.apply(console,["%c"+t,i.apply(i,a[e])].concat(n))},o.pipe=function(){},t.exports=o},function(t,e,n){var r=n(0),i=[],a=new r;a.write=function(t,e,n){i.push([t,e,n])},a.get=function(){return i},a.empty=function(){i=[]},t.exports=a},function(t,e,n){var r=n(0),i=!1,a=new r;a.write=function(t,e,n){if("undefined"!=typeof window&&"undefined"!=typeof JSON&&JSON.stringify&&JSON.parse)try{i||(i=window.localStorage.minilog?JSON.parse(window.localStorage.minilog):[]),i.push([(new Date).toString(),t,e,n]),window.localStorage.minilog=JSON.stringify(i)}catch(t){}},t.exports=a},function(t,e,n){var r=n(0),i=(new Date).valueOf().toString(36);function a(t){this.url=t.url||"",this.cache=[],this.timer=null,this.interval=t.interval||3e4,this.enabled=!0,this.jQuery=window.jQuery,this.extras={}}r.mixin(a),a.prototype.write=function(t,e,n){this.timer||this.init(),this.cache.push([t,e].concat(n))},a.prototype.init=function(){if(this.enabled&&this.jQuery){var t=this;this.timer=setTimeout((function(){var e,n,r=[],a=t.url;if(0==t.cache.length)return t.init();for(e=0;e<t.cache.length;e++)try{JSON.stringify(t.cache[e]),r.push(t.cache[e])}catch(t){}t.jQuery.isEmptyObject(t.extras)?(n=JSON.stringify({logs:r}),a=t.url+"?client_id="+i):n=JSON.stringify(t.jQuery.extend({logs:r},t.extras)),t.jQuery.ajax(a,{type:"POST",cache:!1,processData:!1,data:n,contentType:"application/json",timeout:1e4}).success((function(e,n,r){e.interval&&(t.interval=Math.max(1e3,e.interval))})).error((function(){t.interval=3e4})).always((function(){t.init()})),t.cache=[]}),this.interval)}},a.prototype.end=function(){},a.jQueryWait=function(t){if("undefined"!=typeof window&&(window.jQuery||window.$))return t(window.jQuery||window.$);"undefined"!=typeof window&&setTimeout((function(){a.jQueryWait(t)}),200)},t.exports=a},function(t,e,n){(function(t){const e=n(23),r=n(27),i=n(1),{isWorker:a}=n(3),o=n(29)(null);t.Scratch=t.Scratch||{},Object.assign(t.Scratch,e,{canFetch:()=>Promise.resolve(!0),fetch:function(t){function e(e,n){return t.apply(this,arguments)}return e.toString=function(){return t.toString()},e}((t,e)=>fetch(t,e)),canOpenWindow:()=>Promise.resolve(!1),openWindow:()=>Promise.reject(new Error("Scratch.openWindow not supported in sandboxed extensions")),canRedirect:()=>Promise.resolve(!1),redirect:()=>Promise.reject(new Error("Scratch.redirect not supported in sandboxed extensions")),canRecordAudio:()=>Promise.resolve(!1),canRecordVideo:()=>Promise.resolve(!1),canReadClipboard:()=>Promise.resolve(!1),canNotify:()=>Promise.resolve(!1),translate:o});const s=new class{constructor(){this.nextExtensionId=0,this.initialRegistrations=[],this.firstRegistrationPromise=new Promise(t=>{this.firstRegistrationCallback=t}),r.waitForConnection.then(()=>{r.call("extensions","allocateWorker").then(async t=>{const[e,n]=t;this.workerId=e;try{await(t=>{if("undefined"==typeof webpackJsonp){let e=["coreExample","lazyAudio","canvas","yun","js","jsonfetch","astar","three","box2d","ws","community","community2","yx","set","pen","wedo2","music","microbit","text2speech","translate","videoSensing","ev3","makeymakey","boost","gdxfor","tc","touch","tw","other","p3d","text"];"object"==typeof t||-1!==e.indexOf(t)||t.startsWith("blob:")||t.startsWith("http")||(t="https://newsccode-1302921490.cos.ap-shanghai.myqcloud.com/ext/"+t+".js")}if(!a)return new Promise((e,n)=>{const r=document.createElement("script");r.onload=()=>e(),r.onerror=()=>{n(new Error("Error in sandboxed script: ".concat(t,". Check the console for more information.")))},"object"==typeof t?r.innerText=t.data:r.src=t,document.body.appendChild(r)});importScripts(t)})(n),await this.firstRegistrationPromise;const t=this.initialRegistrations;this.initialRegistrations=null,Promise.all(t).then(()=>r.call("extensions","onWorkerInit",e))}catch(t){i.error(t),r.call("extensions","onWorkerInit",e,"".concat(t))}})}),this.extensions=[]}register(t){const e=this.nextExtensionId++;this.extensions.push(t);const n="extension.".concat(this.workerId,".").concat(e),i=r.setService(n,t).then(()=>r.call("extensions","registerExtensionService",n));return this.initialRegistrations&&(this.firstRegistrationCallback(),this.initialRegistrations.push(i)),i}};t.Scratch.extensions={register:s.register.bind(s)},t.ScratchExtensions=n(33)}).call(this,n(2))},function(t,e,n){const r={ArgumentType:n(5),BlockType:n(6),TargetType:n(24),Cast:n(25)};t.exports=r},function(t,e){t.exports={SPRITE:"sprite",STAGE:"stage"}},function(t,e,n){const r=n(26),i=t=>{if("string"!=typeof t)return!1;for(let e=0;e<t.length;e++){const n=t.charCodeAt(e);if(48===n||9===n)return!1}return!0};class a{static toNumber(t){if("number"==typeof t)return Number.isNaN(t)?0:t;const e=Number(t);return Number.isNaN(e)?0:e}static toBoolean(t){return"boolean"==typeof t?t:"string"==typeof t?""!==t&&"0"!==t&&"false"!==t.toLowerCase():Boolean(t)}static toString(t){return String(t)}static toRgbColorList(t){const e=a.toRgbColorObject(t);return[e.r,e.g,e.b]}static toRgbColorObject(t){let e;return"string"==typeof t&&"#"===t.substring(0,1)?(e=r.hexToRgb(t),e||(e={r:0,g:0,b:0,a:255})):e=r.decimalToRgb(a.toNumber(t)),e}static isWhiteSpace(t){return null===t||"string"==typeof t&&0===t.trim().length}static compare(t,e){let n=Number(t),r=Number(e);if(0===n&&i(t)?n=NaN:0===r&&i(e)&&(r=NaN),isNaN(n)||isNaN(r)){const n=String(t).toLowerCase(),r=String(e).toLowerCase();return n<r?-1:n>r?1:0}return n===1/0&&r===1/0||n===-1/0&&r===-1/0?0:n-r}static isInt(t){return"number"==typeof t?!!isNaN(t)||t===Math.floor(t):"boolean"==typeof t||"string"==typeof t&&t.indexOf(".")<0}static get LIST_INVALID(){return"INVALID"}static get LIST_ALL(){return"ALL"}static toListIndex(t,e,n){if("number"!=typeof t){if("all"===t)return n?a.LIST_ALL:a.LIST_INVALID;if("last"===t)return e>0?e:a.LIST_INVALID;if("random"===t||"any"===t)return e>0?1+Math.floor(Math.random()*e):a.LIST_INVALID}return(t=Math.floor(a.toNumber(t)))<1||t>e?a.LIST_INVALID:t}}t.exports=a},function(t,e){class n{static get RGB_BLACK(){return{r:0,g:0,b:0}}static get RGB_WHITE(){return{r:255,g:255,b:255}}static decimalToHex(t){t<0&&(t+=16777216);let e=Number(t).toString(16);return e="#".concat("000000".substr(0,6-e.length)).concat(e),e}static decimalToRgb(t){const e=t>>24&255;return{r:t>>16&255,g:t>>8&255,b:255&t,a:e>0?e:255}}static hexToRgb(t){t.startsWith("#")&&(t=t.substring(1));const e=parseInt(t,16);if(isNaN(e))return null;if(6===t.length)return{r:e>>16&255,g:e>>8&255,b:255&e};if(3===t.length){const t=e>>8&15,n=e>>4&15,r=15&e;return{r:t<<4|t,g:n<<4|n,b:r<<4|r}}return null}static rgbToHex(t){return n.decimalToHex(n.rgbToDecimal(t))}static rgbToDecimal(t){return(t.r<<16)+(t.g<<8)+t.b}static hexToDecimal(t){return n.rgbToDecimal(n.hexToRgb(t))}static hsvToRgb(t){let e=t.h%360;e<0&&(e+=360);const n=Math.max(0,Math.min(t.s,1)),r=Math.max(0,Math.min(t.v,1)),i=Math.floor(e/60),a=e/60-i,o=r*(1-n),s=r*(1-n*a),c=r*(1-n*(1-a));let l,u,d;switch(i){default:case 0:l=r,u=c,d=o;break;case 1:l=s,u=r,d=o;break;case 2:l=o,u=r,d=c;break;case 3:l=o,u=s,d=r;break;case 4:l=c,u=o,d=r;break;case 5:l=r,u=o,d=s}return{r:Math.floor(255*l),g:Math.floor(255*u),b:Math.floor(255*d)}}static rgbToHsv(t){const e=t.r/255,n=t.g/255,r=t.b/255,i=Math.min(Math.min(e,n),r),a=Math.max(Math.max(e,n),r);let o=0,s=0;if(i!==a){o=60*((e===i?3:n===i?5:1)-(e===i?n-r:n===i?r-e:e-n)/(a-i))%360,s=(a-i)/a}return{h:o,s:s,v:a}}static mixRgb(t,e,n){if(n<=0)return t;if(n>=1)return e;const r=1-n;return{r:r*t.r+n*e.r,g:r*t.g+n*e.g,b:r*t.b+n*e.b}}}t.exports=n},function(t,e,n){const r=n(28),i=n(1),{centralDispatchService:a}=n(3);t.exports=new class extends r{constructor(){super(),this._connectionPromise=new Promise(t=>{this._onConnect=t}),this.services={},this._onMessage=this._onMessage.bind(this,a),"undefined"!=typeof self&&(self.onmessage=this._onMessage)}get waitForConnection(){return this._connectionPromise}setService(t,e){return this.services.hasOwnProperty(t)&&i.warn("Worker dispatch replacing existing service provider for ".concat(t)),this.services[t]=e,this.waitForConnection.then(()=>this._remoteCall(a,"dispatch","setService",t))}_getServiceProvider(t){const e=this.services[t];return{provider:e||a,isRemote:!e}}_onDispatchMessage(t,e){let n;switch(e.method){case"handshake":n=this._onConnect();break;case"terminate":setTimeout(()=>self.close(),0),n=Promise.resolve();break;default:i.error("Worker dispatch received message for unknown method: ".concat(e.method))}return n}}},function(t,e,n){const r=n(1);t.exports=class{constructor(){this.callbacks=[],this.nextResponseId=0}call(t,e,...n){return this.transferCall(t,e,null,...n)}transferCall(t,e,n,...r){try{const{provider:i,isRemote:a}=this._getServiceProvider(t);if(i){if(a)return this._remoteTransferCall(i,t,e,n,...r);const o=i[e].apply(i,r);return Promise.resolve(o)}return Promise.reject(new Error("Service not found: ".concat(t)))}catch(t){return Promise.reject(t)}}_isRemoteService(t){return this._getServiceProvider(t).isRemote}_remoteCall(t,e,n,...r){return this._remoteTransferCall(t,e,n,null,...r)}_remoteTransferCall(t,e,n,r,...i){return new Promise((a,o)=>{const s=this._storeCallbacks(a,o);i.length>0&&"function"==typeof i[i.length-1].func&&(i.pop(),i.pop()),r?t.postMessage({service:e,method:n,responseId:s,args:i},r):t.postMessage({service:e,method:n,responseId:s,args:i})})}_storeCallbacks(t,e){const n=this.nextResponseId++;return this.callbacks[n]=[t,e],n}_deliverResponse(t,e){try{const[n,r]=this.callbacks[t];delete this.callbacks[t],e.error?r(e.error):n(e.result)}catch(t){r.error("Dispatch callback failed: ".concat(t))}}_onMessage(t,e){const n=e.data;let i;n.args=n.args||[],n.service?i="dispatch"===n.service?this._onDispatchMessage(t,n):this.call(n.service,n.method,...n.args):void 0===n.responseId?r.error("Dispatch caught malformed message from a worker: ".concat(JSON.stringify(e))):this._deliverResponse(n.responseId,n),i&&(void 0===n.responseId?r.error("Dispatch message missing required response ID: ".concat(JSON.stringify(e))):i.then(e=>t.postMessage({responseId:n.responseId,result:e}),e=>t.postMessage({responseId:n.responseId,error:"".concat(e)})))}_getServiceProvider(t){throw new Error("Could not get provider for ".concat(t,": _getServiceProvider not implemented"))}_onDispatchMessage(t,e){throw new Error("Unimplemented dispatch message handler cannot handle ".concat(e.method," method"))}}},function(t,e,n){const r=n(30);t.exports=t=>{const e=r.namespace(),n=(t,n)=>{if(t&&"object"==typeof t);else{if("string"!=typeof t)throw new Error("unsupported data type in translate()");t={default:t}}return e(t,n)},i=t=>"_".concat(t);let a={};return n.setup=n=>{n&&(a=n),e.setup({locale:t?t.getLocale():"undefined"!=typeof navigator?navigator.language:"en",missingTranslation:"ignore",generateId:i,translations:a})},n.setup({}),t&&t.on("LOCALE_CHANGED",()=>{n.setup(null)}),n}},function(t,e,n){"use strict";var r=n(31),i=n(32),a=n(9),o=n(8),s=n(7);function c(t,e){return Object.keys(e).forEach((function(n){t[n]=e[n]})),t}t.exports=function t(){var e=c({},s),n="en",l={},u=function(t){return t},d=null,f="warning",h={};function p(t,e,a){var o="string"==typeof t?t:t.default,s=y(o,"object"==typeof t&&t.id||u(o),a||n);return(s.format||(s.format=i(r(s.message),a||n,h)))(e)}p.rich=function(t,e,a){var o="string"==typeof t?t:t.default,s=y(o,"object"==typeof t&&t.id||u(o),a||n);return(s.toParts||(s.toParts=i.toParts(r(s.message,{tagsType:m}),a||n,h)))(e)};var m="<>";function g(t,e){var n=t[2];return function(t,e){var r="object"==typeof n?function(t,e){return Object.keys(t).reduce((function(n,r){return n[r]=t[r](e),n}),{})}(n,e):n;return"function"==typeof t?t(r):t}}function y(t,e,n){var r=o(n,l)||"en",i=l[r]||(l[r]={}),a=i[e];if("string"==typeof a&&(a=i[e]={message:a}),!a){var s='Translation for "'+e+'" in "'+r+'" is missing';if("warning"===f)"undefined"!=typeof console&&console.warn(s);else if("ignore"!==f)throw new Error(s);var c="function"==typeof d?d(t,e,r)||t:d||t;a=i[e]={message:c}}return a}function v(t,e,r,i,s){"object"==typeof r&&"object"!=typeof i&&(s=i,i=r,r=0);var c=o(s||n,a),l=c&&a[c][t]||b;return i["="+ +e]||i[l(e-r)]||i.other}function b(){return"other"}return h[m]=g,p.setup=function(t){return(t=t||{}).locale&&(n=t.locale),"translations"in t&&(l=t.translations||{}),t.generateId&&(u=t.generateId),"missingReplacement"in t&&(d=t.missingReplacement),t.missingTranslation&&(f=t.missingTranslation),t.formats&&(t.formats.number&&c(e.number,t.formats.number),t.formats.date&&c(e.date,t.formats.date),t.formats.time&&c(e.time,t.formats.time)),t.types&&((h=t.types)[m]=g),{locale:n,translations:l,generateId:u,missingReplacement:d,missingTranslation:f,formats:e,types:h}},p.number=function(t,r,i){var a=r&&e.number[r]||e.parseNumberPattern(r)||e.number.default;return new Intl.NumberFormat(i||n,a).format(t)},p.date=function(t,r,i){var a=r&&e.date[r]||e.parseDatePattern(r)||e.date.default;return new Intl.DateTimeFormat(i||n,a).format(t)},p.time=function(t,r,i){var a=r&&e.time[r]||e.parseDatePattern(r)||e.time.default;return new Intl.DateTimeFormat(i||n,a).format(t)},p.select=function(t,e){return e[t]||e.other},p.custom=function(t,e,n,r){return t[1]in h?h[t[1]](t,e)(n,r):n},p.plural=v.bind(null,"cardinal"),p.selectordinal=v.bind(null,"ordinal"),p.namespace=t,p}()},function(t,e,n){"use strict";var r=["number","date","time","ordinal","duration","spellout"],i=["plural","select","selectordinal"];function a(t,e){var n=t.pattern,r=n.length,i=[],a=t.index,s=o(t,e);for(s&&i.push(s),s&&t.tokens&&t.tokens.push(["text",n.slice(a,t.index)]);t.index<r;){if("}"===n[t.index]){if(!e)throw p(t);break}if(e&&t.tagsType&&"</"===n.slice(t.index,t.index+"</".length))break;i.push(l(t)),a=t.index,(s=o(t,e))&&i.push(s),s&&t.tokens&&t.tokens.push(["text",n.slice(a,t.index)])}return i}function o(t,e){for(var n=t.pattern,r=n.length,i="plural"===e||"selectordinal"===e,a=!!t.tagsType,o="{style}"===e,c="";t.index<r;){var l=n[t.index];if("{"===l||"}"===l||i&&"#"===l||a&&"<"===l||o&&s(l.charCodeAt(0)))break;if("'"===l)if("'"===(l=n[++t.index]))c+=l,++t.index;else if("{"===l||"}"===l||i&&"#"===l||a&&"<"===l||o)for(c+=l;++t.index<r;)if("'"===(l=n[t.index])&&"'"===n[t.index+1])c+="'",++t.index;else{if("'"===l){++t.index;break}c+=l}else c+="'";else c+=l,++t.index}return c}function s(t){return t>=9&&t<=13||32===t||133===t||160===t||6158===t||t>=8192&&t<=8205||8232===t||8233===t||8239===t||8287===t||8288===t||12288===t||65279===t}function c(t){for(var e=t.pattern,n=e.length,r=t.index;t.index<n&&s(e.charCodeAt(t.index));)++t.index;r<t.index&&t.tokens&&t.tokens.push(["space",t.pattern.slice(r,t.index)])}function l(t){var e=t.pattern;if("#"===e[t.index])return t.tokens&&t.tokens.push(["syntax","#"]),++t.index,["#"];var n=function(t){var e=t.tagsType;if(!e||"<"!==t.pattern[t.index])return;if("</"===t.pattern.slice(t.index,t.index+"</".length))throw p(t,null,"closing tag without matching opening tag");t.tokens&&t.tokens.push(["syntax","<"]);++t.index;var n=u(t,!0);if(!n)throw p(t,"placeholder id");t.tokens&&t.tokens.push(["id",n]);if(c(t),"/>"===t.pattern.slice(t.index,t.index+"/>".length))return t.tokens&&t.tokens.push(["syntax","/>"]),t.index+="/>".length,[n,e];if(">"!==t.pattern[t.index])throw p(t,">");t.tokens&&t.tokens.push(["syntax",">"]);++t.index;var r=a(t,e),i=t.index;if("</"!==t.pattern.slice(t.index,t.index+"</".length))throw p(t,"</"+n+">");t.tokens&&t.tokens.push(["syntax","</"]);t.index+="</".length;var o=u(t,!0);o&&t.tokens&&t.tokens.push(["id",o]);if(n!==o)throw t.index=i,p(t,"</"+n+">","</"+o+">");if(c(t),">"!==t.pattern[t.index])throw p(t,">");t.tokens&&t.tokens.push(["syntax",">"]);return++t.index,[n,e,{children:r}]}(t);if(n)return n;if("{"!==e[t.index])throw p(t,"{");t.tokens&&t.tokens.push(["syntax","{"]),++t.index,c(t);var i=u(t);if(!i)throw p(t,"placeholder id");t.tokens&&t.tokens.push(["id",i]),c(t);var o=e[t.index];if("}"===o)return t.tokens&&t.tokens.push(["syntax","}"]),++t.index,[i];if(","!==o)throw p(t,", or }");t.tokens&&t.tokens.push(["syntax",","]),++t.index,c(t);var s,l=u(t);if(!l)throw p(t,"placeholder type");if(t.tokens&&t.tokens.push(["type",l]),c(t),"}"===(o=e[t.index])){if(t.tokens&&t.tokens.push(["syntax","}"]),"plural"===l||"selectordinal"===l||"select"===l)throw p(t,l+" sub-messages");return++t.index,[i,l]}if(","!==o)throw p(t,", or }");if(t.tokens&&t.tokens.push(["syntax",","]),++t.index,c(t),"plural"===l||"selectordinal"===l){var h=function(t){var e=t.pattern,n=e.length,r=0;if("offset:"===e.slice(t.index,t.index+"offset:".length)){t.tokens&&t.tokens.push(["offset","offset"],["syntax",":"]),t.index+="offset:".length,c(t);for(var i=t.index;t.index<n&&((a=e.charCodeAt(t.index))>=48&&a<=57);)++t.index;if(i===t.index)throw p(t,"offset number");t.tokens&&t.tokens.push(["number",e.slice(i,t.index)]),r=+e.slice(i,t.index)}var a;return r}(t);c(t),s=[i,l,h,f(t,l)]}else if("select"===l)s=[i,l,f(t,l)];else if(r.indexOf(l)>=0)s=[i,l,d(t)];else{var m=t.index,g=d(t);c(t),"{"===e[t.index]&&(t.index=m,g=f(t,l)),s=[i,l,g]}if(c(t),"}"!==e[t.index])throw p(t,"}");return t.tokens&&t.tokens.push(["syntax","}"]),++t.index,s}function u(t,e){for(var n=t.pattern,r=n.length,i="";t.index<r;){var a=n[t.index];if("{"===a||"}"===a||","===a||"#"===a||"'"===a||s(a.charCodeAt(0))||e&&("<"===a||">"===a||"/"===a))break;i+=a,++t.index}return i}function d(t){var e=t.index,n=o(t,"{style}");if(!n)throw p(t,"placeholder style name");return t.tokens&&t.tokens.push(["style",t.pattern.slice(e,t.index)]),n}function f(t,e){for(var n=t.pattern,r=n.length,a={};t.index<r&&"}"!==n[t.index];){var o=u(t);if(!o)throw p(t,"sub-message selector");t.tokens&&t.tokens.push(["selector",o]),c(t),a[o]=h(t,e),c(t)}if(!a.other&&i.indexOf(e)>=0)throw p(t,null,null,'"other" sub-message must be specified in '+e);return a}function h(t,e){if("{"!==t.pattern[t.index])throw p(t,"{ to start sub-message");t.tokens&&t.tokens.push(["syntax","{"]),++t.index;var n=a(t,e);if("}"!==t.pattern[t.index])throw p(t,"} to end sub-message");return t.tokens&&t.tokens.push(["syntax","}"]),++t.index,n}function p(t,e,n,r){var i=t.pattern,a=i.slice(0,t.index).split(/\r?\n/),o=t.index,s=a.length,c=a.slice(-1)[0].length;return n=n||(t.index>=i.length?"end of message pattern":u(t)||i[t.index]),r||(r=function(t,e){return t?"Expected "+t+" but found "+e:"Unexpected "+e+" found"}(e,n)),new m(r+=" in "+i.replace(/\r?\n/g,"\n"),e,n,o,s,c)}function m(t,e,n,r,i,a){Error.call(this,t),this.name="SyntaxError",this.message=t,this.expected=e,this.found=n,this.offset=r,this.line=i,this.column=a}e=t.exports=function(t,e){return a({pattern:String(t),index:0,tagsType:e&&e.tagsType||null,tokens:e&&e.tokens||null},"")},m.prototype=Object.create(Error.prototype),e.SyntaxError=m},function(t,e,n){"use strict";var r=n(7),i=n(8),a=n(9);function o(t,e,n,r,i){var a=t.map((function(t){return function(t,e,n,r,i){if("string"==typeof t){var a=t;return function(){return a}}var c,l=t[0],u=t[1];if(e&&"#"===t[0]){l=e[0];var d=e[2],h=(r.number||f.number)([l,"number"],n);return function(t){return h(s(l,t)-d,t)}}"plural"===u||"selectordinal"===u?(c={},Object.keys(t[3]).forEach((function(e){c[e]=o(t[3][e],t,n,r,i)})),t=[t[0],t[1],t[2],c]):t[2]&&"object"==typeof t[2]&&(c={},Object.keys(t[2]).forEach((function(e){c[e]=o(t[2][e],t,n,r,i)})),t=[t[0],t[1],c]);var p=u&&(r[u]||f[u]);if(p){var m=p(t,n);return function(t){return m(s(l,t),t)}}return i?function(t){return String(s(l,t))}:function(t){return s(l,t)}}(t,e,n,r,i)}));return i?1===a.length?a[0]:function(t){for(var e="",n=0;n<a.length;++n)e+=a[n](t);return e}:function(t){return a.reduce((function(e,n){return e.concat(n(t))}),[])}}function s(t,e){if(e&&t in e)return e[t];for(var n=t.split("."),r=e,i=0,a=n.length;r&&i<a;++i)r=r[n[i]];return r}function c(t,e){var n=t[2],i=r.number[n]||r.parseNumberPattern(n)||r.number.default;return new Intl.NumberFormat(e,i).format}function l(t,e){var n=t[1],i=t[2],a=r[n][i]||r.parseDatePattern(i)||r[n].default;return new Intl.DateTimeFormat(e,a).format}function u(t,e){var n,r="selectordinal"===t[1]?"ordinal":"cardinal",o=t[2],s=t[3];if(Intl.PluralRules&&Intl.PluralRules.supportedLocalesOf(e).length>0)n=new Intl.PluralRules(e,{type:r});else{var c=i(e,a),l=c&&a[c][r]||d;n={select:l}}return function(t,e){return(s["="+ +t]||s[n.select(t-o)]||s.other)(e)}}function d(){return"other"}(e=t.exports=function(t,e,n){return o(t,null,e||"en",n||{},!0)}).toParts=function(t,e,n){return o(t,null,e||"en",n||{},!1)};var f={number:c,ordinal:c,spellout:c,duration:function(t,e){var n=t[2],i=r.duration[n]||r.duration.default,a=new Intl.NumberFormat(e,i.seconds).format,o=new Intl.NumberFormat(e,i.minutes).format,s=new Intl.NumberFormat(e,i.hours).format,c=/^fi$|^fi-|^da/.test(String(e))?".":":";return function(t,e){if(t=+t,!isFinite(t))return a(t);var n=~~(t/60/60),r=~~(t/60%60),i=(n?s(Math.abs(n))+c:"")+o(Math.abs(r))+c+a(Math.abs(t%60));return t<0?s(-1).replace(s(1),i):i}},date:l,time:l,plural:u,selectordinal:u,select:function(t,e){var n=t[2];return function(t,e){return(n[t]||n.other)(e)}}};e.types=f},function(t,e,n){const r=n(5),i=n(6),{argumentIndexToId:a,generateExtensionId:o}=n(34),s=t=>{if(""===t||" "===t||"w"===t)return{type:i.COMMAND,async:"w"===t};if("r"===t||"R"===t)return{type:i.REPORTER,async:"R"===t};if("b"===t)return{type:i.BOOLEAN,async:!1};if("h"===t)return{type:i.HAT,async:!1};throw new Error("Unknown ScratchX block type: ".concat(t))},c=(t,e)=>{const n={},i="string"==typeof(a=e)||"number"==typeof a||"boolean"==typeof a;var a;if(i&&(n.defaultValue=e),"s"===t)n.type=r.STRING,i||(n.defaultValue="");else if("n"===t)n.type=r.NUMBER,i||(n.defaultValue=0);else{if("m"!==t[0])throw new Error("Unknown ScratchX argument type: ".concat(t));{n.type=r.STRING;const e=t.split(/\.|:/)[1];n.menu=e}}return n},l=(t,e,n)=>r=>{const i=[];for(let t=0;t<e;t++)i.push(r[a(t)]);return n?new Promise(e=>{t(...i,e)}):t(...i)},u=(t,e,n)=>{const r={id:o(t),name:e.displayName||t,blocks:[],color1:"#4a4a5e",color2:"#31323f",color3:"#191a21"},i={getInfo:()=>r,_getStatus:n._getStatus};e.url&&(r.docsURI=e.url);for(const t of e.blocks){if(1===t.length){r.blocks.push("---");continue}const e=t[0],o=t[1],u=t[2],d=t.slice(3);let f="";const h=[],p=o.split(/%([\w.:]+)/g);for(let t=0;t<p.length;t++){const e=p[t];if(t%2==1){c(e);const n=Math.floor(t/2).toString(),r=d[n],i=a(n);h[i]=c(e,r),f+="[".concat(i,"]")}else f+=e}const m=s(e),g={opcode:u,blockType:m.type,text:f,arguments:h};r.blocks.push(g);const y=n[u],v=h.length;i[u]=l(y,v,m.async)}const u=e.menus;if(u){const t={};for(const e of Object.keys(u)||{}){const n={items:u[e]};t[e]=n}r.menus=t}return i},d=new Map;t.exports={register:(t,e,n)=>{const r=u(t,e,n);d.set(t,r),Scratch.extensions.register(r)},getStatus:t=>{const e=d.get(t);return e?e._getStatus():{status:0,msg:"does not exist"}},convert:u}},function(t,e){t.exports={generateExtensionId:t=>{const e=t.replace(/[^a-z0-9]/gi,"").toLowerCase();return"sbx".concat(e)},argumentIndexToId:t=>t.toString()}}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./node_modules/babel-loader/lib/index.js?!./node_modules/scratch-vm/src/extension-support/tw-iframe-extension-worker-entry.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/scratch-vm/src/extension-support/tw-iframe-extension-worker-entry.js":
+/*!***********************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4!./node_modules/scratch-vm/src/extension-support/tw-iframe-extension-worker-entry.js ***!
+  \***********************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {const context = __webpack_require__(/*! ./tw-extension-worker-context */ "./node_modules/scratch-vm/src/extension-support/tw-extension-worker-context.js");
+
+const jQuery = __webpack_require__(/*! ./tw-jquery-shim */ "./node_modules/scratch-vm/src/extension-support/tw-jquery-shim.js");
+
+global.$ = jQuery;
+global.jQuery = jQuery;
+const id = window.__WRAPPED_IFRAME_ID__;
+context.isWorker = false;
+context.centralDispatchService = {
+  postMessage(message, transfer) {
+    const data = {
+      vmIframeId: id,
+      message
+    };
+
+    if (transfer) {
+      window.parent.postMessage(data, '*', transfer);
+    } else {
+      window.parent.postMessage(data, '*');
+    }
+  }
+
+};
+
+__webpack_require__(/*! ./extension-worker */ "./node_modules/scratch-vm/src/extension-support/extension-worker.js");
+
+window.parent.postMessage({
+  vmIframeId: id,
+  ready: true
+}, '*');
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/node_modules/format-message-formats/index.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/format-message-formats/index.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// @flow
+var LONG = 'long'
+var SHORT = 'short'
+var NARROW = 'narrow'
+var NUMERIC = 'numeric'
+var TWODIGIT = '2-digit'
+
+/**
+ * formatting information
+ **/
+module.exports = {
+  number: {
+    decimal: {
+      style: 'decimal'
+    },
+    integer: {
+      style: 'decimal',
+      maximumFractionDigits: 0
+    },
+    currency: {
+      style: 'currency',
+      currency: 'USD'
+    },
+    percent: {
+      style: 'percent'
+    },
+    default: {
+      style: 'decimal'
+    }
+  },
+  date: {
+    short: {
+      month: NUMERIC,
+      day: NUMERIC,
+      year: TWODIGIT
+    },
+    medium: {
+      month: SHORT,
+      day: NUMERIC,
+      year: NUMERIC
+    },
+    long: {
+      month: LONG,
+      day: NUMERIC,
+      year: NUMERIC
+    },
+    full: {
+      month: LONG,
+      day: NUMERIC,
+      year: NUMERIC,
+      weekday: LONG
+    },
+    default: {
+      month: SHORT,
+      day: NUMERIC,
+      year: NUMERIC
+    }
+  },
+  time: {
+    short: {
+      hour: NUMERIC,
+      minute: NUMERIC
+    },
+    medium: {
+      hour: NUMERIC,
+      minute: NUMERIC,
+      second: NUMERIC
+    },
+    long: {
+      hour: NUMERIC,
+      minute: NUMERIC,
+      second: NUMERIC,
+      timeZoneName: SHORT
+    },
+    full: {
+      hour: NUMERIC,
+      minute: NUMERIC,
+      second: NUMERIC,
+      timeZoneName: SHORT
+    },
+    default: {
+      hour: NUMERIC,
+      minute: NUMERIC,
+      second: NUMERIC
+    }
+  },
+  duration: {
+    default: {
+      hours: {
+        minimumIntegerDigits: 1,
+        maximumFractionDigits: 0
+      },
+      minutes: {
+        minimumIntegerDigits: 2,
+        maximumFractionDigits: 0
+      },
+      seconds: {
+        minimumIntegerDigits: 2,
+        maximumFractionDigits: 3
+      }
+    }
+  },
+  parseNumberPattern: function (pattern/*: ?string */) {
+    if (!pattern) return
+    var options = {}
+    var currency = pattern.match(/\b[A-Z]{3}\b/i)
+    var syms = pattern.replace(/[^¤]/g, '').length
+    if (!syms && currency) syms = 1
+    if (syms) {
+      options.style = 'currency'
+      options.currencyDisplay = syms === 1 ? 'symbol' : syms === 2 ? 'code' : 'name'
+      options.currency = currency ? currency[0].toUpperCase() : 'USD'
+    } else if (pattern.indexOf('%') >= 0) {
+      options.style = 'percent'
+    }
+    if (!/[@#0]/.test(pattern)) return options.style ? options : undefined
+    options.useGrouping = pattern.indexOf(',') >= 0
+    if (/E\+?[@#0]+/i.test(pattern) || pattern.indexOf('@') >= 0) {
+      var size = pattern.replace(/E\+?[@#0]+|[^@#0]/gi, '')
+      options.minimumSignificantDigits = Math.min(Math.max(size.replace(/[^@0]/g, '').length, 1), 21)
+      options.maximumSignificantDigits = Math.min(Math.max(size.length, 1), 21)
+    } else {
+      var parts = pattern.replace(/[^#0.]/g, '').split('.')
+      var integer = parts[0]
+      var n = integer.length - 1
+      while (integer[n] === '0') --n
+      options.minimumIntegerDigits = Math.min(Math.max(integer.length - 1 - n, 1), 21)
+      var fraction = parts[1] || ''
+      n = 0
+      while (fraction[n] === '0') ++n
+      options.minimumFractionDigits = Math.min(Math.max(n, 0), 20)
+      while (fraction[n] === '#') ++n
+      options.maximumFractionDigits = Math.min(Math.max(n, 0), 20)
+    }
+    return options
+  },
+  parseDatePattern: function (pattern/*: ?string */) {
+    if (!pattern) return
+    var options = {}
+    for (var i = 0; i < pattern.length;) {
+      var current = pattern[i]
+      var n = 1
+      while (pattern[++i] === current) ++n
+      switch (current) {
+        case 'G':
+          options.era = n === 5 ? NARROW : n === 4 ? LONG : SHORT
+          break
+        case 'y':
+        case 'Y':
+          options.year = n === 2 ? TWODIGIT : NUMERIC
+          break
+        case 'M':
+        case 'L':
+          n = Math.min(Math.max(n - 1, 0), 4)
+          options.month = [NUMERIC, TWODIGIT, SHORT, LONG, NARROW][n]
+          break
+        case 'E':
+        case 'e':
+        case 'c':
+          options.weekday = n === 5 ? NARROW : n === 4 ? LONG : SHORT
+          break
+        case 'd':
+        case 'D':
+          options.day = n === 2 ? TWODIGIT : NUMERIC
+          break
+        case 'h':
+        case 'K':
+          options.hour12 = true
+          options.hour = n === 2 ? TWODIGIT : NUMERIC
+          break
+        case 'H':
+        case 'k':
+          options.hour12 = false
+          options.hour = n === 2 ? TWODIGIT : NUMERIC
+          break
+        case 'm':
+          options.minute = n === 2 ? TWODIGIT : NUMERIC
+          break
+        case 's':
+        case 'S':
+          options.second = n === 2 ? TWODIGIT : NUMERIC
+          break
+        case 'z':
+        case 'Z':
+        case 'v':
+        case 'V':
+          options.timeZoneName = n === 1 ? SHORT : LONG
+          break
+      }
+    }
+    return Object.keys(options).length ? options : undefined
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/node_modules/format-message-interpret/index.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/format-message-interpret/index.js ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// @flow
+
+var formats = __webpack_require__(/*! format-message-formats */ "./node_modules/scratch-vm/node_modules/format-message-formats/index.js")
+var lookupClosestLocale = __webpack_require__(/*! lookup-closest-locale */ "./node_modules/scratch-vm/node_modules/lookup-closest-locale/index.js")
+var plurals = __webpack_require__(/*! ./plurals */ "./node_modules/scratch-vm/node_modules/format-message-interpret/plurals.js")
+
+/*::
+import type {
+  AST,
+  SubMessages
+} from '../format-message-parse'
+type Locale = string
+type Locales = Locale | Locale[]
+type Placeholder = any[] // https://github.com/facebook/flow/issues/4050
+export type Type = (Placeholder, Locales) => (any, ?Object) => any
+export type Types = { [string]: Type }
+*/
+
+exports = module.exports = function interpret (
+  ast/*: AST */,
+  locale/*:: ?: Locales */,
+  types/*:: ?: Types */
+)/*: (args?: Object) => string */ {
+  return interpretAST(ast, null, locale || 'en', types || {}, true)
+}
+
+exports.toParts = function toParts (
+  ast/*: AST */,
+  locale/*:: ?: Locales */,
+  types/*:: ?: Types */
+)/*: (args?: Object) => any[] */ {
+  return interpretAST(ast, null, locale || 'en', types || {}, false)
+}
+
+function interpretAST (
+  elements/*: any[] */,
+  parent/*: ?Placeholder */,
+  locale/*: Locales */,
+  types/*: Types */,
+  join/*: boolean */
+)/*: Function */ {
+  var parts = elements.map(function (element) {
+    return interpretElement(element, parent, locale, types, join)
+  })
+
+  if (!join) {
+    return function format (args) {
+      return parts.reduce(function (parts, part) {
+        return parts.concat(part(args))
+      }, [])
+    }
+  }
+
+  if (parts.length === 1) return parts[0]
+  return function format (args) {
+    var message = ''
+    for (var e = 0; e < parts.length; ++e) {
+      message += parts[e](args)
+    }
+    return message
+  }
+}
+
+function interpretElement (
+  element/*: Placeholder */,
+  parent/*: ?Placeholder */,
+  locale/*: Locales */,
+  types/*: Types */,
+  join/*: boolean */
+)/*: Function */ {
+  if (typeof element === 'string') {
+    var value/*: string */ = element
+    return function format () { return value }
+  }
+
+  var id = element[0]
+  var type = element[1]
+
+  if (parent && element[0] === '#') {
+    id = parent[0]
+    var offset = parent[2]
+    var formatter = (types.number || defaults.number)([id, 'number'], locale)
+    return function format (args) {
+      return formatter(getArg(id, args) - offset, args)
+    }
+  }
+
+  // pre-process children
+  var children
+  if (type === 'plural' || type === 'selectordinal') {
+    children = {}
+    Object.keys(element[3]).forEach(function (key) {
+      children[key] = interpretAST(element[3][key], element, locale, types, join)
+    })
+    element = [element[0], element[1], element[2], children]
+  } else if (element[2] && typeof element[2] === 'object') {
+    children = {}
+    Object.keys(element[2]).forEach(function (key) {
+      children[key] = interpretAST(element[2][key], element, locale, types, join)
+    })
+    element = [element[0], element[1], children]
+  }
+
+  var getFrmt = type && (types[type] || defaults[type])
+  if (getFrmt) {
+    var frmt = getFrmt(element, locale)
+    return function format (args) {
+      return frmt(getArg(id, args), args)
+    }
+  }
+
+  return join
+    ? function format (args) { return String(getArg(id, args)) }
+    : function format (args) { return getArg(id, args) }
+}
+
+function getArg (id/*: string */, args/*: ?Object */)/*: any */ {
+  if (args && (id in args)) return args[id]
+  var parts = id.split('.')
+  var a = args
+  for (var i = 0, ii = parts.length; a && i < ii; ++i) {
+    a = a[parts[i]]
+  }
+  return a
+}
+
+function interpretNumber (element/*: Placeholder */, locales/*: Locales */) {
+  var style = element[2]
+  var options = formats.number[style] || formats.parseNumberPattern(style) || formats.number.default
+  return new Intl.NumberFormat(locales, options).format
+}
+
+function interpretDuration (element/*: Placeholder */, locales/*: Locales */) {
+  var style = element[2]
+  var options = formats.duration[style] || formats.duration.default
+  var fs = new Intl.NumberFormat(locales, options.seconds).format
+  var fm = new Intl.NumberFormat(locales, options.minutes).format
+  var fh = new Intl.NumberFormat(locales, options.hours).format
+  var sep = /^fi$|^fi-|^da/.test(String(locales)) ? '.' : ':'
+
+  return function (s, args) {
+    s = +s
+    if (!isFinite(s)) return fs(s)
+    var h = ~~(s / 60 / 60) // ~~ acts much like Math.trunc
+    var m = ~~(s / 60 % 60)
+    var dur = (h ? (fh(Math.abs(h)) + sep) : '') +
+      fm(Math.abs(m)) + sep + fs(Math.abs(s % 60))
+    return s < 0 ? fh(-1).replace(fh(1), dur) : dur
+  }
+}
+
+function interpretDateTime (element/*: Placeholder */, locales/*: Locales */) {
+  var type = element[1]
+  var style = element[2]
+  var options = formats[type][style] || formats.parseDatePattern(style) || formats[type].default
+  return new Intl.DateTimeFormat(locales, options).format
+}
+
+function interpretPlural (element/*: Placeholder */, locales/*: Locales */) {
+  var type = element[1]
+  var pluralType = type === 'selectordinal' ? 'ordinal' : 'cardinal'
+  var offset = element[2]
+  var children = element[3]
+  var pluralRules
+  if (Intl.PluralRules && Intl.PluralRules.supportedLocalesOf(locales).length > 0) {
+    pluralRules = new Intl.PluralRules(locales, { type: pluralType })
+  } else {
+    var locale = lookupClosestLocale(locales, plurals)
+    var select = (locale && plurals[locale][pluralType]) || returnOther
+    pluralRules = { select: select }
+  }
+
+  return function (value, args) {
+    var clause =
+      children['=' + +value] ||
+      children[pluralRules.select(value - offset)] ||
+      children.other
+    return clause(args)
+  }
+}
+
+function returnOther (/*:: n:number */) { return 'other' }
+
+function interpretSelect (element/*: Placeholder */, locales/*: Locales */) {
+  var children = element[2]
+  return function (value, args) {
+    var clause = children[value] || children.other
+    return clause(args)
+  }
+}
+
+var defaults/*: Types */ = {
+  number: interpretNumber,
+  ordinal: interpretNumber, // TODO: support rbnf
+  spellout: interpretNumber, // TODO: support rbnf
+  duration: interpretDuration,
+  date: interpretDateTime,
+  time: interpretDateTime,
+  plural: interpretPlural,
+  selectordinal: interpretPlural,
+  select: interpretSelect
+}
+exports.types = defaults
+
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/node_modules/format-message-interpret/plurals.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/format-message-interpret/plurals.js ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// @flow
+
+
+/*:: export type Rule = 'zero' | 'one' | 'two' | 'few' | 'many' | 'other' */
+var zero = 'zero', one = 'one', two = 'two', few = 'few', many = 'many', other = 'other'
+var f = [
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n === 1 ? one
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return 0 <= n && n <= 1 ? one
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    var n = +s
+    return i === 0 || n === 1 ? one
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n === 0 ? zero
+      : n === 1 ? one
+      : n === 2 ? two
+      : 3 <= n % 100 && n % 100 <= 10 ? few
+      : 11 <= n % 100 && n % 100 <= 99 ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    var v = (s + '.').split('.')[1].length
+    return i === 1 && v === 0 ? one
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n % 10 === 1 && n % 100 !== 11 ? one
+      : (2 <= n % 10 && n % 10 <= 4) && (n % 100 < 12 || 14 < n % 100) ? few
+      : n % 10 === 0 || (5 <= n % 10 && n % 10 <= 9) || (11 <= n % 100 && n % 100 <= 14) ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n % 10 === 1 && (n % 100 !== 11 && n % 100 !== 71 && n % 100 !== 91) ? one
+      : n % 10 === 2 && (n % 100 !== 12 && n % 100 !== 72 && n % 100 !== 92) ? two
+      : ((3 <= n % 10 && n % 10 <= 4) || n % 10 === 9) && ((n % 100 < 10 || 19 < n % 100) && (n % 100 < 70 || 79 < n % 100) && (n % 100 < 90 || 99 < n % 100)) ? few
+      : n !== 0 && n % 1000000 === 0 ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    var v = (s + '.').split('.')[1].length
+    var f = +(s + '.').split('.')[1]
+    return v === 0 && i % 10 === 1 && i % 100 !== 11 || f % 10 === 1 && f % 100 !== 11 ? one
+      : v === 0 && (2 <= i % 10 && i % 10 <= 4) && (i % 100 < 12 || 14 < i % 100) || (2 <= f % 10 && f % 10 <= 4) && (f % 100 < 12 || 14 < f % 100) ? few
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    var v = (s + '.').split('.')[1].length
+    return i === 1 && v === 0 ? one
+      : (2 <= i && i <= 4) && v === 0 ? few
+      : v !== 0 ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n === 0 ? zero
+      : n === 1 ? one
+      : n === 2 ? two
+      : n === 3 ? few
+      : n === 6 ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    var t = +('' + s).replace(/^[^.]*.?|0+$/g, '')
+    var n = +s
+    return n === 1 || t !== 0 && (i === 0 || i === 1) ? one
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    var v = (s + '.').split('.')[1].length
+    var f = +(s + '.').split('.')[1]
+    return v === 0 && i % 100 === 1 || f % 100 === 1 ? one
+      : v === 0 && i % 100 === 2 || f % 100 === 2 ? two
+      : v === 0 && (3 <= i % 100 && i % 100 <= 4) || (3 <= f % 100 && f % 100 <= 4) ? few
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    return i === 0 || i === 1 ? one
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    var v = (s + '.').split('.')[1].length
+    var f = +(s + '.').split('.')[1]
+    return v === 0 && (i === 1 || i === 2 || i === 3) || v === 0 && (i % 10 !== 4 && i % 10 !== 6 && i % 10 !== 9) || v !== 0 && (f % 10 !== 4 && f % 10 !== 6 && f % 10 !== 9) ? one
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n === 1 ? one
+      : n === 2 ? two
+      : 3 <= n && n <= 6 ? few
+      : 7 <= n && n <= 10 ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n === 1 || n === 11 ? one
+      : n === 2 || n === 12 ? two
+      : ((3 <= n && n <= 10) || (13 <= n && n <= 19)) ? few
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    var v = (s + '.').split('.')[1].length
+    return v === 0 && i % 10 === 1 ? one
+      : v === 0 && i % 10 === 2 ? two
+      : v === 0 && (i % 100 === 0 || i % 100 === 20 || i % 100 === 40 || i % 100 === 60 || i % 100 === 80) ? few
+      : v !== 0 ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    var v = (s + '.').split('.')[1].length
+    var n = +s
+    return i === 1 && v === 0 ? one
+      : i === 2 && v === 0 ? two
+      : v === 0 && (n < 0 || 10 < n) && n % 10 === 0 ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    var t = +('' + s).replace(/^[^.]*.?|0+$/g, '')
+    return t === 0 && i % 10 === 1 && i % 100 !== 11 || t !== 0 ? one
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n === 1 ? one
+      : n === 2 ? two
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n === 0 ? zero
+      : n === 1 ? one
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    var n = +s
+    return n === 0 ? zero
+      : (i === 0 || i === 1) && n !== 0 ? one
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var f = +(s + '.').split('.')[1]
+    var n = +s
+    return n % 10 === 1 && (n % 100 < 11 || 19 < n % 100) ? one
+      : (2 <= n % 10 && n % 10 <= 9) && (n % 100 < 11 || 19 < n % 100) ? few
+      : f !== 0 ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var v = (s + '.').split('.')[1].length
+    var f = +(s + '.').split('.')[1]
+    var n = +s
+    return n % 10 === 0 || (11 <= n % 100 && n % 100 <= 19) || v === 2 && (11 <= f % 100 && f % 100 <= 19) ? zero
+      : n % 10 === 1 && n % 100 !== 11 || v === 2 && f % 10 === 1 && f % 100 !== 11 || v !== 2 && f % 10 === 1 ? one
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    var v = (s + '.').split('.')[1].length
+    var f = +(s + '.').split('.')[1]
+    return v === 0 && i % 10 === 1 && i % 100 !== 11 || f % 10 === 1 && f % 100 !== 11 ? one
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    var v = (s + '.').split('.')[1].length
+    var n = +s
+    return i === 1 && v === 0 ? one
+      : v !== 0 || n === 0 || n !== 1 && (1 <= n % 100 && n % 100 <= 19) ? few
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n === 1 ? one
+      : n === 0 || (2 <= n % 100 && n % 100 <= 10) ? few
+      : 11 <= n % 100 && n % 100 <= 19 ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    var v = (s + '.').split('.')[1].length
+    return i === 1 && v === 0 ? one
+      : v === 0 && (2 <= i % 10 && i % 10 <= 4) && (i % 100 < 12 || 14 < i % 100) ? few
+      : v === 0 && i !== 1 && (0 <= i % 10 && i % 10 <= 1) || v === 0 && (5 <= i % 10 && i % 10 <= 9) || v === 0 && (12 <= i % 100 && i % 100 <= 14) ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    return 0 <= i && i <= 1 ? one
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    var v = (s + '.').split('.')[1].length
+    return v === 0 && i % 10 === 1 && i % 100 !== 11 ? one
+      : v === 0 && (2 <= i % 10 && i % 10 <= 4) && (i % 100 < 12 || 14 < i % 100) ? few
+      : v === 0 && i % 10 === 0 || v === 0 && (5 <= i % 10 && i % 10 <= 9) || v === 0 && (11 <= i % 100 && i % 100 <= 14) ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    var n = +s
+    return i === 0 || n === 1 ? one
+      : 2 <= n && n <= 10 ? few
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    var f = +(s + '.').split('.')[1]
+    var n = +s
+    return (n === 0 || n === 1) || i === 0 && f === 1 ? one
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    var v = (s + '.').split('.')[1].length
+    return v === 0 && i % 100 === 1 ? one
+      : v === 0 && i % 100 === 2 ? two
+      : v === 0 && (3 <= i % 100 && i % 100 <= 4) || v !== 0 ? few
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return (0 <= n && n <= 1) || (11 <= n && n <= 99) ? one
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n === 1 || n === 5 || n === 7 || n === 8 || n === 9 || n === 10 ? one
+      : n === 2 || n === 3 ? two
+      : n === 4 ? few
+      : n === 6 ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    return (i % 10 === 1 || i % 10 === 2 || i % 10 === 5 || i % 10 === 7 || i % 10 === 8) || (i % 100 === 20 || i % 100 === 50 || i % 100 === 70 || i % 100 === 80) ? one
+      : (i % 10 === 3 || i % 10 === 4) || (i % 1000 === 100 || i % 1000 === 200 || i % 1000 === 300 || i % 1000 === 400 || i % 1000 === 500 || i % 1000 === 600 || i % 1000 === 700 || i % 1000 === 800 || i % 1000 === 900) ? few
+      : i === 0 || i % 10 === 6 || (i % 100 === 40 || i % 100 === 60 || i % 100 === 90) ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return (n % 10 === 2 || n % 10 === 3) && (n % 100 !== 12 && n % 100 !== 13) ? few
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n === 1 || n === 3 ? one
+      : n === 2 ? two
+      : n === 4 ? few
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n === 0 || n === 7 || n === 8 || n === 9 ? zero
+      : n === 1 ? one
+      : n === 2 ? two
+      : n === 3 || n === 4 ? few
+      : n === 5 || n === 6 ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n % 10 === 1 && n % 100 !== 11 ? one
+      : n % 10 === 2 && n % 100 !== 12 ? two
+      : n % 10 === 3 && n % 100 !== 13 ? few
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n === 1 || n === 11 ? one
+      : n === 2 || n === 12 ? two
+      : n === 3 || n === 13 ? few
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n === 1 ? one
+      : n === 2 || n === 3 ? two
+      : n === 4 ? few
+      : n === 6 ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n === 1 || n === 5 ? one
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n === 11 || n === 8 || n === 80 || n === 800 ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    return i === 1 ? one
+      : i === 0 || ((2 <= i % 100 && i % 100 <= 20) || i % 100 === 40 || i % 100 === 60 || i % 100 === 80) ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n % 10 === 6 || n % 10 === 9 || n % 10 === 0 && n !== 0 ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var i = Math.floor(Math.abs(+s))
+    return i % 10 === 1 && i % 100 !== 11 ? one
+      : i % 10 === 2 && i % 100 !== 12 ? two
+      : (i % 10 === 7 || i % 10 === 8) && (i % 100 !== 17 && i % 100 !== 18) ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n === 1 ? one
+      : n === 2 || n === 3 ? two
+      : n === 4 ? few
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return 1 <= n && n <= 4 ? one
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return (n === 1 || n === 5 || (7 <= n && n <= 9)) ? one
+      : n === 2 || n === 3 ? two
+      : n === 4 ? few
+      : n === 6 ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n === 1 ? one
+      : n % 10 === 4 && n % 100 !== 14 ? many
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return (n % 10 === 1 || n % 10 === 2) && (n % 100 !== 11 && n % 100 !== 12) ? one
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return (n % 10 === 6 || n % 10 === 9) || n === 10 ? few
+      : other
+  },
+  function (s/*: string | number */)/*: Rule */ {
+    var n = +s
+    return n % 10 === 3 && n % 100 !== 13 ? few
+      : other
+  }
+]
+
+module.exports = {
+  af: { cardinal: f[0] },
+  ak: { cardinal: f[1] },
+  am: { cardinal: f[2] },
+  ar: { cardinal: f[3] },
+  ars: { cardinal: f[3] },
+  as: { cardinal: f[2], ordinal: f[34] },
+  asa: { cardinal: f[0] },
+  ast: { cardinal: f[4] },
+  az: { cardinal: f[0], ordinal: f[35] },
+  be: { cardinal: f[5], ordinal: f[36] },
+  bem: { cardinal: f[0] },
+  bez: { cardinal: f[0] },
+  bg: { cardinal: f[0] },
+  bh: { cardinal: f[1] },
+  bn: { cardinal: f[2], ordinal: f[34] },
+  br: { cardinal: f[6] },
+  brx: { cardinal: f[0] },
+  bs: { cardinal: f[7] },
+  ca: { cardinal: f[4], ordinal: f[37] },
+  ce: { cardinal: f[0] },
+  cgg: { cardinal: f[0] },
+  chr: { cardinal: f[0] },
+  ckb: { cardinal: f[0] },
+  cs: { cardinal: f[8] },
+  cy: { cardinal: f[9], ordinal: f[38] },
+  da: { cardinal: f[10] },
+  de: { cardinal: f[4] },
+  dsb: { cardinal: f[11] },
+  dv: { cardinal: f[0] },
+  ee: { cardinal: f[0] },
+  el: { cardinal: f[0] },
+  en: { cardinal: f[4], ordinal: f[39] },
+  eo: { cardinal: f[0] },
+  es: { cardinal: f[0] },
+  et: { cardinal: f[4] },
+  eu: { cardinal: f[0] },
+  fa: { cardinal: f[2] },
+  ff: { cardinal: f[12] },
+  fi: { cardinal: f[4] },
+  fil: { cardinal: f[13], ordinal: f[0] },
+  fo: { cardinal: f[0] },
+  fr: { cardinal: f[12], ordinal: f[0] },
+  fur: { cardinal: f[0] },
+  fy: { cardinal: f[4] },
+  ga: { cardinal: f[14], ordinal: f[0] },
+  gd: { cardinal: f[15], ordinal: f[40] },
+  gl: { cardinal: f[4] },
+  gsw: { cardinal: f[0] },
+  gu: { cardinal: f[2], ordinal: f[41] },
+  guw: { cardinal: f[1] },
+  gv: { cardinal: f[16] },
+  ha: { cardinal: f[0] },
+  haw: { cardinal: f[0] },
+  he: { cardinal: f[17] },
+  hi: { cardinal: f[2], ordinal: f[41] },
+  hr: { cardinal: f[7] },
+  hsb: { cardinal: f[11] },
+  hu: { cardinal: f[0], ordinal: f[42] },
+  hy: { cardinal: f[12], ordinal: f[0] },
+  ia: { cardinal: f[4] },
+  io: { cardinal: f[4] },
+  is: { cardinal: f[18] },
+  it: { cardinal: f[4], ordinal: f[43] },
+  iu: { cardinal: f[19] },
+  iw: { cardinal: f[17] },
+  jgo: { cardinal: f[0] },
+  ji: { cardinal: f[4] },
+  jmc: { cardinal: f[0] },
+  ka: { cardinal: f[0], ordinal: f[44] },
+  kab: { cardinal: f[12] },
+  kaj: { cardinal: f[0] },
+  kcg: { cardinal: f[0] },
+  kk: { cardinal: f[0], ordinal: f[45] },
+  kkj: { cardinal: f[0] },
+  kl: { cardinal: f[0] },
+  kn: { cardinal: f[2] },
+  ks: { cardinal: f[0] },
+  ksb: { cardinal: f[0] },
+  ksh: { cardinal: f[20] },
+  ku: { cardinal: f[0] },
+  kw: { cardinal: f[19] },
+  ky: { cardinal: f[0] },
+  lag: { cardinal: f[21] },
+  lb: { cardinal: f[0] },
+  lg: { cardinal: f[0] },
+  ln: { cardinal: f[1] },
+  lt: { cardinal: f[22] },
+  lv: { cardinal: f[23] },
+  mas: { cardinal: f[0] },
+  mg: { cardinal: f[1] },
+  mgo: { cardinal: f[0] },
+  mk: { cardinal: f[24], ordinal: f[46] },
+  ml: { cardinal: f[0] },
+  mn: { cardinal: f[0] },
+  mo: { cardinal: f[25], ordinal: f[0] },
+  mr: { cardinal: f[2], ordinal: f[47] },
+  mt: { cardinal: f[26] },
+  nah: { cardinal: f[0] },
+  naq: { cardinal: f[19] },
+  nb: { cardinal: f[0] },
+  nd: { cardinal: f[0] },
+  ne: { cardinal: f[0], ordinal: f[48] },
+  nl: { cardinal: f[4] },
+  nn: { cardinal: f[0] },
+  nnh: { cardinal: f[0] },
+  no: { cardinal: f[0] },
+  nr: { cardinal: f[0] },
+  nso: { cardinal: f[1] },
+  ny: { cardinal: f[0] },
+  nyn: { cardinal: f[0] },
+  om: { cardinal: f[0] },
+  or: { cardinal: f[0], ordinal: f[49] },
+  os: { cardinal: f[0] },
+  pa: { cardinal: f[1] },
+  pap: { cardinal: f[0] },
+  pl: { cardinal: f[27] },
+  prg: { cardinal: f[23] },
+  ps: { cardinal: f[0] },
+  pt: { cardinal: f[28] },
+  'pt-PT': { cardinal: f[4] },
+  rm: { cardinal: f[0] },
+  ro: { cardinal: f[25], ordinal: f[0] },
+  rof: { cardinal: f[0] },
+  ru: { cardinal: f[29] },
+  rwk: { cardinal: f[0] },
+  saq: { cardinal: f[0] },
+  sc: { cardinal: f[4], ordinal: f[43] },
+  scn: { cardinal: f[4], ordinal: f[43] },
+  sd: { cardinal: f[0] },
+  sdh: { cardinal: f[0] },
+  se: { cardinal: f[19] },
+  seh: { cardinal: f[0] },
+  sh: { cardinal: f[7] },
+  shi: { cardinal: f[30] },
+  si: { cardinal: f[31] },
+  sk: { cardinal: f[8] },
+  sl: { cardinal: f[32] },
+  sma: { cardinal: f[19] },
+  smi: { cardinal: f[19] },
+  smj: { cardinal: f[19] },
+  smn: { cardinal: f[19] },
+  sms: { cardinal: f[19] },
+  sn: { cardinal: f[0] },
+  so: { cardinal: f[0] },
+  sq: { cardinal: f[0], ordinal: f[50] },
+  sr: { cardinal: f[7] },
+  ss: { cardinal: f[0] },
+  ssy: { cardinal: f[0] },
+  st: { cardinal: f[0] },
+  sv: { cardinal: f[4], ordinal: f[51] },
+  sw: { cardinal: f[4] },
+  syr: { cardinal: f[0] },
+  ta: { cardinal: f[0] },
+  te: { cardinal: f[0] },
+  teo: { cardinal: f[0] },
+  ti: { cardinal: f[1] },
+  tig: { cardinal: f[0] },
+  tk: { cardinal: f[0], ordinal: f[52] },
+  tl: { cardinal: f[13], ordinal: f[0] },
+  tn: { cardinal: f[0] },
+  tr: { cardinal: f[0] },
+  ts: { cardinal: f[0] },
+  tzm: { cardinal: f[33] },
+  ug: { cardinal: f[0] },
+  uk: { cardinal: f[29], ordinal: f[53] },
+  ur: { cardinal: f[4] },
+  uz: { cardinal: f[0] },
+  ve: { cardinal: f[0] },
+  vo: { cardinal: f[0] },
+  vun: { cardinal: f[0] },
+  wa: { cardinal: f[1] },
+  wae: { cardinal: f[0] },
+  xh: { cardinal: f[0] },
+  xog: { cardinal: f[0] },
+  yi: { cardinal: f[4] },
+  zu: { cardinal: f[2] },
+  lo: { ordinal: f[0] },
+  ms: { ordinal: f[0] },
+  vi: { ordinal: f[0] }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/node_modules/format-message-parse/index.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/format-message-parse/index.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// @flow
+
+
+/*::
+export type AST = Element[]
+export type Element = string | Placeholder
+export type Placeholder = Plural | Styled | Typed | Simple
+export type Plural = [ string, 'plural' | 'selectordinal', number, SubMessages ]
+export type Styled = [ string, string, string | SubMessages ]
+export type Typed = [ string, string ]
+export type Simple = [ string ]
+export type SubMessages = { [string]: AST }
+export type Token = [ TokenType, string ]
+export type TokenType = 'text' | 'space' | 'id' | 'type' | 'style' | 'offset' | 'number' | 'selector' | 'syntax'
+type Context = {|
+  pattern: string,
+  index: number,
+  tagsType: ?string,
+  tokens: ?Token[]
+|}
+*/
+
+var ARG_OPN = '{'
+var ARG_CLS = '}'
+var ARG_SEP = ','
+var NUM_ARG = '#'
+var TAG_OPN = '<'
+var TAG_CLS = '>'
+var TAG_END = '</'
+var TAG_SELF_CLS = '/>'
+var ESC = '\''
+var OFFSET = 'offset:'
+var simpleTypes = [
+  'number',
+  'date',
+  'time',
+  'ordinal',
+  'duration',
+  'spellout'
+]
+var submTypes = [
+  'plural',
+  'select',
+  'selectordinal'
+]
+
+/**
+ * parse
+ *
+ * Turns this:
+ *  `You have { numBananas, plural,
+ *       =0 {no bananas}
+ *      one {a banana}
+ *    other {# bananas}
+ *  } for sale`
+ *
+ * into this:
+ *  [ "You have ", [ "numBananas", "plural", 0, {
+ *       "=0": [ "no bananas" ],
+ *      "one": [ "a banana" ],
+ *    "other": [ [ '#' ], " bananas" ]
+ *  } ], " for sale." ]
+ *
+ * tokens:
+ *  [
+ *    [ "text", "You have " ],
+ *    [ "syntax", "{" ],
+ *    [ "space", " " ],
+ *    [ "id", "numBananas" ],
+ *    [ "syntax", ", " ],
+ *    [ "space", " " ],
+ *    [ "type", "plural" ],
+ *    [ "syntax", "," ],
+ *    [ "space", "\n     " ],
+ *    [ "selector", "=0" ],
+ *    [ "space", " " ],
+ *    [ "syntax", "{" ],
+ *    [ "text", "no bananas" ],
+ *    [ "syntax", "}" ],
+ *    [ "space", "\n    " ],
+ *    [ "selector", "one" ],
+ *    [ "space", " " ],
+ *    [ "syntax", "{" ],
+ *    [ "text", "a banana" ],
+ *    [ "syntax", "}" ],
+ *    [ "space", "\n  " ],
+ *    [ "selector", "other" ],
+ *    [ "space", " " ],
+ *    [ "syntax", "{" ],
+ *    [ "syntax", "#" ],
+ *    [ "text", " bananas" ],
+ *    [ "syntax", "}" ],
+ *    [ "space", "\n" ],
+ *    [ "syntax", "}" ],
+ *    [ "text", " for sale." ]
+ *  ]
+ **/
+exports = module.exports = function parse (
+  pattern/*: string */,
+  options/*:: ?: { tagsType?: string, tokens?: Token[] } */
+)/*: AST */ {
+  return parseAST({
+    pattern: String(pattern),
+    index: 0,
+    tagsType: (options && options.tagsType) || null,
+    tokens: (options && options.tokens) || null
+  }, '')
+}
+
+function parseAST (current/*: Context */, parentType/*: string */)/*: AST */ {
+  var pattern = current.pattern
+  var length = pattern.length
+  var elements/*: AST */ = []
+  var start = current.index
+  var text = parseText(current, parentType)
+  if (text) elements.push(text)
+  if (text && current.tokens) current.tokens.push(['text', pattern.slice(start, current.index)])
+  while (current.index < length) {
+    if (pattern[current.index] === ARG_CLS) {
+      if (!parentType) throw expected(current)
+      break
+    }
+    if (parentType && current.tagsType && pattern.slice(current.index, current.index + TAG_END.length) === TAG_END) break
+    elements.push(parsePlaceholder(current))
+    start = current.index
+    text = parseText(current, parentType)
+    if (text) elements.push(text)
+    if (text && current.tokens) current.tokens.push(['text', pattern.slice(start, current.index)])
+  }
+  return elements
+}
+
+function parseText (current/*: Context */, parentType/*: string */)/*: string */ {
+  var pattern = current.pattern
+  var length = pattern.length
+  var isHashSpecial = (parentType === 'plural' || parentType === 'selectordinal')
+  var isAngleSpecial = !!current.tagsType
+  var isArgStyle = (parentType === '{style}')
+  var text = ''
+  while (current.index < length) {
+    var char = pattern[current.index]
+    if (
+      char === ARG_OPN || char === ARG_CLS ||
+      (isHashSpecial && char === NUM_ARG) ||
+      (isAngleSpecial && char === TAG_OPN) ||
+      (isArgStyle && isWhitespace(char.charCodeAt(0)))
+    ) {
+      break
+    } else if (char === ESC) {
+      char = pattern[++current.index]
+      if (char === ESC) { // double is always 1 '
+        text += char
+        ++current.index
+      } else if (
+        // only when necessary
+        char === ARG_OPN || char === ARG_CLS ||
+        (isHashSpecial && char === NUM_ARG) ||
+        (isAngleSpecial && char === TAG_OPN) ||
+        isArgStyle
+      ) {
+        text += char
+        while (++current.index < length) {
+          char = pattern[current.index]
+          if (char === ESC && pattern[current.index + 1] === ESC) { // double is always 1 '
+            text += ESC
+            ++current.index
+          } else if (char === ESC) { // end of quoted
+            ++current.index
+            break
+          } else {
+            text += char
+          }
+        }
+      } else { // lone ' is just a '
+        text += ESC
+        // already incremented
+      }
+    } else {
+      text += char
+      ++current.index
+    }
+  }
+  return text
+}
+
+function isWhitespace (code/*: number */)/*: boolean */ {
+  return (
+    (code >= 0x09 && code <= 0x0D) ||
+    code === 0x20 || code === 0x85 || code === 0xA0 || code === 0x180E ||
+    (code >= 0x2000 && code <= 0x200D) ||
+    code === 0x2028 || code === 0x2029 || code === 0x202F || code === 0x205F ||
+    code === 0x2060 || code === 0x3000 || code === 0xFEFF
+  )
+}
+
+function skipWhitespace (current/*: Context */)/*: void */ {
+  var pattern = current.pattern
+  var length = pattern.length
+  var start = current.index
+  while (current.index < length && isWhitespace(pattern.charCodeAt(current.index))) {
+    ++current.index
+  }
+  if (start < current.index && current.tokens) {
+    current.tokens.push(['space', current.pattern.slice(start, current.index)])
+  }
+}
+
+function parsePlaceholder (current/*: Context */)/*: Placeholder */ {
+  var pattern = current.pattern
+  if (pattern[current.index] === NUM_ARG) {
+    if (current.tokens) current.tokens.push(['syntax', NUM_ARG])
+    ++current.index // move passed #
+    return [NUM_ARG]
+  }
+
+  var tag = parseTag(current)
+  if (tag) return tag
+
+  /* istanbul ignore if should be unreachable if parseAST and parseText are right */
+  if (pattern[current.index] !== ARG_OPN) throw expected(current, ARG_OPN)
+  if (current.tokens) current.tokens.push(['syntax', ARG_OPN])
+  ++current.index // move passed {
+  skipWhitespace(current)
+
+  var id = parseId(current)
+  if (!id) throw expected(current, 'placeholder id')
+  if (current.tokens) current.tokens.push(['id', id])
+  skipWhitespace(current)
+
+  var char = pattern[current.index]
+  if (char === ARG_CLS) { // end placeholder
+    if (current.tokens) current.tokens.push(['syntax', ARG_CLS])
+    ++current.index // move passed }
+    return [id]
+  }
+
+  if (char !== ARG_SEP) throw expected(current, ARG_SEP + ' or ' + ARG_CLS)
+  if (current.tokens) current.tokens.push(['syntax', ARG_SEP])
+  ++current.index // move passed ,
+  skipWhitespace(current)
+
+  var type = parseId(current)
+  if (!type) throw expected(current, 'placeholder type')
+  if (current.tokens) current.tokens.push(['type', type])
+  skipWhitespace(current)
+  char = pattern[current.index]
+  if (char === ARG_CLS) { // end placeholder
+    if (current.tokens) current.tokens.push(['syntax', ARG_CLS])
+    if (type === 'plural' || type === 'selectordinal' || type === 'select') {
+      throw expected(current, type + ' sub-messages')
+    }
+    ++current.index // move passed }
+    return [id, type]
+  }
+
+  if (char !== ARG_SEP) throw expected(current, ARG_SEP + ' or ' + ARG_CLS)
+  if (current.tokens) current.tokens.push(['syntax', ARG_SEP])
+  ++current.index // move passed ,
+  skipWhitespace(current)
+
+  var arg
+  if (type === 'plural' || type === 'selectordinal') {
+    var offset = parsePluralOffset(current)
+    skipWhitespace(current)
+    arg = [id, type, offset, parseSubMessages(current, type)]
+  } else if (type === 'select') {
+    arg = [id, type, parseSubMessages(current, type)]
+  } else if (simpleTypes.indexOf(type) >= 0) {
+    arg = [id, type, parseSimpleFormat(current)]
+  } else { // custom placeholder type
+    var index = current.index
+    var format/*: string | SubMessages */ = parseSimpleFormat(current)
+    skipWhitespace(current)
+    if (pattern[current.index] === ARG_OPN) {
+      current.index = index // rewind, since should have been submessages
+      format = parseSubMessages(current, type)
+    }
+    arg = [id, type, format]
+  }
+
+  skipWhitespace(current)
+  if (pattern[current.index] !== ARG_CLS) throw expected(current, ARG_CLS)
+  if (current.tokens) current.tokens.push(['syntax', ARG_CLS])
+  ++current.index // move passed }
+  return arg
+}
+
+function parseTag (current/*: Context */)/*: ?Placeholder */ {
+  var tagsType = current.tagsType
+  if (!tagsType || current.pattern[current.index] !== TAG_OPN) return
+
+  if (current.pattern.slice(current.index, current.index + TAG_END.length) === TAG_END) {
+    throw expected(current, null, 'closing tag without matching opening tag')
+  }
+  if (current.tokens) current.tokens.push(['syntax', TAG_OPN])
+  ++current.index // move passed <
+
+  var id = parseId(current, true)
+  if (!id) throw expected(current, 'placeholder id')
+  if (current.tokens) current.tokens.push(['id', id])
+  skipWhitespace(current)
+
+  if (current.pattern.slice(current.index, current.index + TAG_SELF_CLS.length) === TAG_SELF_CLS) {
+    if (current.tokens) current.tokens.push(['syntax', TAG_SELF_CLS])
+    current.index += TAG_SELF_CLS.length
+    return [id, tagsType]
+  }
+  if (current.pattern[current.index] !== TAG_CLS) throw expected(current, TAG_CLS)
+  if (current.tokens) current.tokens.push(['syntax', TAG_CLS])
+  ++current.index // move passed >
+
+  var children = parseAST(current, tagsType)
+
+  var end = current.index
+  if (current.pattern.slice(current.index, current.index + TAG_END.length) !== TAG_END) throw expected(current, TAG_END + id + TAG_CLS)
+  if (current.tokens) current.tokens.push(['syntax', TAG_END])
+  current.index += TAG_END.length
+  var closeId = parseId(current, true)
+  if (closeId && current.tokens) current.tokens.push(['id', closeId])
+  if (id !== closeId) {
+    current.index = end // rewind for better error message
+    throw expected(current, TAG_END + id + TAG_CLS, TAG_END + closeId + TAG_CLS)
+  }
+  skipWhitespace(current)
+  if (current.pattern[current.index] !== TAG_CLS) throw expected(current, TAG_CLS)
+  if (current.tokens) current.tokens.push(['syntax', TAG_CLS])
+  ++current.index // move passed >
+
+  return [id, tagsType, { children: children }]
+}
+
+function parseId (current/*: Context */, isTag/*:: ?: boolean */)/*: string */ {
+  var pattern = current.pattern
+  var length = pattern.length
+  var id = ''
+  while (current.index < length) {
+    var char = pattern[current.index]
+    if (
+      char === ARG_OPN || char === ARG_CLS || char === ARG_SEP ||
+      char === NUM_ARG || char === ESC || isWhitespace(char.charCodeAt(0)) ||
+      (isTag && (char === TAG_OPN || char === TAG_CLS || char === '/'))
+    ) break
+    id += char
+    ++current.index
+  }
+  return id
+}
+
+function parseSimpleFormat (current/*: Context */)/*: string */ {
+  var start = current.index
+  var style = parseText(current, '{style}')
+  if (!style) throw expected(current, 'placeholder style name')
+  if (current.tokens) current.tokens.push(['style', current.pattern.slice(start, current.index)])
+  return style
+}
+
+function parsePluralOffset (current/*: Context */)/*: number */ {
+  var pattern = current.pattern
+  var length = pattern.length
+  var offset = 0
+  if (pattern.slice(current.index, current.index + OFFSET.length) === OFFSET) {
+    if (current.tokens) current.tokens.push(['offset', 'offset'], ['syntax', ':'])
+    current.index += OFFSET.length // move passed offset:
+    skipWhitespace(current)
+    var start = current.index
+    while (current.index < length && isDigit(pattern.charCodeAt(current.index))) {
+      ++current.index
+    }
+    if (start === current.index) throw expected(current, 'offset number')
+    if (current.tokens) current.tokens.push(['number', pattern.slice(start, current.index)])
+    offset = +pattern.slice(start, current.index)
+  }
+  return offset
+}
+
+function isDigit (code/*: number */)/*: boolean */ {
+  return (code >= 0x30 && code <= 0x39)
+}
+
+function parseSubMessages (current/*: Context */, parentType/*: string */)/*: SubMessages */ {
+  var pattern = current.pattern
+  var length = pattern.length
+  var options/*: SubMessages */ = {}
+  while (current.index < length && pattern[current.index] !== ARG_CLS) {
+    var selector = parseId(current)
+    if (!selector) throw expected(current, 'sub-message selector')
+    if (current.tokens) current.tokens.push(['selector', selector])
+    skipWhitespace(current)
+    options[selector] = parseSubMessage(current, parentType)
+    skipWhitespace(current)
+  }
+  if (!options.other && submTypes.indexOf(parentType) >= 0) {
+    throw expected(current, null, null, '"other" sub-message must be specified in ' + parentType)
+  }
+  return options
+}
+
+function parseSubMessage (current/*: Context */, parentType/*: string */)/*: AST */ {
+  if (current.pattern[current.index] !== ARG_OPN) throw expected(current, ARG_OPN + ' to start sub-message')
+  if (current.tokens) current.tokens.push(['syntax', ARG_OPN])
+  ++current.index // move passed {
+  var message = parseAST(current, parentType)
+  if (current.pattern[current.index] !== ARG_CLS) throw expected(current, ARG_CLS + ' to end sub-message')
+  if (current.tokens) current.tokens.push(['syntax', ARG_CLS])
+  ++current.index // move passed }
+  return message
+}
+
+function expected (current/*: Context */, expected/*:: ?: ?string */, found/*:: ?: ?string */, message/*:: ?: string */) {
+  var pattern = current.pattern
+  var lines = pattern.slice(0, current.index).split(/\r?\n/)
+  var offset = current.index
+  var line = lines.length
+  var column = lines.slice(-1)[0].length
+  found = found || (
+    (current.index >= pattern.length) ? 'end of message pattern'
+      : (parseId(current) || pattern[current.index])
+  )
+  if (!message) message = errorMessage(expected, found)
+  message += ' in ' + pattern.replace(/\r?\n/g, '\n')
+  return new SyntaxError(message, expected, found, offset, line, column)
+}
+
+function errorMessage (expected/*: ?string */, found/* string */) {
+  if (!expected) return 'Unexpected ' + found + ' found'
+  return 'Expected ' + expected + ' but found ' + found
+}
+
+/**
+ * SyntaxError
+ *  Holds information about bad syntax found in a message pattern
+ **/
+function SyntaxError (message/*: string */, expected/*: ?string */, found/*: ?string */, offset/*: number */, line/*: number */, column/*: number */) {
+  Error.call(this, message)
+  this.name = 'SyntaxError'
+  this.message = message
+  this.expected = expected
+  this.found = found
+  this.offset = offset
+  this.line = line
+  this.column = column
+}
+SyntaxError.prototype = Object.create(Error.prototype)
+exports.SyntaxError = SyntaxError
+
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/node_modules/format-message/index.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/format-message/index.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// @flow
+
+var parse = __webpack_require__(/*! format-message-parse */ "./node_modules/scratch-vm/node_modules/format-message-parse/index.js")
+var interpret = __webpack_require__(/*! format-message-interpret */ "./node_modules/scratch-vm/node_modules/format-message-interpret/index.js")
+var plurals = __webpack_require__(/*! format-message-interpret/plurals */ "./node_modules/scratch-vm/node_modules/format-message-interpret/plurals.js")
+var lookupClosestLocale = __webpack_require__(/*! lookup-closest-locale */ "./node_modules/scratch-vm/node_modules/lookup-closest-locale/index.js")
+var origFormats = __webpack_require__(/*! format-message-formats */ "./node_modules/scratch-vm/node_modules/format-message-formats/index.js")
+
+/*::
+import type { Types } from 'format-message-interpret'
+type Locale = string
+type Locales = Locale | Locale[]
+type Message = string | {|
+  id?: string,
+  default: string,
+  description?: string
+|}
+type Translations = { [string]: ?{ [string]: string | Translation } }
+type Translation = {
+  message: string,
+  format?: (args?: Object) => string,
+  toParts?: (args?: Object) => any[],
+}
+type Replacement = ?string | (string, string, locales?: Locales) => ?string
+type GenerateId = (string) => string
+type MissingTranslation = 'ignore' | 'warning' | 'error'
+type FormatObject = { [string]: * }
+type Options = {
+  locale?: Locales,
+  translations?: ?Translations,
+  generateId?: GenerateId,
+  missingReplacement?: Replacement,
+  missingTranslation?: MissingTranslation,
+  formats?: {
+    number?: FormatObject,
+    date?: FormatObject,
+    time?: FormatObject
+  },
+  types?: Types
+}
+type Setup = {|
+  locale: Locales,
+  translations: Translations,
+  generateId: GenerateId,
+  missingReplacement: Replacement,
+  missingTranslation: MissingTranslation,
+  formats: {
+    number: FormatObject,
+    date: FormatObject,
+    time: FormatObject
+  },
+  types: Types
+|}
+type FormatMessage = {
+  (msg: Message, args?: Object, locales?: Locales): string,
+  rich (msg: Message, args?: Object, locales?: Locales): any[],
+  setup (opt?: Options): Setup,
+  number (value: number, style?: string, locales?: Locales): string,
+  date (value: number | Date, style?: string, locales?: Locales): string,
+  time (value: number | Date, style?: string, locales?: Locales): string,
+  select (value: any, options: Object): any,
+  custom (placeholder: any[], locales: Locales, value: any, args: Object): any,
+  plural (value: number, offset: any, options: any, locale: any): any,
+  selectordinal (value: number, offset: any, options: any, locale: any): any,
+  namespace (): FormatMessage
+}
+*/
+
+function assign/*:: <T: Object> */ (target/*: T */, source/*: Object */) {
+  Object.keys(source).forEach(function (key) { target[key] = source[key] })
+  return target
+}
+
+function namespace ()/*: FormatMessage */ {
+  var formats = assign({}, origFormats)
+  var currentLocales/*: Locales */ = 'en'
+  var translations/*: Translations */ = {}
+  var generateId/*: GenerateId */ = function (pattern) { return pattern }
+  var missingReplacement/*: Replacement */ = null
+  var missingTranslation/*: MissingTranslation */ = 'warning'
+  var types/*: Types */ = {}
+
+  function formatMessage (msg/*: Message */, args/*:: ?: Object */, locales/*:: ?: Locales */) {
+    var pattern = typeof msg === 'string' ? msg : msg.default
+    var id = (typeof msg === 'object' && msg.id) || generateId(pattern)
+    var translated = translate(pattern, id, locales || currentLocales)
+    var format = translated.format || (
+      translated.format = interpret(parse(translated.message), locales || currentLocales, types)
+    )
+    return format(args)
+  }
+
+  formatMessage.rich = function rich (msg/*: Message */, args/*:: ?: Object */, locales/*:: ?: Locales */) {
+    var pattern = typeof msg === 'string' ? msg : msg.default
+    var id = (typeof msg === 'object' && msg.id) || generateId(pattern)
+    var translated = translate(pattern, id, locales || currentLocales)
+    var format = translated.toParts || (
+      translated.toParts = interpret.toParts(parse(translated.message, { tagsType: tagsType }), locales || currentLocales, types)
+    )
+    return format(args)
+  }
+
+  var tagsType = '<>'
+  function richType (node/*: any[] */, locales/*: Locales */) {
+    var style = node[2]
+    return function (fn, args) {
+      var props = typeof style === 'object' ? mapObject(style, args) : style
+      return typeof fn === 'function' ? fn(props) : fn
+    }
+  }
+  types[tagsType] = richType
+
+  function mapObject (object/* { [string]: (args?: Object) => any } */, args/*: ?Object */) {
+    return Object.keys(object).reduce(function (mapped, key) {
+      mapped[key] = object[key](args)
+      return mapped
+    }, {})
+  }
+
+  function translate (pattern/*: string */, id/*: string */, locales/*: Locales */)/*: Translation */ {
+    var locale = lookupClosestLocale(locales, translations) || 'en'
+    var messages = translations[locale] || (translations[locale] = {})
+    var translated = messages[id]
+    if (typeof translated === 'string') {
+      translated = messages[id] = { message: translated }
+    }
+    if (!translated) {
+      var message = 'Translation for "' + id + '" in "' + locale + '" is missing'
+      if (missingTranslation === 'warning') {
+        /* istanbul ignore else */
+        if (typeof console !== 'undefined') console.warn(message)
+      } else if (missingTranslation !== 'ignore') { // 'error'
+        throw new Error(message)
+      }
+      var replacement = typeof missingReplacement === 'function'
+        ? missingReplacement(pattern, id, locale) || pattern
+        : missingReplacement || pattern
+      translated = messages[id] = { message: replacement }
+    }
+    return translated
+  }
+
+  formatMessage.setup = function setup (opt/*:: ?: Options */) {
+    opt = opt || {}
+    if (opt.locale) currentLocales = opt.locale
+    if ('translations' in opt) translations = opt.translations || {}
+    if (opt.generateId) generateId = opt.generateId
+    if ('missingReplacement' in opt) missingReplacement = opt.missingReplacement
+    if (opt.missingTranslation) missingTranslation = opt.missingTranslation
+    if (opt.formats) {
+      if (opt.formats.number) assign(formats.number, opt.formats.number)
+      if (opt.formats.date) assign(formats.date, opt.formats.date)
+      if (opt.formats.time) assign(formats.time, opt.formats.time)
+    }
+    if (opt.types) {
+      types = opt.types
+      types[tagsType] = richType
+    }
+    return {
+      locale: currentLocales,
+      translations: translations,
+      generateId: generateId,
+      missingReplacement: missingReplacement,
+      missingTranslation: missingTranslation,
+      formats: formats,
+      types: types
+    }
+  }
+
+  formatMessage.number = function (value/*: number */, style/*:: ?: string */, locales/*:: ?: Locales */) {
+    var options = (style && formats.number[style]) ||
+      formats.parseNumberPattern(style) ||
+      formats.number.default
+    return new Intl.NumberFormat(locales || currentLocales, options).format(value)
+  }
+
+  formatMessage.date = function (value/*:: ?: number | Date */, style/*:: ?: string */, locales/*:: ?: Locales */) {
+    var options = (style && formats.date[style]) ||
+      formats.parseDatePattern(style) ||
+      formats.date.default
+    return new Intl.DateTimeFormat(locales || currentLocales, options).format(value)
+  }
+
+  formatMessage.time = function (value/*:: ?: number | Date */, style/*:: ?: string */, locales/*:: ?: Locales */) {
+    var options = (style && formats.time[style]) ||
+      formats.parseDatePattern(style) ||
+      formats.time.default
+    return new Intl.DateTimeFormat(locales || currentLocales, options).format(value)
+  }
+
+  formatMessage.select = function (value/*: any */, options/*: Object */) {
+    return options[value] || options.other
+  }
+
+  formatMessage.custom = function (placeholder/*: any[] */, locales/*: Locales */, value/*: any */, args/*: Object */) {
+    if (!(placeholder[1] in types)) return value
+    return types[placeholder[1]](placeholder, locales)(value, args)
+  }
+
+  formatMessage.plural = plural.bind(null, 'cardinal')
+  formatMessage.selectordinal = plural.bind(null, 'ordinal')
+  function plural (
+    pluralType/*: 'cardinal' | 'ordinal' */,
+    value/*: number */,
+    offset/*: any */,
+    options/*: any */,
+    locale/*: any */
+  ) {
+    if (typeof offset === 'object' && typeof options !== 'object') { // offset is optional
+      locale = options
+      options = offset
+      offset = 0
+    }
+    var closest = lookupClosestLocale(locale || currentLocales, plurals)
+    var plural = (closest && plurals[closest][pluralType]) || returnOther
+    return options['=' + +value] || options[plural(value - offset)] || options.other
+  }
+  function returnOther (/*:: n:number */) { return 'other' }
+
+  formatMessage.namespace = namespace
+
+  return formatMessage
+}
+
+module.exports = exports = namespace()
+
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/node_modules/lookup-closest-locale/index.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/lookup-closest-locale/index.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// @flow
+// "lookup" algorithm http://tools.ietf.org/html/rfc4647#section-3.4
+// assumes normalized language tags, and matches in a case sensitive manner
+module.exports = function lookupClosestLocale (locale/*: string | string[] | void */, available/*: { [string]: any } */)/*: ?string */ {
+  if (typeof locale === 'string' && available[locale]) return locale
+  var locales = [].concat(locale || [])
+  for (var l = 0, ll = locales.length; l < ll; ++l) {
+    var current = locales[l].split('-')
+    while (current.length) {
+      var candidate = current.join('-')
+      if (available[candidate]) return candidate
+      current.pop()
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/node_modules/microee/index.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/microee/index.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function M() { this._events = {}; }
+M.prototype = {
+  on: function(ev, cb) {
+    this._events || (this._events = {});
+    var e = this._events;
+    (e[ev] || (e[ev] = [])).push(cb);
+    return this;
+  },
+  removeListener: function(ev, cb) {
+    var e = this._events[ev] || [], i;
+    for(i = e.length-1; i >= 0 && e[i]; i--){
+      if(e[i] === cb || e[i].cb === cb) { e.splice(i, 1); }
+    }
+  },
+  removeAllListeners: function(ev) {
+    if(!ev) { this._events = {}; }
+    else { this._events[ev] && (this._events[ev] = []); }
+  },
+  listeners: function(ev) {
+    return (this._events ? this._events[ev] || [] : []);
+  },
+  emit: function(ev) {
+    this._events || (this._events = {});
+    var args = Array.prototype.slice.call(arguments, 1), i, e = this._events[ev] || [];
+    for(i = e.length-1; i >= 0 && e[i]; i--){
+      e[i].apply(this, args);
+    }
+    return this;
+  },
+  when: function(ev, cb) {
+    return this.once(ev, cb, true);
+  },
+  once: function(ev, cb, when) {
+    if(!cb) return this;
+    function c() {
+      if(!when) this.removeListener(ev, c);
+      if(cb.apply(this, arguments) && when) this.removeListener(ev, c);
+    }
+    c.cb = cb;
+    this.on(ev, c);
+    return this;
+  }
+};
+M.mixin = function(dest) {
+  var o = M.prototype, k;
+  for (k in o) {
+    o.hasOwnProperty(k) && (dest.prototype[k] = o[k]);
+  }
+};
+module.exports = M;
+
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/common/filter.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/common/filter.js ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// default filter
+var Transform = __webpack_require__(/*! ./transform.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js");
+
+var levelMap = { debug: 1, info: 2, warn: 3, error: 4 };
+
+function Filter() {
+  this.enabled = true;
+  this.defaultResult = true;
+  this.clear();
+}
+
+Transform.mixin(Filter);
+
+// allow all matching, with level >= given level
+Filter.prototype.allow = function(name, level) {
+  this._white.push({ n: name, l: levelMap[level] });
+  return this;
+};
+
+// deny all matching, with level <= given level
+Filter.prototype.deny = function(name, level) {
+  this._black.push({ n: name, l: levelMap[level] });
+  return this;
+};
+
+Filter.prototype.clear = function() {
+  this._white = [];
+  this._black = [];
+  return this;
+};
+
+function test(rule, name) {
+  // use .test for RegExps
+  return (rule.n.test ? rule.n.test(name) : rule.n == name);
+};
+
+Filter.prototype.test = function(name, level) {
+  var i, len = Math.max(this._white.length, this._black.length);
+  for(i = 0; i < len; i++) {
+    if(this._white[i] && test(this._white[i], name) && levelMap[level] >= this._white[i].l) {
+      return true;
+    }
+    if(this._black[i] && test(this._black[i], name) && levelMap[level] <= this._black[i].l) {
+      return false;
+    }
+  }
+  return this.defaultResult;
+};
+
+Filter.prototype.write = function(name, level, args) {
+  if(!this.enabled || this.test(name, level)) {
+    return this.emit('item', name, level, args);
+  }
+};
+
+module.exports = Filter;
+
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/common/minilog.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/common/minilog.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Transform = __webpack_require__(/*! ./transform.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js"),
+    Filter = __webpack_require__(/*! ./filter.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/filter.js");
+
+var log = new Transform(),
+    slice = Array.prototype.slice;
+
+exports = module.exports = function create(name) {
+  var o   = function() { log.write(name, undefined, slice.call(arguments)); return o; };
+  o.debug = function() { log.write(name, 'debug', slice.call(arguments)); return o; };
+  o.info  = function() { log.write(name, 'info',  slice.call(arguments)); return o; };
+  o.warn  = function() { log.write(name, 'warn',  slice.call(arguments)); return o; };
+  o.error = function() { log.write(name, 'error', slice.call(arguments)); return o; };
+  o.log   = o.debug; // for interface compliance with Node and browser consoles
+  o.suggest = exports.suggest;
+  o.format = log.format;
+  return o;
+};
+
+// filled in separately
+exports.defaultBackend = exports.defaultFormatter = null;
+
+exports.pipe = function(dest) {
+  return log.pipe(dest);
+};
+
+exports.end = exports.unpipe = exports.disable = function(from) {
+  return log.unpipe(from);
+};
+
+exports.Transform = Transform;
+exports.Filter = Filter;
+// this is the default filter that's applied when .enable() is called normally
+// you can bypass it completely and set up your own pipes
+exports.suggest = new Filter();
+
+exports.enable = function() {
+  if(exports.defaultFormatter) {
+    return log.pipe(exports.suggest) // filter
+              .pipe(exports.defaultFormatter) // formatter
+              .pipe(exports.defaultBackend); // backend
+  }
+  return log.pipe(exports.suggest) // filter
+            .pipe(exports.defaultBackend); // formatter
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var microee = __webpack_require__(/*! microee */ "./node_modules/scratch-vm/node_modules/microee/index.js");
+
+// Implements a subset of Node's stream.Transform - in a cross-platform manner.
+function Transform() {}
+
+microee.mixin(Transform);
+
+// The write() signature is different from Node's
+// --> makes it much easier to work with objects in logs.
+// One of the lessons from v1 was that it's better to target
+// a good browser rather than the lowest common denominator
+// internally.
+// If you want to use external streams, pipe() to ./stringify.js first.
+Transform.prototype.write = function(name, level, args) {
+  this.emit('item', name, level, args);
+};
+
+Transform.prototype.end = function() {
+  this.emit('end');
+  this.removeAllListeners();
+};
+
+Transform.prototype.pipe = function(dest) {
+  var s = this;
+  // prevent double piping
+  s.emit('unpipe', dest);
+  // tell the dest that it's being piped to
+  dest.emit('pipe', s);
+
+  function onItem() {
+    dest.write.apply(dest, Array.prototype.slice.call(arguments));
+  }
+  function onEnd() { !dest._isStdio && dest.end(); }
+
+  s.on('item', onItem);
+  s.on('end', onEnd);
+
+  s.when('unpipe', function(from) {
+    var match = (from === dest) || typeof from == 'undefined';
+    if(match) {
+      s.removeListener('item', onItem);
+      s.removeListener('end', onEnd);
+      dest.emit('unpipe');
+    }
+    return match;
+  });
+
+  return dest;
+};
+
+Transform.prototype.unpipe = function(from) {
+  this.emit('unpipe', from);
+  return this;
+};
+
+Transform.prototype.format = function(dest) {
+  throw new Error([
+    'Warning: .format() is deprecated in Minilog v2! Use .pipe() instead. For example:',
+    'var Minilog = require(\'minilog\');',
+    'Minilog',
+    '  .pipe(Minilog.backends.console.formatClean)',
+    '  .pipe(Minilog.backends.console);'].join('\n'));
+};
+
+Transform.mixin = function(dest) {
+  var o = Transform.prototype, k;
+  for (k in o) {
+    o.hasOwnProperty(k) && (dest.prototype[k] = o[k]);
+  }
+};
+
+module.exports = Transform;
+
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/web/array.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/web/array.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js"),
+    cache = [ ];
+
+var logger = new Transform();
+
+logger.write = function(name, level, args) {
+  cache.push([ name, level, args ]);
+};
+
+// utility functions
+logger.get = function() { return cache; };
+logger.empty = function() { cache = []; };
+
+module.exports = logger;
+
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/web/console.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/web/console.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js");
+
+var newlines = /\n+$/,
+    logger = new Transform();
+
+logger.write = function(name, level, args) {
+  var i = args.length-1;
+  if (typeof console === 'undefined' || !console.log) {
+    return;
+  }
+  if(console.log.apply) {
+    return console.log.apply(console, [name, level].concat(args));
+  } else if(JSON && JSON.stringify) {
+    // console.log.apply is undefined in IE8 and IE9
+    // for IE8/9: make console.log at least a bit less awful
+    if(args[i] && typeof args[i] == 'string') {
+      args[i] = args[i].replace(newlines, '');
+    }
+    try {
+      for(i = 0; i < args.length; i++) {
+        args[i] = JSON.stringify(args[i]);
+      }
+    } catch(e) {}
+    console.log(args.join(' '));
+  }
+};
+
+logger.formatters = ['color', 'minilog'];
+logger.color = __webpack_require__(/*! ./formatters/color.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/color.js");
+logger.minilog = __webpack_require__(/*! ./formatters/minilog.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/minilog.js");
+
+module.exports = logger;
+
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/color.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/color.js ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Transform = __webpack_require__(/*! ../../common/transform.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js"),
+    color = __webpack_require__(/*! ./util.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/util.js");
+
+var colors = { debug: ['cyan'], info: ['purple' ], warn: [ 'yellow', true ], error: [ 'red', true ] },
+    logger = new Transform();
+
+logger.write = function(name, level, args) {
+  var fn = console.log;
+  if(console[level] && console[level].apply) {
+    fn = console[level];
+    fn.apply(console, [ '%c'+name+' %c'+level, color('gray'), color.apply(color, colors[level])].concat(args));
+  }
+};
+
+// NOP, because piping the formatted logs can only cause trouble.
+logger.pipe = function() { };
+
+module.exports = logger;
+
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/minilog.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/minilog.js ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Transform = __webpack_require__(/*! ../../common/transform.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js"),
+    color = __webpack_require__(/*! ./util.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/util.js"),
+    colors = { debug: ['gray'], info: ['purple' ], warn: [ 'yellow', true ], error: [ 'red', true ] },
+    logger = new Transform();
+
+logger.write = function(name, level, args) {
+  var fn = console.log;
+  if(level != 'debug' && console[level]) {
+    fn = console[level];
+  }
+
+  var subset = [], i = 0;
+  if(level != 'info') {
+    for(; i < args.length; i++) {
+      if(typeof args[i] != 'string') break;
+    }
+    fn.apply(console, [ '%c'+name +' '+ args.slice(0, i).join(' '), color.apply(color, colors[level]) ].concat(args.slice(i)));
+  } else {
+    fn.apply(console, [ '%c'+name, color.apply(color, colors[level]) ].concat(args));
+  }
+};
+
+// NOP, because piping the formatted logs can only cause trouble.
+logger.pipe = function() { };
+
+module.exports = logger;
+
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/util.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/web/formatters/util.js ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var hex = {
+  black: '#000',
+  red: '#c23621',
+  green: '#25bc26',
+  yellow: '#bbbb00',
+  blue:  '#492ee1',
+  magenta: '#d338d3',
+  cyan: '#33bbc8',
+  gray: '#808080',
+  purple: '#708'
+};
+function color(fg, isInverse) {
+  if(isInverse) {
+    return 'color: #fff; background: '+hex[fg]+';';
+  } else {
+    return 'color: '+hex[fg]+';';
+  }
+}
+
+module.exports = color;
+
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/web/index.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/web/index.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Minilog = __webpack_require__(/*! ../common/minilog.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/minilog.js");
+
+var oldEnable = Minilog.enable,
+    oldDisable = Minilog.disable,
+    isChrome = (typeof navigator != 'undefined' && /chrome/i.test(navigator.userAgent)),
+    console = __webpack_require__(/*! ./console.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/web/console.js");
+
+// Use a more capable logging backend if on Chrome
+Minilog.defaultBackend = (isChrome ? console.minilog : console);
+
+// apply enable inputs from localStorage and from the URL
+if(typeof window != 'undefined') {
+  try {
+    Minilog.enable(JSON.parse(window.localStorage['minilogSettings']));
+  } catch(e) {}
+  if(window.location && window.location.search) {
+    var match = RegExp('[?&]minilog=([^&]*)').exec(window.location.search);
+    match && Minilog.enable(decodeURIComponent(match[1]));
+  }
+}
+
+// Make enable also add to localStorage
+Minilog.enable = function() {
+  oldEnable.call(Minilog, true);
+  try { window.localStorage['minilogSettings'] = JSON.stringify(true); } catch(e) {}
+  return this;
+};
+
+Minilog.disable = function() {
+  oldDisable.call(Minilog);
+  try { delete window.localStorage.minilogSettings; } catch(e) {}
+  return this;
+};
+
+exports = module.exports = Minilog;
+
+exports.backends = {
+  array: __webpack_require__(/*! ./array.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/web/array.js"),
+  browser: Minilog.defaultBackend,
+  localStorage: __webpack_require__(/*! ./localstorage.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/web/localstorage.js"),
+  jQuery: __webpack_require__(/*! ./jquery_simple.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/web/jquery_simple.js")
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/web/jquery_simple.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/web/jquery_simple.js ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js");
+
+var cid = new Date().valueOf().toString(36);
+
+function AjaxLogger(options) {
+  this.url = options.url || '';
+  this.cache = [];
+  this.timer = null;
+  this.interval = options.interval || 30*1000;
+  this.enabled = true;
+  this.jQuery = window.jQuery;
+  this.extras = {};
+}
+
+Transform.mixin(AjaxLogger);
+
+AjaxLogger.prototype.write = function(name, level, args) {
+  if(!this.timer) { this.init(); }
+  this.cache.push([name, level].concat(args));
+};
+
+AjaxLogger.prototype.init = function() {
+  if(!this.enabled || !this.jQuery) return;
+  var self = this;
+  this.timer = setTimeout(function() {
+    var i, logs = [], ajaxData, url = self.url;
+    if(self.cache.length == 0) return self.init();
+    // Test each log line and only log the ones that are valid (e.g. don't have circular references).
+    // Slight performance hit but benefit is we log all valid lines.
+    for(i = 0; i < self.cache.length; i++) {
+      try {
+        JSON.stringify(self.cache[i]);
+        logs.push(self.cache[i]);
+      } catch(e) { }
+    }
+    if(self.jQuery.isEmptyObject(self.extras)) {
+        ajaxData = JSON.stringify({ logs: logs });
+        url = self.url + '?client_id=' + cid;
+    } else {
+        ajaxData = JSON.stringify(self.jQuery.extend({logs: logs}, self.extras));
+    }
+
+    self.jQuery.ajax(url, {
+      type: 'POST',
+      cache: false,
+      processData: false,
+      data: ajaxData,
+      contentType: 'application/json',
+      timeout: 10000
+    }).success(function(data, status, jqxhr) {
+      if(data.interval) {
+        self.interval = Math.max(1000, data.interval);
+      }
+    }).error(function() {
+      self.interval = 30000;
+    }).always(function() {
+      self.init();
+    });
+    self.cache = [];
+  }, this.interval);
+};
+
+AjaxLogger.prototype.end = function() {};
+
+// wait until jQuery is defined. Useful if you don't control the load order.
+AjaxLogger.jQueryWait = function(onDone) {
+  if(typeof window !== 'undefined' && (window.jQuery || window.$)) {
+    return onDone(window.jQuery || window.$);
+  } else if (typeof window !== 'undefined') {
+    setTimeout(function() { AjaxLogger.jQueryWait(onDone); }, 200);
+  }
+};
+
+module.exports = AjaxLogger;
+
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/node_modules/minilog/lib/web/localstorage.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/scratch-vm/node_modules/minilog/lib/web/localstorage.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/scratch-vm/node_modules/minilog/lib/common/transform.js"),
+    cache = false;
+
+var logger = new Transform();
+
+logger.write = function(name, level, args) {
+  if(typeof window == 'undefined' || typeof JSON == 'undefined' || !JSON.stringify || !JSON.parse) return;
+  try {
+    if(!cache) { cache = (window.localStorage.minilog ? JSON.parse(window.localStorage.minilog) : []); }
+    cache.push([ new Date().toString(), name, level, args ]);
+    window.localStorage.minilog = JSON.stringify(cache);
+  } catch(e) {}
+};
+
+module.exports = logger;
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/src/dispatch/shared-dispatch.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/scratch-vm/src/dispatch/shared-dispatch.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const log = __webpack_require__(/*! ../util/log */ "./node_modules/scratch-vm/src/util/log.js");
+/**
+ * @typedef {object} DispatchCallMessage - a message to the dispatch system representing a service method call
+ * @property {*} responseId - send a response message with this response ID. See {@link DispatchResponseMessage}
+ * @property {string} service - the name of the service to be called
+ * @property {string} method - the name of the method to be called
+ * @property {Array|undefined} args - the arguments to be passed to the method
+ */
+
+/**
+ * @typedef {object} DispatchResponseMessage - a message to the dispatch system representing the results of a call
+ * @property {*} responseId - a copy of the response ID from the call which generated this response
+ * @property {*|undefined} error - if this is truthy, then it contains results from a failed call (such as an exception)
+ * @property {*|undefined} result - if error is not truthy, then this contains the return value of the call (if any)
+ */
+
+/**
+ * @typedef {DispatchCallMessage|DispatchResponseMessage} DispatchMessage
+ * Any message to the dispatch system.
+ */
+
+/**
+ * The SharedDispatch class is responsible for dispatch features shared by
+ * {@link CentralDispatch} and {@link WorkerDispatch}.
+ */
+
+
+class SharedDispatch {
+  constructor() {
+    /**
+     * List of callback registrations for promises waiting for a response from a call to a service on another
+     * worker. A callback registration is an array of [resolve,reject] Promise functions.
+     * Calls to local services don't enter this list.
+     * @type {Array.<Function[]>}
+     */
+    this.callbacks = [];
+    /**
+     * The next response ID to be used.
+     * @type {int}
+     */
+
+    this.nextResponseId = 0;
+  }
+  /**
+   * Call a particular method on a particular service, regardless of whether that service is provided locally or on
+   * a worker. If the service is provided by a worker, the `args` will be copied using the Structured Clone
+   * algorithm, except for any items which are also in the `transfer` list. Ownership of those items will be
+   * transferred to the worker, and they should not be used after this call.
+   * @example
+   *      dispatcher.call('vm', 'setData', 'cat', 42);
+   *      // this finds the worker for the 'vm' service, then on that worker calls:
+   *      vm.setData('cat', 42);
+   * @param {string} service - the name of the service.
+   * @param {string} method - the name of the method.
+   * @param {*} [args] - the arguments to be copied to the method, if any.
+   * @returns {Promise} - a promise for the return value of the service method.
+   */
+
+
+  call(service, method, ...args) {
+    return this.transferCall(service, method, null, ...args);
+  }
+  /**
+   * Call a particular method on a particular service, regardless of whether that service is provided locally or on
+   * a worker. If the service is provided by a worker, the `args` will be copied using the Structured Clone
+   * algorithm, except for any items which are also in the `transfer` list. Ownership of those items will be
+   * transferred to the worker, and they should not be used after this call.
+   * @example
+   *      dispatcher.transferCall('vm', 'setData', [myArrayBuffer], 'cat', myArrayBuffer);
+   *      // this finds the worker for the 'vm' service, transfers `myArrayBuffer` to it, then on that worker calls:
+   *      vm.setData('cat', myArrayBuffer);
+   * @param {string} service - the name of the service.
+   * @param {string} method - the name of the method.
+   * @param {Array} [transfer] - objects to be transferred instead of copied. Must be present in `args` to be useful.
+   * @param {*} [args] - the arguments to be copied to the method, if any.
+   * @returns {Promise} - a promise for the return value of the service method.
+   */
+
+
+  transferCall(service, method, transfer, ...args) {
+    try {
+      const {
+        provider,
+        isRemote
+      } = this._getServiceProvider(service);
+
+      if (provider) {
+        if (isRemote) {
+          return this._remoteTransferCall(provider, service, method, transfer, ...args);
+        }
+
+        const result = provider[method].apply(provider, args);
+        return Promise.resolve(result);
+      }
+
+      return Promise.reject(new Error("Service not found: ".concat(service)));
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  }
+  /**
+   * Check if a particular service lives on another worker.
+   * @param {string} service - the service to check.
+   * @returns {boolean} - true if the service is remote (calls must cross a Worker boundary), false otherwise.
+   * @private
+   */
+
+
+  _isRemoteService(service) {
+    return this._getServiceProvider(service).isRemote;
+  }
+  /**
+   * Like {@link call}, but force the call to be posted through a particular communication channel.
+   * @param {object} provider - send the call through this object's `postMessage` function.
+   * @param {string} service - the name of the service.
+   * @param {string} method - the name of the method.
+   * @param {*} [args] - the arguments to be copied to the method, if any.
+   * @returns {Promise} - a promise for the return value of the service method.
+   */
+
+
+  _remoteCall(provider, service, method, ...args) {
+    return this._remoteTransferCall(provider, service, method, null, ...args);
+  }
+  /**
+   * Like {@link transferCall}, but force the call to be posted through a particular communication channel.
+   * @param {object} provider - send the call through this object's `postMessage` function.
+   * @param {string} service - the name of the service.
+   * @param {string} method - the name of the method.
+   * @param {Array} [transfer] - objects to be transferred instead of copied. Must be present in `args` to be useful.
+   * @param {*} [args] - the arguments to be copied to the method, if any.
+   * @returns {Promise} - a promise for the return value of the service method.
+   */
+
+
+  _remoteTransferCall(provider, service, method, transfer, ...args) {
+    return new Promise((resolve, reject) => {
+      const responseId = this._storeCallbacks(resolve, reject);
+      /** @TODO: remove this hack! this is just here so we don't try to send `util` to a worker */
+      // tw: upstream's logic is broken
+      // Args is actually a 3 length list of [args, util, real block info]
+      // We only want to send args. The others will throw errors when they try to be cloned
+
+
+      if (args.length > 0 && typeof args[args.length - 1].func === 'function') {
+        args.pop();
+        args.pop();
+      }
+
+      if (transfer) {
+        provider.postMessage({
+          service,
+          method,
+          responseId,
+          args
+        }, transfer);
+      } else {
+        provider.postMessage({
+          service,
+          method,
+          responseId,
+          args
+        });
+      }
+    });
+  }
+  /**
+   * Store callback functions pending a response message.
+   * @param {Function} resolve - function to call if the service method returns.
+   * @param {Function} reject - function to call if the service method throws.
+   * @returns {*} - a unique response ID for this set of callbacks. See {@link _deliverResponse}.
+   * @protected
+   */
+
+
+  _storeCallbacks(resolve, reject) {
+    const responseId = this.nextResponseId++;
+    this.callbacks[responseId] = [resolve, reject];
+    return responseId;
+  }
+  /**
+   * Deliver call response from a worker. This should only be called as the result of a message from a worker.
+   * @param {int} responseId - the response ID of the callback set to call.
+   * @param {DispatchResponseMessage} message - the message containing the response value(s).
+   * @protected
+   */
+
+
+  _deliverResponse(responseId, message) {
+    try {
+      const [resolve, reject] = this.callbacks[responseId];
+      delete this.callbacks[responseId];
+
+      if (message.error) {
+        reject(message.error);
+      } else {
+        resolve(message.result);
+      }
+    } catch (e) {
+      log.error("Dispatch callback failed: ".concat(e));
+    }
+  }
+  /**
+   * Handle a message event received from a connected worker.
+   * @param {Worker} worker - the worker which sent the message, or the global object if running in a worker.
+   * @param {MessageEvent} event - the message event to be handled.
+   * @protected
+   */
+
+
+  _onMessage(worker, event) {
+    /** @type {DispatchMessage} */
+    const message = event.data;
+    message.args = message.args || [];
+    let promise;
+
+    if (message.service) {
+      if (message.service === 'dispatch') {
+        promise = this._onDispatchMessage(worker, message);
+      } else {
+        promise = this.call(message.service, message.method, ...message.args);
+      }
+    } else if (typeof message.responseId === 'undefined') {
+      log.error("Dispatch caught malformed message from a worker: ".concat(JSON.stringify(event)));
+    } else {
+      this._deliverResponse(message.responseId, message);
+    }
+
+    if (promise) {
+      if (typeof message.responseId === 'undefined') {
+        log.error("Dispatch message missing required response ID: ".concat(JSON.stringify(event)));
+      } else {
+        promise.then(result => worker.postMessage({
+          responseId: message.responseId,
+          result
+        }), error => worker.postMessage({
+          responseId: message.responseId,
+          error: "".concat(error)
+        }));
+      }
+    }
+  }
+  /**
+   * Fetch the service provider object for a particular service name.
+   * @abstract
+   * @param {string} service - the name of the service to look up
+   * @returns {{provider:(object|Worker), isRemote:boolean}} - the means to contact the service, if found
+   * @protected
+   */
+
+
+  _getServiceProvider(service) {
+    throw new Error("Could not get provider for ".concat(service, ": _getServiceProvider not implemented"));
+  }
+  /**
+   * Handle a call message sent to the dispatch service itself
+   * @abstract
+   * @param {Worker} worker - the worker which sent the message.
+   * @param {DispatchCallMessage} message - the message to be handled.
+   * @returns {Promise|undefined} - a promise for the results of this operation, if appropriate
+   * @private
+   */
+
+
+  _onDispatchMessage(worker, message) {
+    throw new Error("Unimplemented dispatch message handler cannot handle ".concat(message.method, " method"));
+  }
+
+}
+
+module.exports = SharedDispatch;
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/src/dispatch/worker-dispatch.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/scratch-vm/src/dispatch/worker-dispatch.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const SharedDispatch = __webpack_require__(/*! ./shared-dispatch */ "./node_modules/scratch-vm/src/dispatch/shared-dispatch.js");
+
+const log = __webpack_require__(/*! ../util/log */ "./node_modules/scratch-vm/src/util/log.js");
+
+const {
+  centralDispatchService
+} = __webpack_require__(/*! ../extension-support/tw-extension-worker-context */ "./node_modules/scratch-vm/src/extension-support/tw-extension-worker-context.js");
+/**
+ * This class provides a Worker with the means to participate in the message dispatch system managed by CentralDispatch.
+ * From any context in the messaging system, the dispatcher's "call" method can call any method on any "service"
+ * provided in any participating context. The dispatch system will forward function arguments and return values across
+ * worker boundaries as needed.
+ * @see {CentralDispatch}
+ */
+
+
+class WorkerDispatch extends SharedDispatch {
+  constructor() {
+    super();
+    /**
+     * This promise will be resolved when we have successfully connected to central dispatch.
+     * @type {Promise}
+     * @see {waitForConnection}
+     * @private
+     */
+
+    this._connectionPromise = new Promise(resolve => {
+      this._onConnect = resolve;
+    });
+    /**
+     * Map of service name to local service provider.
+     * If a service is not listed here, it is assumed to be provided by another context (another Worker or the main
+     * thread).
+     * @see {setService}
+     * @type {object}
+     */
+
+    this.services = {};
+    this._onMessage = this._onMessage.bind(this, centralDispatchService);
+
+    if (typeof self !== 'undefined') {
+      self.onmessage = this._onMessage;
+    }
+  }
+  /**
+   * @returns {Promise} a promise which will resolve upon connection to central dispatch. If you need to make a call
+   * immediately on "startup" you can attach a 'then' to this promise.
+   * @example
+   *      dispatch.waitForConnection.then(() => {
+   *          dispatch.call('myService', 'hello');
+   *      })
+   */
+
+
+  get waitForConnection() {
+    return this._connectionPromise;
+  }
+  /**
+   * Set a local object as the global provider of the specified service.
+   * WARNING: Any method on the provider can be called from any worker within the dispatch system.
+   * @param {string} service - a globally unique string identifying this service. Examples: 'vm', 'gui', 'extension9'.
+   * @param {object} provider - a local object which provides this service.
+   * @returns {Promise} - a promise which will resolve once the service is registered.
+   */
+
+
+  setService(service, provider) {
+    if (this.services.hasOwnProperty(service)) {
+      log.warn("Worker dispatch replacing existing service provider for ".concat(service));
+    }
+
+    this.services[service] = provider;
+    return this.waitForConnection.then(() => this._remoteCall(centralDispatchService, 'dispatch', 'setService', service));
+  }
+  /**
+   * Fetch the service provider object for a particular service name.
+   * @override
+   * @param {string} service - the name of the service to look up
+   * @returns {{provider:(object|Worker), isRemote:boolean}} - the means to contact the service, if found
+   * @protected
+   */
+
+
+  _getServiceProvider(service) {
+    // if we don't have a local service by this name, contact central dispatch by calling `postMessage` on self
+    const provider = this.services[service];
+    return {
+      provider: provider || centralDispatchService,
+      isRemote: !provider
+    };
+  }
+  /**
+   * Handle a call message sent to the dispatch service itself
+   * @override
+   * @param {Worker} worker - the worker which sent the message.
+   * @param {DispatchCallMessage} message - the message to be handled.
+   * @returns {Promise|undefined} - a promise for the results of this operation, if appropriate
+   * @protected
+   */
+
+
+  _onDispatchMessage(worker, message) {
+    let promise;
+
+    switch (message.method) {
+      case 'handshake':
+        promise = this._onConnect();
+        break;
+
+      case 'terminate':
+        // Don't close until next tick, after sending confirmation back
+        setTimeout(() => self.close(), 0);
+        promise = Promise.resolve();
+        break;
+
+      default:
+        log.error("Worker dispatch received message for unknown method: ".concat(message.method));
+    }
+
+    return promise;
+  }
+
+}
+
+module.exports = new WorkerDispatch();
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/src/extension-support/argument-type.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/scratch-vm/src/extension-support/argument-type.js ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Block argument types
+ * @enum {string}
+ */
+const ArgumentType = {
+  /**
+   * Numeric value with angle picker
+   */
+  ANGLE: 'angle',
+
+  /**
+   * Boolean value with hexagonal placeholder
+   */
+  BOOLEAN: 'Boolean',
+
+  /**
+   * Numeric value with color picker
+   */
+  COLOR: 'color',
+
+  /**
+   * Numeric value with text field
+   */
+  NUMBER: 'number',
+
+  /**
+   * String value with text field
+   */
+  STRING: 'string',
+
+  /**
+   * String value with matrix field
+   */
+  MATRIX: 'matrix',
+
+  /**
+   * MIDI note number with note picker (piano) field
+   */
+  NOTE: 'note',
+
+  /**
+   * Inline image on block (as part of the label)
+   */
+  IMAGE: 'image',
+
+  /**
+   * Name of costume in the current target
+   */
+  COSTUME: 'costume',
+
+  /**
+   * Name of sound in the current target
+   */
+  SOUND: 'sound'
+};
+module.exports = ArgumentType;
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/src/extension-support/block-type.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/scratch-vm/src/extension-support/block-type.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Types of block
+ * @enum {string}
+ */
+const BlockType = {
+  /**
+   * Boolean reporter with hexagonal shape
+   */
+  BOOLEAN: 'Boolean',
+
+  /**
+   * A button (not an actual block) for some special action, like making a variable
+   */
+  BUTTON: 'button',
+
+  /**
+   * A text label (not an actual block) for adding comments or labling blocks
+   */
+  LABEL: 'label',
+
+  /**
+   * Command block
+   */
+  COMMAND: 'command',
+
+  /**
+   * Specialized command block which may or may not run a child branch
+   * The thread continues with the next block whether or not a child branch ran.
+   */
+  CONDITIONAL: 'conditional',
+
+  /**
+   * Specialized hat block with no implementation function
+   * This stack only runs if the corresponding event is emitted by other code.
+   */
+  EVENT: 'event',
+
+  /**
+   * Hat block which conditionally starts a block stack
+   */
+  HAT: 'hat',
+
+  /**
+   * Specialized command block which may or may not run a child branch
+   * If a child branch runs, the thread evaluates the loop block again.
+   */
+  LOOP: 'loop',
+
+  /**
+   * General reporter with numeric or string value
+   */
+  REPORTER: 'reporter'
+};
+module.exports = BlockType;
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/src/extension-support/extension-worker.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/scratch-vm/src/extension-support/extension-worker.js ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {/* eslint-env worker */
+const ScratchCommon = __webpack_require__(/*! ./tw-extension-api-common */ "./node_modules/scratch-vm/src/extension-support/tw-extension-api-common.js");
+
+const dispatch = __webpack_require__(/*! ../dispatch/worker-dispatch */ "./node_modules/scratch-vm/src/dispatch/worker-dispatch.js");
+
+const log = __webpack_require__(/*! ../util/log */ "./node_modules/scratch-vm/src/util/log.js");
+
+const {
+  isWorker
+} = __webpack_require__(/*! ./tw-extension-worker-context */ "./node_modules/scratch-vm/src/extension-support/tw-extension-worker-context.js");
+
+const createTranslate = __webpack_require__(/*! ./tw-l10n */ "./node_modules/scratch-vm/src/extension-support/tw-l10n.js");
+
+const Scratch = __webpack_require__(/*! ./tw-extension-api-common */ "./node_modules/scratch-vm/src/extension-support/tw-extension-api-common.js");
+
+const translate = createTranslate(null);
+
+const loadScripts = url => {
+  if (typeof webpackJsonp == 'undefined') {
+    let u = ['coreExample', 'lazyAudio', 'canvas', 'yun', 'js', 'jsonfetch', 'astar', 'three', 'box2d', 'ws', 'community', 'community2', 'yx', 'set', 'pen', 'wedo2', 'music', 'microbit', 'text2speech', 'translate', 'videoSensing', 'ev3', 'makeymakey', 'boost', 'gdxfor', 'tc', 'touch', 'tw', 'other', 'p3d', 'text'];
+
+    if (typeof url !== 'object' && u.indexOf(url) === -1 && !url.startsWith('blob:') && !url.startsWith('http')) {
+      url = 'https://40code-cdn.zq990.com/ext/' + url + '.js';
+    }
+  }
+
+  if (isWorker) {
+    importScripts(url);
+  } else {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+
+      script.onload = () => resolve();
+
+      script.onerror = () => {
+        reject(new Error("Error in sandboxed script: ".concat(url, ". Check the console for more information.")));
+      };
+
+      if (typeof url === 'object') script.innerText = url.data;else script.src = url;
+      document.body.appendChild(script);
+    });
+  }
+};
+
+class ExtensionWorker {
+  constructor() {
+    this.nextExtensionId = 0;
+    this.initialRegistrations = [];
+    this.firstRegistrationPromise = new Promise(resolve => {
+      this.firstRegistrationCallback = resolve;
+    });
+    dispatch.waitForConnection.then(() => {
+      dispatch.call('extensions', 'allocateWorker').then(async x => {
+        const [id, extension] = x;
+        this.workerId = id;
+
+        try {
+          await loadScripts(extension);
+          await this.firstRegistrationPromise;
+          const initialRegistrations = this.initialRegistrations;
+          this.initialRegistrations = null;
+
+          if (window.tempExt) {
+            Scratch.extensions.register(new window.tempExt.Extension());
+            window.tempExt = false;
+          }
+
+          Promise.all(initialRegistrations).then(() => dispatch.call('extensions', 'onWorkerInit', id));
+        } catch (e) {
+          log.error(e);
+          dispatch.call('extensions', 'onWorkerInit', id, "".concat(e));
+        }
+      });
+    });
+    this.extensions = [];
+  }
+
+  register(extensionObject) {
+    const extensionId = this.nextExtensionId++;
+    this.extensions.push(extensionObject);
+    const serviceName = "extension.".concat(this.workerId, ".").concat(extensionId);
+    const promise = dispatch.setService(serviceName, extensionObject).then(() => dispatch.call('extensions', 'registerExtensionService', serviceName));
+
+    if (this.initialRegistrations) {
+      this.firstRegistrationCallback();
+      this.initialRegistrations.push(promise);
+    }
+
+    return promise;
+  }
+
+}
+
+global.Scratch = global.Scratch || {};
+Object.assign(global.Scratch, ScratchCommon, {
+  canFetch: () => Promise.resolve(true),
+  fetch: function (_fetch) {
+    function fetch(_x, _x2) {
+      return _fetch.apply(this, arguments);
+    }
+
+    fetch.toString = function () {
+      return _fetch.toString();
+    };
+
+    return fetch;
+  }((url, options) => fetch(url, options)),
+  canOpenWindow: () => Promise.resolve(false),
+  openWindow: () => Promise.reject(new Error('Scratch.openWindow not supported in sandboxed extensions')),
+  canRedirect: () => Promise.resolve(false),
+  redirect: () => Promise.reject(new Error('Scratch.redirect not supported in sandboxed extensions')),
+  canRecordAudio: () => Promise.resolve(false),
+  canRecordVideo: () => Promise.resolve(false),
+  canReadClipboard: () => Promise.resolve(false),
+  canNotify: () => Promise.resolve(false),
+  translate
+});
+/**
+ * Expose only specific parts of the worker to extensions.
+ */
+
+const extensionWorker = new ExtensionWorker();
+global.Scratch.extensions = {
+  register: extensionWorker.register.bind(extensionWorker)
+};
+global.ScratchExtensions = __webpack_require__(/*! ./tw-scratchx-compatibility-layer */ "./node_modules/scratch-vm/src/extension-support/tw-scratchx-compatibility-layer.js");
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/src/extension-support/target-type.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/scratch-vm/src/extension-support/target-type.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Default types of Target supported by the VM
+ * @enum {string}
+ */
+const TargetType = {
+  /**
+   * Rendered target which can move, change costumes, etc.
+   */
+  SPRITE: 'sprite',
+
+  /**
+   * Rendered target which cannot move but can change backdrops
+   */
+  STAGE: 'stage'
+};
+module.exports = TargetType;
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/src/extension-support/tw-extension-api-common.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/scratch-vm/src/extension-support/tw-extension-api-common.js ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const ArgumentType = __webpack_require__(/*! ./argument-type */ "./node_modules/scratch-vm/src/extension-support/argument-type.js");
+
+const BlockType = __webpack_require__(/*! ./block-type */ "./node_modules/scratch-vm/src/extension-support/block-type.js");
+
+const TargetType = __webpack_require__(/*! ./target-type */ "./node_modules/scratch-vm/src/extension-support/target-type.js");
+
+const Cast = __webpack_require__(/*! ../util/cast */ "./node_modules/scratch-vm/src/util/cast.js");
+
+const Scratch = {
+  ArgumentType,
+  BlockType,
+  TargetType,
+  Cast
+};
+module.exports = Scratch;
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/src/extension-support/tw-extension-worker-context.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/scratch-vm/src/extension-support/tw-extension-worker-context.js ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+  isWorker: true,
+  // centralDispatchService is the object to call postMessage() on to send a message to parent.
+  centralDispatchService: self
+};
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/src/extension-support/tw-jquery-shim.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/scratch-vm/src/extension-support/tw-jquery-shim.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {/**
+ * @fileoverview
+ * Many ScratchX extensions require jQuery to do things like loading scripts and making requests.
+ * The real jQuery is pretty large and we'd rather not bring in everything, so this file reimplements
+ * small stubs of a few jQuery methods.
+ * It's just supposed to be enough to make existing ScratchX extensions work, nothing more.
+ */
+const log = __webpack_require__(/*! ../util/log */ "./node_modules/scratch-vm/src/util/log.js");
+
+const jQuery = () => {
+  throw new Error('Not implemented');
+};
+
+jQuery.getScript = (src, callback) => {
+  const script = document.createElement('script');
+  script.src = src;
+
+  if (callback) {
+    // We don't implement callback arguments.
+    script.onload = () => callback();
+  }
+
+  document.body.appendChild(script);
+};
+/**
+ * @param {Record<string, any>|undefined} obj
+ * @returns {URLSearchParams}
+ */
+
+
+const objectToQueryString = obj => {
+  const params = new URLSearchParams();
+
+  if (obj) {
+    for (const key of Object.keys(obj)) {
+      params.set(key, obj[key]);
+    }
+  }
+
+  return params;
+};
+
+let jsonpCallback = 0;
+
+jQuery.ajax = async (arg1, arg2) => {
+  let options = {};
+
+  if (arg1 && arg2) {
+    options = arg2;
+    options.url = arg1;
+  } else if (arg1) {
+    options = arg1;
+  }
+
+  const urlParameters = objectToQueryString(options.data);
+
+  const getFinalURL = () => {
+    const query = urlParameters.toString();
+    let url = options.url;
+
+    if (query) {
+      url += "?".concat(query);
+    } // Forcibly upgrade all HTTP requests to HTTPS so that they don't error on HTTPS sites
+    // All the extensions we care about work fine with this
+
+
+    if (url.startsWith('http://')) {
+      url = url.replace('http://', 'https://');
+    }
+
+    return url;
+  };
+
+  const successCallback = result => {
+    if (options.success) {
+      options.success(result);
+    }
+  };
+
+  const errorCallback = error => {
+    log.error(error);
+
+    if (options.error) {
+      // The error object we provide here might not match what jQuery provides but it's enough to
+      // prevent extensions from throwing errors trying to access properties.
+      options.error(error);
+    }
+  };
+
+  try {
+    if (options.dataType === 'jsonp') {
+      const callbackName = "_jsonp_callback".concat(jsonpCallback++);
+
+      global[callbackName] = data => {
+        delete global[callbackName];
+        successCallback(data);
+      };
+
+      const callbackParameterName = options.jsonp || 'callback';
+      urlParameters.set(callbackParameterName, callbackName);
+      jQuery.getScript(getFinalURL());
+      return;
+    }
+
+    if (options.dataType === 'script') {
+      jQuery.getScript(getFinalURL(), successCallback);
+      return;
+    }
+
+    const res = await fetch(getFinalURL(), {
+      headers: options.headers
+    }); // dataType defaults to "Intelligent Guess (xml, json, script, or html)"
+    // It happens that all the ScratchX extensions we care about either set dataType to "json" or
+    // leave it blank and implicitly request JSON, so this works good enough for now.
+
+    successCallback(await res.json());
+  } catch (e) {
+    errorCallback(e);
+  }
+};
+
+module.exports = jQuery;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/src/extension-support/tw-l10n.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/scratch-vm/src/extension-support/tw-l10n.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const formatMessage = __webpack_require__(/*! format-message */ "./node_modules/scratch-vm/node_modules/format-message/index.js");
+/**
+ * @param {VM|null} vm
+ * @returns {object}
+ */
+
+
+const createTranslate = vm => {
+  const namespace = formatMessage.namespace();
+
+  const translate = (message, args) => {
+    if (message && typeof message === 'object') {// already in the expected format
+    } else if (typeof message === 'string') {
+      message = {
+        default: message
+      };
+    } else {
+      throw new Error('unsupported data type in translate()');
+    }
+
+    return namespace(message, args);
+  };
+
+  const generateId = defaultMessage => "_".concat(defaultMessage);
+
+  const getLocale = () => {
+    if (vm) return vm.getLocale();
+    if (typeof navigator !== 'undefined') return navigator.language;
+    return 'en';
+  };
+
+  let storedTranslations = {};
+
+  translate.setup = newTranslations => {
+    if (newTranslations) {
+      storedTranslations = newTranslations;
+    }
+
+    namespace.setup({
+      locale: getLocale(),
+      missingTranslation: 'ignore',
+      generateId,
+      translations: storedTranslations
+    });
+  };
+
+  translate.setup({});
+
+  if (vm) {
+    vm.on('LOCALE_CHANGED', () => {
+      translate.setup(null);
+    });
+  }
+
+  return translate;
+};
+
+module.exports = createTranslate;
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/src/extension-support/tw-scratchx-compatibility-layer.js":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/scratch-vm/src/extension-support/tw-scratchx-compatibility-layer.js ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// ScratchX API Documentation: https://github.com/LLK/scratchx/wiki/
+// Global Scratch API from extension-worker.js
+
+/* globals Scratch */
+const ArgumentType = __webpack_require__(/*! ./argument-type */ "./node_modules/scratch-vm/src/extension-support/argument-type.js");
+
+const BlockType = __webpack_require__(/*! ./block-type */ "./node_modules/scratch-vm/src/extension-support/block-type.js");
+
+const {
+  argumentIndexToId,
+  generateExtensionId
+} = __webpack_require__(/*! ./tw-scratchx-utilities */ "./node_modules/scratch-vm/src/extension-support/tw-scratchx-utilities.js");
+/**
+ * @typedef ScratchXDescriptor
+ * @property {unknown[][]} blocks
+ * @property {Record<string, unknown[]>} [menus]
+ * @property {string} [url]
+ * @property {string} [displayName]
+ */
+
+/**
+ * @typedef ScratchXStatus
+ * @property {0|1|2} status 0 is red/error, 1 is yellow/not ready, 2 is green/ready
+ * @property {string} msg
+ */
+
+
+const parseScratchXBlockType = type => {
+  if (type === '' || type === ' ' || type === 'w') {
+    return {
+      type: BlockType.COMMAND,
+      async: type === 'w'
+    };
+  }
+
+  if (type === 'r' || type === 'R') {
+    return {
+      type: BlockType.REPORTER,
+      async: type === 'R'
+    };
+  }
+
+  if (type === 'b') {
+    return {
+      type: BlockType.BOOLEAN,
+      // ScratchX docs don't seem to mention boolean reporters that wait
+      async: false
+    };
+  }
+
+  if (type === 'h') {
+    return {
+      type: BlockType.HAT,
+      async: false
+    };
+  }
+
+  throw new Error("Unknown ScratchX block type: ".concat(type));
+};
+
+const isScratchCompatibleValue = v => typeof v === 'string' || typeof v === 'number' || typeof v === 'boolean';
+/**
+ * @param {string} argument ScratchX argument with leading % removed.
+ * @param {unknown} defaultValue Default value, if any
+ */
+
+
+const parseScratchXArgument = (argument, defaultValue) => {
+  const result = {};
+  const hasDefaultValue = isScratchCompatibleValue(defaultValue);
+
+  if (hasDefaultValue) {
+    result.defaultValue = defaultValue;
+  } // TODO: ScratchX docs don't mention support for boolean arguments?
+
+
+  if (argument === 's') {
+    result.type = ArgumentType.STRING;
+
+    if (!hasDefaultValue) {
+      result.defaultValue = '';
+    }
+  } else if (argument === 'n') {
+    result.type = ArgumentType.NUMBER;
+
+    if (!hasDefaultValue) {
+      result.defaultValue = 0;
+    }
+  } else if (argument[0] === 'm') {
+    result.type = ArgumentType.STRING;
+    const split = argument.split(/\.|:/);
+    const menuName = split[1];
+    result.menu = menuName;
+  } else {
+    throw new Error("Unknown ScratchX argument type: ".concat(argument));
+  }
+
+  return result;
+};
+
+const wrapScratchXFunction = (originalFunction, argumentCount, async) => args => {
+  // Convert Scratch 3's argument object to an argument list expected by ScratchX
+  const argumentList = [];
+
+  for (let i = 0; i < argumentCount; i++) {
+    argumentList.push(args[argumentIndexToId(i)]);
+  }
+
+  if (async) {
+    return new Promise(resolve => {
+      originalFunction(...argumentList, resolve);
+    });
+  }
+
+  return originalFunction(...argumentList);
+};
+/**
+ * @param {string} name
+ * @param {ScratchXDescriptor} descriptor
+ * @param {Record<string, () => unknown>} functions
+ */
+
+
+const convert = (name, descriptor, functions) => {
+  const extensionId = generateExtensionId(name);
+  const info = {
+    id: extensionId,
+    name: descriptor.displayName || name,
+    blocks: [],
+    color1: '#4a4a5e',
+    color2: '#31323f',
+    color3: '#191a21'
+  };
+  const scratch3Extension = {
+    getInfo: () => info,
+    _getStatus: functions._getStatus
+  };
+
+  if (descriptor.url) {
+    info.docsURI = descriptor.url;
+  }
+
+  for (const blockDescriptor of descriptor.blocks) {
+    if (blockDescriptor.length === 1) {
+      // Separator
+      info.blocks.push('---');
+      continue;
+    }
+
+    const scratchXBlockType = blockDescriptor[0];
+    const blockText = blockDescriptor[1];
+    const functionName = blockDescriptor[2];
+    const defaultArgumentValues = blockDescriptor.slice(3);
+    let scratchText = '';
+    const argumentInfo = [];
+    const blockTextParts = blockText.split(/%([\w.:]+)/g);
+
+    for (let i = 0; i < blockTextParts.length; i++) {
+      const part = blockTextParts[i];
+      const isArgument = i % 2 === 1;
+
+      if (isArgument) {
+        parseScratchXArgument(part);
+        const argumentIndex = Math.floor(i / 2).toString();
+        const argumentDefaultValue = defaultArgumentValues[argumentIndex];
+        const argumentId = argumentIndexToId(argumentIndex);
+        argumentInfo[argumentId] = parseScratchXArgument(part, argumentDefaultValue);
+        scratchText += "[".concat(argumentId, "]");
+      } else {
+        scratchText += part;
+      }
+    }
+
+    const scratch3BlockType = parseScratchXBlockType(scratchXBlockType);
+    const blockInfo = {
+      opcode: functionName,
+      blockType: scratch3BlockType.type,
+      text: scratchText,
+      arguments: argumentInfo
+    };
+    info.blocks.push(blockInfo);
+    const originalFunction = functions[functionName];
+    const argumentCount = argumentInfo.length;
+    scratch3Extension[functionName] = wrapScratchXFunction(originalFunction, argumentCount, scratch3BlockType.async);
+  }
+
+  const menus = descriptor.menus;
+
+  if (menus) {
+    const scratch3Menus = {};
+
+    for (const menuName of Object.keys(menus) || {}) {
+      const menuItems = menus[menuName];
+      const menuInfo = {
+        items: menuItems
+      };
+      scratch3Menus[menuName] = menuInfo;
+    }
+
+    info.menus = scratch3Menus;
+  }
+
+  return scratch3Extension;
+};
+
+const extensionNameToExtension = new Map();
+
+const register = (name, descriptor, functions) => {
+  const scratch3Extension = convert(name, descriptor, functions);
+  extensionNameToExtension.set(name, scratch3Extension);
+  Scratch.extensions.register(scratch3Extension);
+};
+/**
+ * @param {string} extensionName
+ * @returns {ScratchXStatus}
+ */
+
+
+const getStatus = extensionName => {
+  const extension = extensionNameToExtension.get(extensionName);
+
+  if (extension) {
+    return extension._getStatus();
+  }
+
+  return {
+    status: 0,
+    msg: 'does not exist'
+  };
+};
+
+module.exports = {
+  register,
+  getStatus,
+  // For tests
+  convert
+};
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/src/extension-support/tw-scratchx-utilities.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/scratch-vm/src/extension-support/tw-scratchx-utilities.js ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * @fileoverview
+ * General ScratchX-related utilities used in multiple places.
+ * Changing these functions may break projects.
+ */
+
+/**
+ * @param {string} scratchXName
+ * @returns {string}
+ */
+const generateExtensionId = scratchXName => {
+  const sanitizedName = scratchXName.replace(/[^a-z0-9]/gi, '').toLowerCase();
+  return "sbx".concat(sanitizedName);
+};
+/**
+ * @param {number} i 0-indexed index of argument in list
+ * @returns {string} Scratch 3 argument name
+ */
+
+
+const argumentIndexToId = i => i.toString();
+
+module.exports = {
+  generateExtensionId,
+  argumentIndexToId
+};
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/src/util/cast.js":
+/*!**************************************************!*\
+  !*** ./node_modules/scratch-vm/src/util/cast.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Color = __webpack_require__(/*! ../util/color */ "./node_modules/scratch-vm/src/util/color.js");
+/**
+ * @fileoverview
+ * Utilities for casting and comparing Scratch data-types.
+ * Scratch behaves slightly differently from JavaScript in many respects,
+ * and these differences should be encapsulated below.
+ * For example, in Scratch, add(1, join("hello", world")) -> 1.
+ * This is because "hello world" is cast to 0.
+ * In JavaScript, 1 + Number("hello" + "world") would give you NaN.
+ * Use when coercing a value before computation.
+ */
+
+/**
+ * Used internally by compare()
+ * @param {*} val A value that evaluates to 0 in JS string-to-number conversation such as empty string, 0, or tab.
+ * @returns {boolean} True if the value should not be treated as the number zero.
+ */
+
+
+const isNotActuallyZero = val => {
+  if (typeof val !== 'string') return false;
+
+  for (let i = 0; i < val.length; i++) {
+    const code = val.charCodeAt(i); // '0'.charCodeAt(0) === 48
+    // '\t'.charCodeAt(0) === 9
+    // We include tab for compatibility with scratch-www's broken trim() polyfill.
+    // https://github.com/TurboWarp/scratch-vm/issues/115
+    // https://scratch.mit.edu/projects/788261699/
+
+    if (code === 48 || code === 9) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+class Cast {
+  /**
+   * Scratch cast to number.
+   * Treats NaN as 0.
+   * In Scratch 2.0, this is captured by `interp.numArg.`
+   * @param {*} value Value to cast to number.
+   * @return {number} The Scratch-casted number value.
+   */
+  static toNumber(value) {
+    // If value is already a number we don't need to coerce it with
+    // Number().
+    if (typeof value === 'number') {
+      // Scratch treats NaN as 0, when needed as a number.
+      // E.g., 0 + NaN -> 0.
+      if (Number.isNaN(value)) {
+        return 0;
+      }
+
+      return value;
+    }
+
+    const n = Number(value);
+
+    if (Number.isNaN(n)) {
+      // Scratch treats NaN as 0, when needed as a number.
+      // E.g., 0 + NaN -> 0.
+      return 0;
+    }
+
+    return n;
+  }
+  /**
+   * Scratch cast to boolean.
+   * In Scratch 2.0, this is captured by `interp.boolArg.`
+   * Treats some string values differently from JavaScript.
+   * @param {*} value Value to cast to boolean.
+   * @return {boolean} The Scratch-casted boolean value.
+   */
+
+
+  static toBoolean(value) {
+    // Already a boolean?
+    if (typeof value === 'boolean') {
+      return value;
+    }
+
+    if (typeof value === 'string') {
+      // These specific strings are treated as false in Scratch.
+      if (value === '' || value === '0' || value.toLowerCase() === 'false') {
+        return false;
+      } // All other strings treated as true.
+
+
+      return true;
+    } // Coerce other values and numbers.
+
+
+    return Boolean(value);
+  }
+  /**
+   * Scratch cast to string.
+   * @param {*} value Value to cast to string.
+   * @return {string} The Scratch-casted string value.
+   */
+
+
+  static toString(value) {
+    return String(value);
+  }
+  /**
+   * Cast any Scratch argument to an RGB color array to be used for the renderer.
+   * @param {*} value Value to convert to RGB color array.
+   * @return {Array.<number>} [r,g,b], values between 0-255.
+   */
+
+
+  static toRgbColorList(value) {
+    const color = Cast.toRgbColorObject(value);
+    return [color.r, color.g, color.b];
+  }
+  /**
+   * Cast any Scratch argument to an RGB color object to be used for the renderer.
+   * @param {*} value Value to convert to RGB color object.
+   * @return {RGBOject} [r,g,b], values between 0-255.
+   */
+
+
+  static toRgbColorObject(value) {
+    let color;
+
+    if (typeof value === 'string' && value.substring(0, 1) === '#') {
+      color = Color.hexToRgb(value); // If the color wasn't *actually* a hex color, cast to black
+
+      if (!color) color = {
+        r: 0,
+        g: 0,
+        b: 0,
+        a: 255
+      };
+    } else {
+      color = Color.decimalToRgb(Cast.toNumber(value));
+    }
+
+    return color;
+  }
+  /**
+   * Determine if a Scratch argument is a white space string (or null / empty).
+   * @param {*} val value to check.
+   * @return {boolean} True if the argument is all white spaces or null / empty.
+   */
+
+
+  static isWhiteSpace(val) {
+    return val === null || typeof val === 'string' && val.trim().length === 0;
+  }
+  /**
+   * Compare two values, using Scratch cast, case-insensitive string compare, etc.
+   * In Scratch 2.0, this is captured by `interp.compare.`
+   * @param {*} v1 First value to compare.
+   * @param {*} v2 Second value to compare.
+   * @returns {number} Negative number if v1 < v2; 0 if equal; positive otherwise.
+   */
+
+
+  static compare(v1, v2) {
+    let n1 = Number(v1);
+    let n2 = Number(v2);
+
+    if (n1 === 0 && isNotActuallyZero(v1)) {
+      n1 = NaN;
+    } else if (n2 === 0 && isNotActuallyZero(v2)) {
+      n2 = NaN;
+    }
+
+    if (isNaN(n1) || isNaN(n2)) {
+      // At least one argument can't be converted to a number.
+      // Scratch compares strings as case insensitive.
+      const s1 = String(v1).toLowerCase();
+      const s2 = String(v2).toLowerCase();
+
+      if (s1 < s2) {
+        return -1;
+      } else if (s1 > s2) {
+        return 1;
+      }
+
+      return 0;
+    } // Handle the special case of Infinity
+
+
+    if (n1 === Infinity && n2 === Infinity || n1 === -Infinity && n2 === -Infinity) {
+      return 0;
+    } // Compare as numbers.
+
+
+    return n1 - n2;
+  }
+  /**
+   * Determine if a Scratch argument number represents a round integer.
+   * @param {*} val Value to check.
+   * @return {boolean} True if number looks like an integer.
+   */
+
+
+  static isInt(val) {
+    // Values that are already numbers.
+    if (typeof val === 'number') {
+      if (isNaN(val)) {
+        // NaN is considered an integer.
+        return true;
+      } // True if it's "round" (e.g., 2.0 and 2).
+
+
+      return val === Math.floor(val);
+    } else if (typeof val === 'boolean') {
+      // `True` and `false` always represent integer after Scratch cast.
+      return true;
+    } else if (typeof val === 'string') {
+      // If it contains a decimal point, don't consider it an int.
+      return val.indexOf('.') < 0;
+    }
+
+    return false;
+  }
+
+  static get LIST_INVALID() {
+    return 'INVALID';
+  }
+
+  static get LIST_ALL() {
+    return 'ALL';
+  }
+  /**
+   * Compute a 1-based index into a list, based on a Scratch argument.
+   * Two special cases may be returned:
+   * LIST_ALL: if the block is referring to all of the items in the list.
+   * LIST_INVALID: if the index was invalid in any way.
+   * @param {*} index Scratch arg, including 1-based numbers or special cases.
+   * @param {number} length Length of the list.
+   * @param {boolean} acceptAll Whether it should accept "all" or not.
+   * @return {(number|string)} 1-based index for list, LIST_ALL, or LIST_INVALID.
+   */
+
+
+  static toListIndex(index, length, acceptAll) {
+    if (typeof index !== 'number') {
+      if (index === 'all') {
+        return acceptAll ? Cast.LIST_ALL : Cast.LIST_INVALID;
+      }
+
+      if (index === 'last') {
+        if (length > 0) {
+          return length;
+        }
+
+        return Cast.LIST_INVALID;
+      } else if (index === 'random' || index === 'any') {
+        if (length > 0) {
+          return 1 + Math.floor(Math.random() * length);
+        }
+
+        return Cast.LIST_INVALID;
+      }
+    }
+
+    index = Math.floor(Cast.toNumber(index));
+
+    if (index < 1 || index > length) {
+      return Cast.LIST_INVALID;
+    }
+
+    return index;
+  }
+
+}
+
+module.exports = Cast;
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/src/util/color.js":
+/*!***************************************************!*\
+  !*** ./node_modules/scratch-vm/src/util/color.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+class Color {
+  /**
+   * @typedef {object} RGBObject - An object representing a color in RGB format.
+   * @property {number} r - the red component, in the range [0, 255].
+   * @property {number} g - the green component, in the range [0, 255].
+   * @property {number} b - the blue component, in the range [0, 255].
+   */
+
+  /**
+   * @typedef {object} HSVObject - An object representing a color in HSV format.
+   * @property {number} h - hue, in the range [0-359).
+   * @property {number} s - saturation, in the range [0,1].
+   * @property {number} v - value, in the range [0,1].
+   */
+
+  /** @type {RGBObject} */
+  static get RGB_BLACK() {
+    return {
+      r: 0,
+      g: 0,
+      b: 0
+    };
+  }
+  /** @type {RGBObject} */
+
+
+  static get RGB_WHITE() {
+    return {
+      r: 255,
+      g: 255,
+      b: 255
+    };
+  }
+  /**
+   * Convert a Scratch decimal color to a hex string, #RRGGBB.
+   * @param {number} decimal RGB color as a decimal.
+   * @return {string} RGB color as #RRGGBB hex string.
+   */
+
+
+  static decimalToHex(decimal) {
+    if (decimal < 0) {
+      decimal += 0xFFFFFF + 1;
+    }
+
+    let hex = Number(decimal).toString(16);
+    hex = "#".concat('000000'.substr(0, 6 - hex.length)).concat(hex);
+    return hex;
+  }
+  /**
+   * Convert a Scratch decimal color to an RGB color object.
+   * @param {number} decimal RGB color as decimal.
+   * @return {RGBObject} rgb - {r: red [0,255], g: green [0,255], b: blue [0,255]}.
+   */
+
+
+  static decimalToRgb(decimal) {
+    const a = decimal >> 24 & 0xFF;
+    const r = decimal >> 16 & 0xFF;
+    const g = decimal >> 8 & 0xFF;
+    const b = decimal & 0xFF;
+    return {
+      r: r,
+      g: g,
+      b: b,
+      a: a > 0 ? a : 255
+    };
+  }
+  /**
+   * Convert a hex color (e.g., F00, #03F, #0033FF) to an RGB color object.
+   * @param {!string} hex Hex representation of the color.
+   * @return {RGBObject} null on failure, or rgb: {r: red [0,255], g: green [0,255], b: blue [0,255]}.
+   */
+
+
+  static hexToRgb(hex) {
+    if (hex.startsWith('#')) {
+      hex = hex.substring(1);
+    }
+
+    const parsed = parseInt(hex, 16);
+
+    if (isNaN(parsed)) {
+      return null;
+    }
+
+    if (hex.length === 6) {
+      return {
+        r: parsed >> 16 & 0xff,
+        g: parsed >> 8 & 0xff,
+        b: parsed & 0xff
+      };
+    } else if (hex.length === 3) {
+      const r = parsed >> 8 & 0xf;
+      const g = parsed >> 4 & 0xf;
+      const b = parsed & 0xf;
+      return {
+        r: r << 4 | r,
+        g: g << 4 | g,
+        b: b << 4 | b
+      };
+    }
+
+    return null;
+  }
+  /**
+   * Convert an RGB color object to a hex color.
+   * @param {RGBObject} rgb - {r: red [0,255], g: green [0,255], b: blue [0,255]}.
+   * @return {!string} Hex representation of the color.
+   */
+
+
+  static rgbToHex(rgb) {
+    return Color.decimalToHex(Color.rgbToDecimal(rgb));
+  }
+  /**
+   * Convert an RGB color object to a Scratch decimal color.
+   * @param {RGBObject} rgb - {r: red [0,255], g: green [0,255], b: blue [0,255]}.
+   * @return {!number} Number representing the color.
+   */
+
+
+  static rgbToDecimal(rgb) {
+    return (rgb.r << 16) + (rgb.g << 8) + rgb.b;
+  }
+  /**
+  * Convert a hex color (e.g., F00, #03F, #0033FF) to a decimal color number.
+  * @param {!string} hex Hex representation of the color.
+  * @return {!number} Number representing the color.
+  */
+
+
+  static hexToDecimal(hex) {
+    return Color.rgbToDecimal(Color.hexToRgb(hex));
+  }
+  /**
+   * Convert an HSV color to RGB format.
+   * @param {HSVObject} hsv - {h: hue [0,360), s: saturation [0,1], v: value [0,1]}
+   * @return {RGBObject} rgb - {r: red [0,255], g: green [0,255], b: blue [0,255]}.
+   */
+
+
+  static hsvToRgb(hsv) {
+    let h = hsv.h % 360;
+    if (h < 0) h += 360;
+    const s = Math.max(0, Math.min(hsv.s, 1));
+    const v = Math.max(0, Math.min(hsv.v, 1));
+    const i = Math.floor(h / 60);
+    const f = h / 60 - i;
+    const p = v * (1 - s);
+    const q = v * (1 - s * f);
+    const t = v * (1 - s * (1 - f));
+    let r;
+    let g;
+    let b;
+
+    switch (i) {
+      default:
+      case 0:
+        r = v;
+        g = t;
+        b = p;
+        break;
+
+      case 1:
+        r = q;
+        g = v;
+        b = p;
+        break;
+
+      case 2:
+        r = p;
+        g = v;
+        b = t;
+        break;
+
+      case 3:
+        r = p;
+        g = q;
+        b = v;
+        break;
+
+      case 4:
+        r = t;
+        g = p;
+        b = v;
+        break;
+
+      case 5:
+        r = v;
+        g = p;
+        b = q;
+        break;
+    }
+
+    return {
+      r: Math.floor(r * 255),
+      g: Math.floor(g * 255),
+      b: Math.floor(b * 255)
+    };
+  }
+  /**
+   * Convert an RGB color to HSV format.
+   * @param {RGBObject} rgb - {r: red [0,255], g: green [0,255], b: blue [0,255]}.
+   * @return {HSVObject} hsv - {h: hue [0,360), s: saturation [0,1], v: value [0,1]}
+   */
+
+
+  static rgbToHsv(rgb) {
+    const r = rgb.r / 255;
+    const g = rgb.g / 255;
+    const b = rgb.b / 255;
+    const x = Math.min(Math.min(r, g), b);
+    const v = Math.max(Math.max(r, g), b); // For grays, hue will be arbitrarily reported as zero. Otherwise, calculate
+
+    let h = 0;
+    let s = 0;
+
+    if (x !== v) {
+      const f = r === x ? g - b : g === x ? b - r : r - g;
+      const i = r === x ? 3 : g === x ? 5 : 1;
+      h = (i - f / (v - x)) * 60 % 360;
+      s = (v - x) / v;
+    }
+
+    return {
+      h: h,
+      s: s,
+      v: v
+    };
+  }
+  /**
+   * Linear interpolation between rgb0 and rgb1.
+   * @param {RGBObject} rgb0 - the color corresponding to fraction1 <= 0.
+   * @param {RGBObject} rgb1 - the color corresponding to fraction1 >= 1.
+   * @param {number} fraction1 - the interpolation parameter. If this is 0.5, for example, mix the two colors equally.
+   * @return {RGBObject} the interpolated color.
+   */
+
+
+  static mixRgb(rgb0, rgb1, fraction1) {
+    if (fraction1 <= 0) return rgb0;
+    if (fraction1 >= 1) return rgb1;
+    const fraction0 = 1 - fraction1;
+    return {
+      r: fraction0 * rgb0.r + fraction1 * rgb1.r,
+      g: fraction0 * rgb0.g + fraction1 * rgb1.g,
+      b: fraction0 * rgb0.b + fraction1 * rgb1.b
+    };
+  }
+
+}
+
+module.exports = Color;
+
+/***/ }),
+
+/***/ "./node_modules/scratch-vm/src/util/log.js":
+/*!*************************************************!*\
+  !*** ./node_modules/scratch-vm/src/util/log.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const minilog = __webpack_require__(/*! minilog */ "./node_modules/scratch-vm/node_modules/minilog/lib/web/index.js");
+
+minilog.enable();
+module.exports = minilog('vm');
+
+/***/ }),
+
+/***/ "./node_modules/webpack/buildin/global.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ })
+
+/******/ });
+//# sourceMappingURL=extension worker.js.map
