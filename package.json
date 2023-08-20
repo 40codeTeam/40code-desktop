@@ -1,7 +1,7 @@
 {
   "name": "40code",
   "version": "3.2.3",
-  "description": "40code编辑器",
+  "description": "40code offline editor",
   "main": "main.js",
   "scripts": {
     "start": "electron . --openssl-legacy-provider",
