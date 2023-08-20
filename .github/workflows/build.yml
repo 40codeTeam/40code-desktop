@@ -2,6 +2,8 @@ name: Build/release
 
 on: push
 
+permissions: write-all
+
 jobs:
   release:
     runs-on: ${{ matrix.os }}
@@ -30,4 +32,3 @@ jobs:
           # release the app after building
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
           skip_build: 'true'
-          
