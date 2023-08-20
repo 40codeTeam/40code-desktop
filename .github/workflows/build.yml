@@ -2,7 +2,8 @@ name: Build/release
 
 on: push
 
-permissions: write-all
+permissions:
+  contents: write
 
 jobs:
   release:
