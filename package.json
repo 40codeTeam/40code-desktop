@@ -26,7 +26,7 @@
     "directories": {
       "output": "build"
     },
-    "productName": "40code离线编辑器",
+    "productName": "40code_Offline_Editor",
 
     "mac": {
       "icon": "./logo.icns",
