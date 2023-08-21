@@ -1,7 +1,7 @@
 {
   "name": "40code",
-  "version": "3.2.2",
-  "description": "40code编辑器",
+  "version": "3.2.3",
+  "description": "40code offline editor",
   "main": "main.js",
   "scripts": {
     "start": "electron . --openssl-legacy-provider",
@@ -9,7 +9,7 @@
     "build": "electron-builder --win --x64 ",
     "buildmac": "electron-builder --mac --x64"
   },
-  "repository": "https://github.com/52black/40code-desktop",
+  "repository": "https://github.com/jexjws/40code-desktop",
   "keywords": [
     "40code"
   ],
@@ -22,11 +22,21 @@
   ],
   "build": {
     "appId": "40code",
+    "publish": ["github"],
     "directories": {
       "output": "build"
     },
-    "productName": "40code离线编辑器",
+    "productName": "40code_Offline_Editor",
+
+    "mac": {
+      "icon": "./logo.icns",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
     "dmg": {
+      "backgroundColor":"#4b9aed",
       "icon": "./logo.icns",
       "window": {
         "x": "200",
@@ -35,18 +45,13 @@
         "height": 400
       }
     },
-    "mac": {
-      "icon": "./logo.icns",
-      "target": [
-        "dmg",
-        "zip"
-      ]
-    },
+
     "win": {
       "icon": "./logo.ico",
       "target": [
         "nsis",
-        "zip"
+        "zip",
+        "appx"
       ]
     },
     "nsis": {
@@ -57,14 +62,24 @@
       "installerHeaderIcon": "./logo.ico",
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true
+    },
+    "appx":{
+      "applicationId": "scratch.letUs40code"
+    },
+
+    "linux":{
+      "target": [
+        "zip","tar.gz",
+        "AppImage"
+      ]
     }
   },
   "author": "40code",
   "license": "AGPLv3",
   "devDependencies": {
-    "electron": "^19.0.6",
-    "electron-builder": "^23.6.0",
-    "electron-packager": "^17.1.1"
+    "electron": "^26.0.0",
+    "electron-builder": "^24.6.3",
+    "electron-packager": "^17.1.2"
   },
   "dependencies": {
 
