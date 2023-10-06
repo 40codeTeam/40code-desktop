@@ -20,4 +20,5 @@ yarn build
 ```
 yarn buildmac
 ```
-此项目的版权协议为AGPL
+
+目前此项目的版权协议为AGPL
