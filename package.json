@@ -1,6 +1,6 @@
 {
   "name": "40code",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "description": "40code offline editor",
   "main": "main.js",
   "scripts": {
