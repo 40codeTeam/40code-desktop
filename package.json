@@ -26,7 +26,7 @@
       "output": "build"
     },
     "mac": {
-      "icon": "icons/win/icon.ico",
+      "icon": "icons/mac/icon.icns",
       "target": [
         "dmg",
         "zip"
