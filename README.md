@@ -11,7 +11,8 @@ yarn install
 ```
 yarn start
 ```
-## 制作安装包（用哪个系统运行的就做该系统对应的平台安装包（linux要用docker，详见[electron-build文档页](https://www.electron.build/multi-platform-build)）
+## 制作安装包   
+ps.用哪个系统运行的就会制作该系统对应的平台安装包（linux要用docker，详见[electron-build文档页](https://www.electron.build/multi-platform-build)
 ```
 yarn build
 ```
