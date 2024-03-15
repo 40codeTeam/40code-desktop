@@ -3,6 +3,8 @@
   "version": "3.2.3",
   "description": "40code offline editor",
   "main": "main.js",
+  "author": "40codeTeam <1@40code.com> (https://github.com/40codeTeam/40code-desktop)",
+  "license": "AGPLv3",
   "scripts": {
     "start": "electron . --openssl-legacy-provider",
     "icon": "yarn run electron-icon-maker --input=logo1.png --output=./build/",
@@ -62,8 +64,6 @@
       ]
     }
   },
-  "author": "40code",
-  "license": "AGPLv3",
   "devDependencies": {
     "electron": "^29.1.4",
     "electron-builder": "^24.13.3",
