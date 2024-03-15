@@ -6,8 +6,8 @@
   "scripts": {
     "start": "electron . --openssl-legacy-provider",
     "icon": "yarn run electron-icon-maker --input=logo1.png --output=./build/",
-    "build": "electron-builder --publish never",
-    "buildmac": "electron-builder --mac --x64"
+    "build": "yarn icon && electron-builder --publish never",
+    "CICD_build": "yarn build"
   },
   "repository": "https://github.com/40codeTeam/40code-desktop",
   "keywords": [
@@ -21,67 +21,54 @@
     }
   ],
   "build": {
-    "appId": "40code",
-    "publish": [
-      "github"
-    ],
+    "appId": "com.40code.desktop",
     "directories": {
       "output": "build"
     },
-    "productName": "40code_Offline_Editor",
     "mac": {
-      "icon": "./logo.icns",
+      "icon": "icons/win/icon.ico",
       "target": [
         "dmg",
         "zip"
       ]
     },
     "dmg": {
-      "backgroundColor": "#4b9aed",
-      "icon": "./logo.icns",
-      "window": {
-        "x": "200",
-        "y": "150",
-        "width": 500,
-        "height": 400
-      }
+      "backgroundColor": "#4b9aed"
     },
     "win": {
-      "icon": "./logo.ico",
+      "icon": "icons/win/icon.ico",
       "target": [
         "nsis",
-        "zip",
-        "appx"
+        "zip"
       ]
     },
     "nsis": {
       "oneClick": false,
       "allowElevation": true,
       "allowToChangeInstallationDirectory": true,
-      "installerIcon": "./logo.ico",
-      "installerHeaderIcon": "./logo.ico",
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true
     },
-    "appx": {
-      "applicationId": "scratch.letUs40code"
-    },
     "linux": {
+      "category": "Education",
+      "icon": "icons/png",
       "target": [
+        "AppImage",
         "zip",
-        "tar.gz",
-        "AppImage"
+        "deb",
+        "pacman",
+        "rpm",
+        "snap"
       ]
     }
   },
   "author": "40code",
   "license": "AGPLv3",
   "devDependencies": {
-    "electron": "^26.0.0",
+    "electron": "^29.1.4",
     "electron-builder": "^24.13.3",
+    "electron-icon-maker": "^0.0.5",
     "electron-packager": "^17.1.2"
   },
-  "dependencies": {
-    "electron-icon-maker": "^0.0.5"
-  }
+  "dependencies": {}
 }
