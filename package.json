@@ -24,9 +24,6 @@
   ],
   "build": {
     "appId": "com.40code.desktop",
-    "directories": {
-      "output": "build"
-    },
     "mac": {
       "icon": "icons/mac/icon.icns",
       "target": [

@@ -11,14 +11,9 @@ yarn install
 ```
 yarn start
 ```
-## 部署
-### windows
+## 制作安装包（用哪个系统运行的就做该系统对应的平台安装包（linux要用docker，详见[electron-build文档页](https://www.electron.build/multi-platform-build)）
 ```
 yarn build
-```
-### mac
-```
-yarn buildmac
 ```
 
 目前此项目的版权协议为AGPL
