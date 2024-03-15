@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron . --openssl-legacy-provider",
     "icon": "yarn run electron-icon-maker --input=logo1.png --output=./build/",
-    "build": "yarn icon && electron-builder --publish never",
+    "build": "yarn run icon && electron-builder --publish never",
     "CICD_build": "yarn build"
   },
   "repository": "https://github.com/40codeTeam/40code-desktop",
