@@ -5,7 +5,9 @@ on:
     tags:
       v*.*.*
 
-
+permissions:
+  contents: write
+  
 jobs:
   BuildOrRelease:
     # the type of machine to run the job on
