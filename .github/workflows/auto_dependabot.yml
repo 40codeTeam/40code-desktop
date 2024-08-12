@@ -1,0 +1,53 @@
+name: Dependabot Fully automatic release
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+
+permissions:
+  pull-requests: write
+  #issues: write
+  repository-projects: write
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]' # 仅在 Dependabot 提交 PR 时运行
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "latest"
+
+      - name: Bump version
+        id: bump_version
+        run: |
+          # 提取当前版本号
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "Current version: $CURRENT_VERSION"
+
+          # 使用 npm version 命令自动增加 patch 版本号
+          NEW_VERSION=$(npm version patch --no-git-tag-version)
+          echo "New version: $NEW_VERSION"
+
+          # 将新版本号输出为 GitHub Actions 环境变量
+          echo "NEW_VERSION=${NEW_VERSION}" >> $GITHUB_ENV
+
+      - name: Commit and push version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -am "Bump version to $NEW_VERSION"
+          git push origin HEAD
+
+      - name: Create Git tag
+        run: |
+          git tag $NEW_VERSION
+          git push origin $NEW_VERSION
