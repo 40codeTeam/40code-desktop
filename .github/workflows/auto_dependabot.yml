@@ -13,8 +13,9 @@ jobs:
     if: github.actor == 'dependabot[bot]' # 仅在 Dependabot 提交 PR 时运行
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
