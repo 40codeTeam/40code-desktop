@@ -48,7 +48,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git commit -am "刷版本号到 $NEW_VERSION"
           git tag $NEW_VERSION
-          git push origin HEAD
+          git push origin HEAD:refs/heads/main --follow-tags
 
       - name: Enable auto-merge for Dependabot PRs
         if: contains(steps.metadata.outputs.dependency-names, 'my-dependency') && steps.metadata.outputs.update-type == 'version-update:semver-patch'
