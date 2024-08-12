@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -47,11 +49,6 @@ jobs:
           git commit -am "刷版本号到 $NEW_VERSION"
           git tag $NEW_VERSION
           git push origin HEAD
-
-      - name: Create Git tag
-        run: |
-
-          git push origin $NEW_VERSION
 
       - name: Enable auto-merge for Dependabot PRs
         if: contains(steps.metadata.outputs.dependency-names, 'my-dependency') && steps.metadata.outputs.update-type == 'version-update:semver-patch'
