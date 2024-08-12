@@ -7,3 +7,8 @@ updates:
     time: "13:00"
   open-pull-requests-limit: 99
   versioning-strategy: increase
+  # https://docs.github.com/zh/code-security/dependabot/working-with-dependabot/keeping-your-actions-up-to-date-with-dependabot#%E4%BE%8B%E5%A6%82%E7%94%A8%E4%BA%8E-github-actions
+- package-ecosystem: "github-actions"
+  directory: "/"
+  schedule:
+    interval: "weekly"
