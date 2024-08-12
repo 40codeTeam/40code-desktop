@@ -50,6 +50,7 @@ jobs:
           git commit -am "更新依赖，刷版本号到 $NEW_VERSION"
           git tag $NEW_VERSION
           git push origin $NEW_VERSION
+          git push origin HEAD
 
       - name: Enable auto-merge for Dependabot PRs
         if: contains(steps.metadata.outputs.dependency-names, 'my-dependency') #&& steps.metadata.outputs.update-type == 'version-update:semver-major'
