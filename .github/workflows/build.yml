@@ -13,6 +13,10 @@ jobs:
   VersionBumpANDGitTag:
     runs-on: ubuntu-latest
     steps:
+      - name: ⚙️ Check out Git repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
       - name: "Automated Version Bump"
         uses: "phips28/gh-action-bump-version@master"
         env:
@@ -27,6 +31,8 @@ jobs:
           check-last-commit-only: "true"
 
   BuildOrRelease:
+    needs: VersionBumpANDGitTag
+
     # the type of machine to run the job on
     runs-on: ${{ matrix.os }}
 
