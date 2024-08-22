@@ -2,11 +2,30 @@ name: Build/release
 
 on:
   push:
+    branches: [master]
+#  release:
+#    types: [created]
 
 permissions:
   contents: write
 
 jobs:
+  VersionBumpANDGitTag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Automated Version Bump"
+        uses: "phips28/gh-action-bump-version@master"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          minor-wording: "add,Adds,new,主版本更新"
+          major-wording: "MAJOR,cut-major,新功能"
+          patch-wording:
+            "patch,fixes" # Providing patch-wording will override commits
+            # defaulting to a patch bump.
+          rc-wording: "RELEASE,alpha,新版本"
+          check-last-commit-only: "true"
+
   BuildOrRelease:
     # the type of machine to run the job on
     runs-on: ${{ matrix.os }}
@@ -19,6 +38,8 @@ jobs:
     steps:
       - name: ⚙️ Check out Git repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: ⚙️📦️ Build(Linux)
         if: matrix.os == 'ubuntu-latest'
