@@ -18,3 +18,7 @@ yarn build
 ```
 
 目前此项目的版权协议为GPL
+
+## 开发注意
+
+[develop.md](develop.md)

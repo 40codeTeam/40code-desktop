@@ -22,7 +22,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          minor-wording: "add,Adds,new,主版本更新"
+          minor-wording: "add,Adds,new,大版本更新"
           major-wording: "MAJOR,cut-major,新功能"
           patch-wording:
             "patch,fixes" # Providing patch-wording will override commits
