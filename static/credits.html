@@ -1,6 +1,35 @@
-<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>40code Credits</title><style>body[splash-theme="dark"]:not(.tw-loaded) {
+<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>40code Credits</title><style>body[data-splash-theme="dark"] {
         background: #111;
-      }</style></head><body><script>(function() {
-        try {var localTheme = localStorage.getItem('tw:theme');} catch (e) {}
-        if (localTheme ? localTheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches) document.body.setAttribute('splash-theme', 'dark');
-      })();</script><div id="app"></div><script src="././js/vendors~addon-settings~credits~editor~embed~fullscreen~player.4c6679f91eff94a89716.js"></script><script src="././js/credits.93ce19380ac92a7ab2ec.js"></script></body></html>
+      }
+
+      noscript {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }</style></head><body><noscript><h1>This page requires JavaScript</h1></noscript><script>(function() {
+        var theme = '';
+
+        try {
+          var themeSetting = localStorage.getItem('tw:theme');
+        } catch (e) {
+          // ignore
+        }
+        if (themeSetting === 'light') {
+          theme = 'light';
+        } else if (themeSetting === 'dark') {
+          theme = 'dark';
+        } else if (themeSetting) {
+          try {
+            var parsed = JSON.parse(themeSetting);
+            if (parsed.gui === 'dark' || parsed.gui === 'light') {
+              theme = parsed.gui;
+            }
+          } catch (e) {
+            // ignore
+          }
+        }
+
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        document.body.setAttribute('data-splash-theme', theme);
+      })();</script><div id="app"></div><script src="./js/vendors~addon-settings~credits~editor~embed~fullscreen~player.71d174ac318da20c6fe1.js"></script><script src="./js/credits.00d7c682404ac0c737d9.js"></script></body></html>

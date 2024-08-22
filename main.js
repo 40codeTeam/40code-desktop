@@ -1,5 +1,7 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, BrowserView,webContents, ipcMain } = require('electron')
+const { app, BrowserWindow, BrowserView,webContents, ipcMain,Menu,globalShortcut } = require('electron')
+var Mousetrap = require('mousetrap');
+
 const path = require('path')
 
 function createWindow() {
@@ -13,51 +15,26 @@ function createWindow() {
       // contextIsolation: true, // protect against prototype pollution
       // enableRemoteModule: false, // turn off remote
       nodeIntegration: true, // 是否集成 Nodejs
+      contextIsolation: false
     },
     // autoHideMenuBar: true // 自动隐藏菜单栏
   })
 
   // and load the index.html of the app.
+  globalShortcut.register('f12', () => {
+    console.log('Electron loves global shortcuts!')
+  })
+  Menu.setApplicationMenu(null)
+  mainWindow.setMenu(null)
+
   mainWindow.loadFile('./static/editor.html')
-  // require('./menu')
 
-  const { Menu, shell } = require('electron')
-  var template = [
-    {
-      label: '打开官网',//一级菜单名称
-      click: () => {  //添加点击事件
-        shell.openExternal('https://40code.com')
-      }
-    },
-    {
-      label: '打包作品',//一级菜单名称
-      click: () => {  //添加点击事件
-        // const view = new BrowserView()
-        const win = new BrowserWindow({
-          width: 800,
-          height: 600,
-          webPreferences: {
-            webSecurity: false
-          }
-        })
-        // win.setBrowserView(view)
-        // view.setBounds({ x: 0, y: 0, width: 300, height: 300 })
-        win.webContents.loadURL('https://packager.40code.com')
-      }
-    }, {
-      label: '打开控制台',//一级菜单名称
-      click: () => {  //添加点击事件
-        mainWindow.webContents.openDevTools()
-      }
-    }
+  // const args = process.argv.slice(2);
+  // console.log('Command line arguments:', args);
 
-  ]
-
-  var m = Menu.buildFromTemplate(template)
-
-  Menu.setApplicationMenu(m)
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  if(process.env.dev)
+  mainWindow.webContents.openDevTools()
 
 
 }

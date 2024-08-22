@@ -1,10 +1,10 @@
 {
   "name": "40code",
-  "version": "3.2.6",
+  "version": "3.3.0",
   "description": "40code offline editor",
   "main": "main.js",
   "author": "40codeTeam <1@40code.com> (https://github.com/40codeTeam/40code-desktop)",
-  "license": "AGPLv3",
+  "license": "GPLv3",
   "scripts": {
     "start": "electron . --openssl-legacy-provider",
     "icon": "yarn run electron-icon-maker --input=logo1.png --output=./build/",
@@ -67,5 +67,8 @@
     "electron-icon-maker": "^0.0.5",
     "electron-packager": "^17.1.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "mousetrap": "^1.6.5"
+  }
 }

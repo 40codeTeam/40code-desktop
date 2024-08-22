@@ -4,8 +4,9 @@
 // `nodeIntegration` is turned off. Use `preload.js` to
 // selectively enable features needed in the rendering
 // process.
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge, ipcRenderer,shell } from 'electron'
 contextBridge.exposeInMainWorld('electron', {
-    load: (callback) => ipcRenderer.on('open-file', callback)
+    load: (callback) => ipcRenderer.on('open-file', callback),
+    shell: shell
 })
 // ipcRenderer.on('open-file',(file)=>{vm.loadProject(file)})

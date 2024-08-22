@@ -1,6 +1,6 @@
 const {
   contextBridge,
-  ipcRenderer
+  ipcRenderer,
 } = require("electron");
 
 // Expose protected methods that allow the renderer process to use
