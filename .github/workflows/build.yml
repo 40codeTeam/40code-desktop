@@ -1,10 +1,10 @@
 name: Build/release
 
 on:
-  push:
-    branches: [master]
-#  release:
-#    types: [created]
+  #  push:
+  #    branches: [master]
+  release:
+    types: [created]
 
 permissions:
   contents: write
@@ -27,7 +27,7 @@ jobs:
           patch-wording:
             "patch,fixes" # Providing patch-wording will override commits
             # defaulting to a patch bump.
-          rc-wording: "RELEASE,alpha,新版本"
+          #rc-wording: "RELEASE,alpha"
           check-last-commit-only: "true"
 
   BuildOrRelease:
