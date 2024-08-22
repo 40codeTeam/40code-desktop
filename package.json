@@ -1,15 +1,17 @@
 {
   "name": "40code",
-  "version": "3.4.1",
+  "version": "4.0.0",
   "description": "40code offline editor",
   "main": "main.js",
   "author": "40codeTeam <1@40code.com> (https://github.com/40codeTeam/40code-desktop)",
   "license": "GPL-3.0",
   "scripts": {
-    "start": "electron . --openssl-legacy-provider",
-    "icon": "yarn run electron-icon-maker --input=logo1.png --output=./build/",
-    "build": "yarn run icon && electron-builder --publish never",
-    "CICD_build": "yarn build"
+    "electron:build": "electron-builder --publish never",
+    "electron:start": "electron ./electron --openssl-legacy-provider",
+    "electron:icon": "yarn run electron-icon-maker --input=logo1.png --output=./build/",
+    "webpack:build:prod": "webpack --mode=production --node-env=production",
+    "webpack:build:dev": "webpack --mode=development",
+    "webpack:watch": "webpack --watch"
   },
   "repository": "https://github.com/40codeTeam/40code-desktop",
   "keywords": [
@@ -62,10 +64,20 @@
     }
   },
   "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.4",
+    "@webpack-cli/generators": "^3.0.7",
+    "babel-loader": "^9.1.3",
+    "css-loader": "^7.1.2",
     "electron": "^31.3.1",
     "electron-builder": "^24.13.3",
     "electron-icon-maker": "^0.0.5",
-    "electron-packager": "^17.1.2"
+    "electron-packager": "^17.1.2",
+    "html-webpack-plugin": "^5.6.0",
+    "mini-css-extract-plugin": "^2.9.1",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
     "fs-extra": "^11.2.0",
