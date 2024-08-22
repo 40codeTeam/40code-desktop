@@ -2,12 +2,10 @@ name: Build/release
 
 on:
   push:
-    tags:
-      v*.*.*
 
 permissions:
   contents: write
-  
+
 jobs:
   BuildOrRelease:
     # the type of machine to run the job on
@@ -36,7 +34,7 @@ jobs:
           -v ~/.cache/electron-builder:/root/.cache/electron-builder \
           electronuserland/builder \
           /bin/bash -c "yarn install && yarn icon && yarn run CICD_build"
-      
+
       - name: ⚙️📦️ Build(Windows/MacOS)
         if: matrix.os != 'ubuntu-latest'
         run: yarn install && yarn icon && yarn run CICD_build
@@ -55,7 +53,7 @@ jobs:
             dist/*.exe
             dist/*.zip
             dist/*.dmg
-      
+
       - name: 🚀️ release
         uses: softprops/action-gh-release@v2
         with:
