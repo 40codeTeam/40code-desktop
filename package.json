@@ -4,7 +4,7 @@
   "description": "40code offline editor",
   "main": "main.js",
   "author": "40codeTeam <1@40code.com> (https://github.com/40codeTeam/40code-desktop)",
-  "license": "GPLv3",
+  "license": "GPL-3.0",
   "scripts": {
     "start": "electron . --openssl-legacy-provider",
     "icon": "yarn run electron-icon-maker --input=logo1.png --output=./build/",
