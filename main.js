@@ -51,9 +51,9 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
   app.on('close', (event, title) => {
-    // let { canClose } = storage.getData('canClose');
-    // let canClose=1;
-    // if (canClose) {
+    // let { cannotClose } = storage.getData('canClose');
+    // // let canClose=1;
+    // if (cannotClose) {
     app.exit();
     // }
   })
