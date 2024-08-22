@@ -1,6 +1,6 @@
 {
   "name": "40code",
-  "version": "3.4.3",
+  "version": "3.4.5",
   "description": "40code offline editor",
   "main": "main.js",
   "author": "40codeTeam <1@40code.com> (https://github.com/40codeTeam/40code-desktop)",
@@ -62,7 +62,7 @@
     }
   },
   "devDependencies": {
-    "electron": "^31.3.1",
+    "electron": "^32.0.1",
     "electron-builder": "^24.13.3",
     "electron-icon-maker": "^0.0.5",
     "electron-packager": "^17.1.2"
